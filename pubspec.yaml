@@ -69,8 +69,9 @@ dependencies:
   keyboard_dismisser: ^3.0.0
   permission_handler: ^11.3.0
   pin_code_fields: ^8.0.1
-  ai_barcode_scanner: ^3.4.3
+  # ai_barcode_scanner: ^3.4.3
   mobile_scanner: ^4.0.0
+  qr_flutter: ^4.0.0
 
 
 

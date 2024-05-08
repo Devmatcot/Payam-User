@@ -15,6 +15,7 @@ class _QrCodeScreenState extends ConsumerState<QrCodeScreen> {
 
   MobileScannerController controller = MobileScannerController();
   String? qrjsonCode;
+  bool switchCreateQr = false;
   @override
   Widget build(BuildContext context) {
     return OverlayWidget(
@@ -106,23 +107,91 @@ class _QrCodeScreenState extends ConsumerState<QrCodeScreen> {
                           style: AppTextStyle.headline2.copyWith(fontSize: 24),
                         ),
                         40.0.spacingH,
-                        AppTextField(
-                            isAmount: true,
-                            title: 'Amount',
-                            hint: '100.00 - 2,000,000.00',
-                            type: TextInputType.number),
+                        AnimatedSwitcher(
+                          duration: Duration(seconds: 3),
+                          switchInCurve: Curves.easeIn,
+                          switchOutCurve: Curves.easeInOut,
+                          transitionBuilder:
+                              (Widget child, Animation<double> animation) {
+                            return ScaleTransition(
+                                child: child, scale: animation);
+                          },
+                          child: switchCreateQr
+                              ? Column(
+                                  children: [
+                                    Center(
+                                      child: Container(
+                                        padding: EdgeInsets.all(10).r,
+                                        height: 350.h,
+                                        width: 350.h,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20).r,
+                                            border: Border.all(
+                                                color: AppColors.primary,
+                                                width: 1)),
+                                        child: QrImageView(
+                                          // backgroundColor: AppColors.appBlue,
+                                          dataModuleStyle: QrDataModuleStyle(
+                                              color: AppColors.primaryDeep,
+                                              dataModuleShape:
+                                                  QrDataModuleShape.square),
+                                          eyeStyle: QrEyeStyle(
+                                              color: AppColors.primaryDeep,
+                                              eyeShape: QrEyeShape.square),
+                                          data:
+                                              '{"account":"1122334455",amount:"550"}',
+                                          version: QrVersions.auto,
+                                        ),
+                                      ),
+                                    ),
+                                    20.0.spacingH,
+                                    LoadingButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          'Share QR Code',
+                                          style: AppTextStyle.pryBtnStyle,
+                                        )),
+                                    20.0.spacingH,
+                                    SecondaryButton(
+                                        onTap: () {
+                                          setState(() {
+                                            switchCreateQr = !switchCreateQr;
+                                          });
+                                        },
+                                        child: Text(
+                                          'Generate new QR Code',
+                                          style: AppTextStyle.secBtnStyle,
+                                        ))
+                                  ],
+                                )
+                              : Column(
+                                  children: [
+                                    AppTextField(
+                                        isAmount: true,
+                                        title: 'Amount',
+                                        hint: '100.00 - 2,000,000.00',
+                                        type: TextInputType.number),
+                                    20.0.spacingH,
+                                    AppTextField(
+                                        title: 'Description',
+                                        hint: 'e.g food',
+                                        type: TextInputType.number),
+                                    100.0.spacingH,
+                                    LoadingButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            switchCreateQr = !switchCreateQr;
+                                          });
+                                        },
+                                        child: Text(
+                                          'Create QR Code',
+                                          style: AppTextStyle.pryBtnStyle,
+                                        ))
+                                  ],
+                                ),
+                        ),
                         20.0.spacingH,
-                        AppTextField(
-                            title: 'Description',
-                            hint: 'e.g food',
-                            type: TextInputType.number),
-                        100.0.spacingH,
-                        LoadingButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Create QR Code',
-                              style: AppTextStyle.pryBtnStyle,
-                            ))
                       ],
                     ),
                   ),
