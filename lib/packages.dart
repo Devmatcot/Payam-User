@@ -53,4 +53,7 @@ export '/src/core/typography/text_styles.dart';
 export '/src/core/utils/extension/widget_extensions.dart';
 export 'package:payam_user/src/features/auth/presentation/widgets/auth_phone.dart';
 export 'package:payam_user/src/core/shared/custom_numpad.dart';
+export 'package:ai_barcode_scanner/ai_barcode_scanner.dart';
+export 'package:payam_user/src/core/shared/confirm_details.dart';
+export 'package:payam_user/src/features/qrcode/model/qr_enum.dart';
 

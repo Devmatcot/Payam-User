@@ -10,6 +10,7 @@ class AppTextField extends StatefulWidget {
   final bool obscured;
   final bool? readOnly;
   final int? maxLines;
+  final bool isAmount;
   final TextStyle? hintStyle;
   final TextInputType type;
   final Color? fillColor;
@@ -33,6 +34,7 @@ class AppTextField extends StatefulWidget {
     required this.hint,
     this.prefixIcons,
     this.surfixIcons,
+    this.isAmount = false,
     this.formeter,
     this.maxLines = 1,
     this.controller,
@@ -110,9 +112,12 @@ class _AppTextFieldState extends State<AppTextField> {
     return InputDecoration(
       hintText: widget.hint,
       hintStyle: widget.hintStyle ??
-          AppTextStyle.formText.copyWith(fontWeight: AppFontWeight.semiBold),
+          AppTextStyle.formText.copyWith(fontWeight: AppFontWeight.regular),
       counterText: "",
       filled: widget.fill,
+      prefixText: widget.isAmount ? '₦' : null,
+      prefixStyle: TextStyle(
+          fontFamily: 'Arial', fontWeight: AppFontWeight.medium, fontSize: 18),
       prefixIcon: widget.prefixIcons,
       fillColor: widget.fillColor ?? AppColors.gray,
       suffixIcon: widget.isPassword

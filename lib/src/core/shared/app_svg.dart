@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../../packages.dart';
 // import 'package:lottie/lottie.dart';
 
 class SvgWidget extends StatelessWidget {
@@ -45,6 +47,31 @@ class ImageWidget extends StatelessWidget {
       height: height,
       width: width,
       color: color,
+    );
+  }
+}
+
+
+class NairaText extends StatelessWidget {
+  final double? fontSize;
+  final Color? color;
+  final FontWeight? fontWeight;
+  const NairaText({
+    Key? key,
+    this.fontSize,
+    this.color,
+    this.fontWeight,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      AssetConstants.nairaSymbol,
+      style: TextStyle(
+          fontFamily: 'Ariel',
+          fontSize: fontSize,
+          fontWeight: fontWeight ?? AppFontWeight.regular,
+          color: color),
     );
   }
 }

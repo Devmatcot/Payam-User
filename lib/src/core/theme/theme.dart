@@ -13,7 +13,7 @@ class AppTheme {
   static ThemeData get standard {
     return ThemeData(
       colorScheme: ColorScheme.fromSwatch(
-          accentColor: AppColors.primary, primarySwatch: Colors.blue),
+          accentColor: AppColors.primary, primarySwatch: Colors.green),
       appBarTheme: _appBarTheme,
       useMaterial3: true,
       elevatedButtonTheme: _elevatedButtonTheme,

@@ -1,4 +1,5 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:payam_user/src/features/qrcode/model/qr_enum.dart';
 
 import '../../property/repositiory/properties_repo.dart';
 
@@ -21,6 +22,9 @@ final escrowControllerProvider =
 //   return ref.read(escrowControllerProvider.notifier).getEscrowById(id);
 // });
 
+final qrEnumProvider = StateProvider<QRCodeEnum>((ref) {
+  return QRCodeEnum.scan;
+});
 final proofImageProvider = StateProvider<FilePickerResult?>((ref) {
   return null;
 });
@@ -37,6 +41,4 @@ class EscrowController extends StateNotifier<bool> {
         _propertiesRepository = propertiesRepository,
         _ref = ref,
         super(false);
-
- 
 }

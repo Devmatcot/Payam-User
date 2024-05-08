@@ -147,6 +147,13 @@ class AppTextStyle {
     );
   }
 
+      static TextStyle get bodyText5M {
+    return _baseTextStyle.copyWith(
+      fontSize: 15,
+      fontWeight: AppFontWeight.medium,
+    );
+  }
+
   /// Caption Text Style
   static TextStyle get caption {
     return _baseTextStyle.copyWith(
@@ -218,6 +225,14 @@ class AppTextStyle {
       fontSize: 12 + 3,
       color: AppColors.natural,
       fontWeight: AppFontWeight.light,
+    );
+  }
+
+  static TextStyle get formTextNaturalR {
+    return _baseTextStyle.copyWith(
+      fontSize: 12 + 3,
+      color: AppColors.natural,
+      fontWeight: AppFontWeight.regular,
     );
   }
 }

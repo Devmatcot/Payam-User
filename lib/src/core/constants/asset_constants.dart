@@ -10,18 +10,18 @@ class AssetConstants {
   static const String location = "location";
   static const String badge = "badge";
   static const String call = "call";
-  static const String heart = "heart";
+  static const String qrcode = "qrcode";
   static const String message = "message";
-  static const String peg = "peg";
+  static const String history = "history";
   static const String resident = "resident";
-  static const String arrowleft = "arrow_left";
+  static const String arrowleft = "arrowback";
   static const String secured = "secured";
-  static const String coin = "coin";
+  static const String bill = "bill";
   static const String microphone = "microphone";
   static const String send = "send";
   static const String success = "success";
   static const String naira = "naira";
-  static const String cards = "cards";
+  static const String ride = "ride";
   static const String arrow_right = "arrow_right";
   static const String myprofile = "myprofile";
   static const String points = "points";
@@ -32,7 +32,7 @@ class AssetConstants {
   static const String lock = "lock";
   static const String logout = "logout";
   static const String sms = "sms";
-  static const String switch_agent = "switch_agent";
+  static const String transfer = "transfer";
   static const String user_shield = "user_shield";
   static const String money = "money";
   static const String timer = "timer";
@@ -57,9 +57,11 @@ class AssetConstants {
   //Image Assests
 
   static const String building = "building";
-  static const String avater = "avater";
+  static const String avater = "assets/images/avater.png";
   static const String livesupport = "live_support";
   static const String plumber = "plumber";
+  static const String nairaSymbol = "₦";
+
   // static const String avater = "avafilter";
   // static const String avater = "avafilter";
   // static const String avater = "avafilter";
