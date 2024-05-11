@@ -40,6 +40,11 @@ class PinCodeField extends StatelessWidget {
       readOnly: readOnly,
       obscureText: obscure,
       obscuringCharacter: '\u2B24',
+      obscuringWidget: Container(
+        height: 15.h,
+        decoration: const BoxDecoration(
+            shape: BoxShape.circle, color: AppColors.primary),
+      ),
       keyboardType: TextInputType.number,
       autoDisposeControllers: true,
       textStyle: AppTextStyle.headline2,

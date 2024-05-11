@@ -1,3 +1,5 @@
+import 'package:payam_user/src/features/qrcode/presentation/widgets/confirm_transaction.dart';
+
 import '../../../../../packages.dart';
 import '../../controller/escrow_controller.dart';
 
@@ -177,7 +179,7 @@ class _QrCodeScreenState extends ConsumerState<QrCodeScreen> {
                                         title: 'Description',
                                         hint: 'e.g food',
                                         type: TextInputType.number),
-                                    100.0.spacingH,
+                                    50.0.spacingH,
                                     LoadingButton(
                                         onPressed: () {
                                           setState(() {
@@ -187,6 +189,17 @@ class _QrCodeScreenState extends ConsumerState<QrCodeScreen> {
                                         child: Text(
                                           'Create QR Code',
                                           style: AppTextStyle.pryBtnStyle,
+                                        )),
+                                    20.0.spacingH,
+                                    SecondaryButton(
+                                        onTap: () {
+                                          setState(() {
+                                            switchCreateQr = !switchCreateQr;
+                                          });
+                                        },
+                                        child: Text(
+                                          'Create dynamic QR Code',
+                                          style: AppTextStyle.secBtnStyle,
                                         ))
                                   ],
                                 ),
@@ -236,7 +249,10 @@ class _QrCodeScreenState extends ConsumerState<QrCodeScreen> {
                                   type: TextInputType.number),
                               30.0.spacingH,
                               LoadingButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    bottomSheet(
+                                        context, ConfirmQrCodeTransaction());
+                                  },
                                   child: Text(
                                     'Proceed',
                                     style: AppTextStyle.pryBtnStyle,

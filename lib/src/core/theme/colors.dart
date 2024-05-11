@@ -17,6 +17,8 @@ abstract class AppColors {
 
   /// Scafolld BackGround
   static const Color scaffoldColor = Color(0xFFF5F5F5);
+  static const Color scaffoldColorGrey = Color(0xFFF9F9F9);
+  
 
   /// DarkGray
   static const Color darkGray = Color(0xFFB4B4B4);

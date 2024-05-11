@@ -57,4 +57,6 @@ export 'package:mobile_scanner/mobile_scanner.dart';
 export 'package:qr_flutter/qr_flutter.dart';
 export 'package:payam_user/src/core/shared/confirm_details.dart';
 export 'package:payam_user/src/features/qrcode/model/qr_enum.dart';
+export 'package:payam_user/src/features/home/presentation/views/control_screen.dart';
+
 

@@ -38,7 +38,14 @@ class AppTextStyle {
       fontWeight: AppFontWeight.regular,
     );
   }
-
+ static TextStyle get nairaStyle {
+    return _baseTextStyle.copyWith(
+      fontSize: 18,
+      fontFamily: 'Ariel',
+  
+      fontWeight: AppFontWeight.regular,
+    );
+  }
 //secondary button style
   static TextStyle get secBtnStyle {
     return AppTextStyle.headline3.copyWith(
