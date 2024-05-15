@@ -9,7 +9,7 @@ final chatControlerProvider =
     StateNotifierProvider<ChatController, bool>((ref) {
   ref.onDispose(() {
     print('chat dispose');
-    ref.read(chatRepoProvider).closeSocket();
+    // ref.read(chatRepoProvider).closeSocket();
   });
   return ChatController(chatRepository: ref.watch(chatRepoProvider), ref: ref);
 });

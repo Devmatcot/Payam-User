@@ -1,10 +1,12 @@
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import '../../../../../packages.dart';
 
 class AppPhoneField extends StatelessWidget {
+ final TextEditingController controller;
   const AppPhoneField({
-    super.key,
-  });
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,11 @@ class AppPhoneField extends StatelessWidget {
         10.0.spacingW,
         Expanded(
             child: AppTextField(
-                hint: '7011223344', type: TextInputType.phone))
+          hint: 'e.g 7011223344',
+          type: TextInputType.phone,
+          controller: controller,
+          maxLenth: 10,
+        ))
       ],
     );
   }

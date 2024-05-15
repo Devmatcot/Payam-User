@@ -9,6 +9,11 @@
 // import '../presentation/views/verify_email.dart';
 // import '../presentation/views/verify_otp.dart';
 // import '../presentation/views/welcome_back.dart';
+import 'package:payam_user/src/features/auth/presentation/views/create_passcode.dart';
+import 'package:payam_user/src/features/auth/presentation/views/phone_otp.dart';
+import 'package:payam_user/src/features/auth/presentation/views/success_registration.dart';
+
+import '../presentation/views/create_conPasscode.dart';
 import '../repository/auth_repo.dart';
 import '/packages.dart';
 // import '/src/features/auth/presentation/views/switch_account.dart';
@@ -46,101 +51,99 @@ class AuthController extends StateNotifier<bool> {
         _localStorage = localStroage,
         super(false);
 
-  // createUserAcct(
-  //     {required BuildContext context,
-  //     required String firstName,
-  //     required String lastName,
-  //     required String phoneNum,
-  //     required String email,
-  //     required bool isAgent,
-  //     required String password}) async {
-  //   try {
-  //     state = true;
-  //     final res = await _authrepo.createUserAcct(
-  //         firstName: firstName,
-  //         lastName: lastName,
-  //         phoneNum: phoneNum,
-  //         isAgent: isAgent,
-  //         email: email,
-  //         password: password);
-  //     res.fold((l) {
-  //       state = false;
-  //       AppConfig.handleErrorMessage(
-  //         l.error,
-  //       );
-  //     }, (r) async {
-  //       AppConfig.showToast(
-  //           'Account Created Successfully, proceed to email verification',
-  //           null,
-  //           () {});
-  //       await Future.delayed(Duration(seconds: 3));
-  //       state = false;
-  //       pushTo(
-  //         context,
-  //         VerifyEmailScreen(
-  //           isRestPassword: false,
-  //           email: email,
-  //         ),
-  //       );
-  //     });
-  //   } catch (e) {}
-  // }
+  createUserAcct({
+    required BuildContext context,
+    required String firstName,
+    required String lastName,
+    required String phoneNum,
+    required String email,
+    required String gender,
+  }) async {
+    try {
+      state = true;
+      final userDob = _ref.read(datePickerProvider);
+      final res = await _authrepo.createUserAcct(
+        firstName: firstName,
+        lastName: lastName,
+        phoneNum: phoneNum,
+        dob: userDob ?? DateTime.now(),
+        gender: gender,
+        email: email,
+      );
+      res.fold((l) {
+        state = false;
+        AppConfig.handleErrorMessage(
+          l.error,
+        );
+      }, (r) async {
+        AppConfig.showToast(
+            'Profile Created Successfully, proceed to passcode setup!',
+            null,
+            () {});
+        await Future.delayed(Duration(seconds: 3));
+        state = false;
+        pushToFirst(
+          context,
+          CreatePassCodeScreen(
+            phoneNumber: phoneNum,
+          ),
+        );
+      });
+    } catch (e) {}
+  }
 
-  // sendEmailOTP(BuildContext context, String email,
-  //     [bool isForget = false]) async {
-  //   state = true;
-  //   final res = await _authrepo.sendEmailOTP(email, isForget);
-  //   res.fold((l) {
-  //     state = false;
-  //     AppConfig.handleErrorMessage(
-  //       l.error,
-  //     );
-  //   }, (r) async {
-  //     AppConfig.showToast(
-  //         'Verification code sent successfully. Please check your mail',
-  //         null,
-  //         () {});
-  //     await Future.delayed(Duration(seconds: 3));
-  //     state = false;
-  //     pushToFirst(
-  //       context,
-  //       EmailOTPScreen(
-  //         email: email,
-  //         isForget: isForget,
-  //       ),
-  //     );
-  //   });
-  // }
+  sendSMSOTP(BuildContext context, String phone,
+      [bool isForget = false]) async {
+    state = true;
+    final res = await _authrepo.sendSMSOTP(phone, isForget);
+    res.fold((l) {
+      state = false;
+      AppConfig.handleErrorMessage(
+        l.error,
+      );
+    }, (r) async {
+      AppConfig.showToast(
+          'Verification code sent successfully. Please check your phone',
+          null,
+          () {});
+      await Future.delayed(Duration(seconds: 3));
+      state = false;
+      pushTo(
+          context,
+          PhoneOTPScreen(
+            phoneNumber: phone,
+          ));
+    });
+  }
 
-  // verifyEmailOTP(
-  //     BuildContext context, String email, String OTP, bool isForget) async {
-  //   state = true;
-  //   final res = await _authrepo.verifyEmailOTP(email, OTP, isForget);
-  //   res.fold((l) {
-  //     state = false;
-  //     AppConfig.handleErrorMessage(
-  //       l.error,
-  //     );
-  //   }, (r) async {
-  //     AppConfig.showToast(
-  //         'Email verified Successfully, Proceed to ${isForget ? 'change password' : 'login'}',
-  //         null,
-  //         () {});
-  //     await Future.delayed(Duration(seconds: 3));
-  //     state = false;
-  //     if (isForget) {
-  //       pushToFirst(
-  //         context,
-  //         PasswordScreen(),
-  //       );
-  //     } else {
-  //       pushToAndClearStack(
-  //         context,
-  //         LoginScreen(),
-  //       );
-  //     }
-  //   });
-  // }
+  verifySMSOTP(
+      BuildContext context, String phone, String OTP, bool isForget) async {
+    state = true;
+    final res = await _authrepo.verifySMSOTP(phone, OTP, isForget);
+    res.fold((l) {
+      state = false;
+      AppConfig.handleErrorMessage(
+        l.error,
+      );
+    }, (r) async {
+      AppConfig.showToast(
+          'Phone Number verified Successfully, Lets Proceed', null, () {});
+      await Future.delayed(Duration(seconds: 3));
+      state = false;
+      if (isForget) {
+        // pushToFirst(
+        //   context,
+        //   PasswordScreen(),
+        // );
+      } else {
+        pushTo(
+            context,
+            CreateProfileScreen(
+              phoneNumber: phone,
+            ));
+      }
+    });
+  }
 
   // login(
   //   BuildContext context,
@@ -208,7 +211,7 @@ class AuthController extends StateNotifier<bool> {
     //     pushToAndClearStack(context, LoginScreen());
     //   }
     // } else {
-      pushToAndClearStack(context, OnboardingScreen());
+    pushToAndClearStack(context, OnboardingScreen());
     // }
   }
 
@@ -283,19 +286,25 @@ class AuthController extends StateNotifier<bool> {
   //   });
   // }
 
-  // newPassword(BuildContext context, String password) async {
-  //   state = true;
-  //   final res = await _authrepo.newPassword(password);
-  //   res.fold((l) {
-  //     state = false;
-  //     AppConfig.handleErrorMessage(l.error);
-  //   }, (r) async {
-  //     AppConfig.showToast('Password change successfully!');
-  //     await Future.delayed(Duration(seconds: 2));
-  //     state = false;
-  //     pushReplacementTo(context, LoginScreen());
-  //   });
-  // }
+  createPasscode(BuildContext context, String phoneNum, String passcode,
+      bool isConfirm) async {
+    state = true;
+    final res = await _authrepo.createPasscode(phoneNum, passcode, isConfirm);
+    res.fold((l) {
+      state = false;
+      AppConfig.handleErrorMessage(l.error);
+    }, (r) async {
+      AppConfig.showToast(
+          'Passcode ${isConfirm ? 'confirmed' : 'created'} successfully!');
+      await Future.delayed(Duration(seconds: 2));
+      state = false;
+      if (!isConfirm) {
+        pushTo(context, ConfirmPassCodeScreen(phoneNumber: phoneNum));
+      } else {
+        pushToFirst(context, SuccessRegistration());
+      }
+    });
+  }
 
   // switchUser(AccountType acctType) async {
   //   state = true;

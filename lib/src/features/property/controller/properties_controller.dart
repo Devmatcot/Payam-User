@@ -1,7 +1,5 @@
 import 'package:file_picker/file_picker.dart';
 
-// import '../../coin/presentation/widgets/no_coin_alert.dart';
-import '../../home/controller/home_controller.dart';
 import '../../jobs/model/job_type.dart';
 // import '../../jobs/presentation/views/create_job.dart';
 
@@ -55,34 +53,34 @@ final propertiesLoadingProvider = StateProvider<bool>((ref) {
 //       .getAgentPropertiesById(pro);
 // });
 
-final allProTypeProvider = FutureProvider<List<OptionsType>>((ref) async {
-  final res =
-      await ref.read(propertiesControllerProvider.notifier).getProType();
-  ref.read(proTypeListProvider.notifier).update((state) {
-    state.addAll(res);
-    return state;
-  });
-  return res;
-});
-final allProConProvider = FutureProvider<List<OptionsType>>((ref) async {
-  final res =
-      await ref.read(propertiesControllerProvider.notifier).getCondType();
-  ref.read(proConListProvider.notifier).update((state) {
-    state.addAll(res);
-    return state;
-  });
-  return res;
-});
+// final allProTypeProvider = FutureProvider<List<OptionsType>>((ref) async {
+//   final res =
+//       await ref.read(propertiesControllerProvider.notifier).getProType();
+//   ref.read(proTypeListProvider.notifier).update((state) {
+//     state.addAll(res);
+//     return state;
+//   });
+//   return res;
+// });
+// final allProConProvider = FutureProvider<List<OptionsType>>((ref) async {
+//   final res =
+//       await ref.read(propertiesControllerProvider.notifier).getCondType();
+//   ref.read(proConListProvider.notifier).update((state) {
+//     state.addAll(res);
+//     return state;
+//   });
+//   return res;
+// });
 
-final allProResProvider = FutureProvider<List<OptionsType>>((ref) async {
-  final res =
-      await ref.read(propertiesControllerProvider.notifier).getResType();
-  ref.read(proResListProvider.notifier).update((state) {
-    state.addAll(res);
-    return state;
-  });
-  return res;
-});
+// final allProResProvider = FutureProvider<List<OptionsType>>((ref) async {
+//   final res =
+//       await ref.read(propertiesControllerProvider.notifier).getResType();
+//   ref.read(proResListProvider.notifier).update((state) {
+//     state.addAll(res);
+//     return state;
+//   });
+//   return res;
+// });
 final proTypeListProvider = StateProvider<List<OptionsType>>((ref) {
   List<OptionsType> proType = [
     OptionsType(
@@ -168,17 +166,17 @@ class PropertiesController extends StateNotifier<bool> {
   //   });
   // }
 
-  changeFavorite(String propertiesId) async {
-    bool favoriteState = _ref.read(favoriteProvider);
-    _ref.read(favoriteProvider.notifier).update((state) => !state);
-    final res = await _propertiesRepository.addPropertiesToWatchList(
-        propertiesId, favoriteState);
-    res.fold(
-        (l) => AppConfig.handleErrorMessage(l.error),
-        (r) => AppConfig.showToast(favoriteState
-            ? 'Properties Removed from Watchlists'
-            : 'Properties Added to Watchlists'));
-  }
+  // changeFavorite(String propertiesId) async {
+  //   bool favoriteState = _ref.read(favoriteProvider);
+  //   _ref.read(favoriteProvider.notifier).update((state) => !state);
+  //   final res = await _propertiesRepository.addPropertiesToWatchList(
+  //       propertiesId, favoriteState);
+  //   res.fold(
+  //       (l) => AppConfig.handleErrorMessage(l.error),
+  //       (r) => AppConfig.showToast(favoriteState
+  //           ? 'Properties Removed from Watchlists'
+  //           : 'Properties Added to Watchlists'));
+  // }
 
   // Future<List<Listing>> getAllWatchListProperties() async {
   //   final res = await _propertiesRepository.getAllWatchListProperties();
@@ -195,35 +193,35 @@ class PropertiesController extends StateNotifier<bool> {
   //   return res.fold((l) => AppConfig.handleErrorMessage(l.error), (r) => r);
   // }
 
-  pickImage() async {
-    final res = await _propertiesRepository.pickImage();
-    if (res?.files != null) {
-      _ref.read(selectedImageProvider.notifier).update((state) {
-        state.addAll(res!.files);
-        return state;
-      });
-      _ref.read(selectedImageProvider);
-      print(_ref.read(selectedImageProvider).length);
-    } else {}
-  }
+  // pickImage() async {
+  //   final res = await _propertiesRepository.pickImage();
+  //   if (res?.files != null) {
+  //     _ref.read(selectedImageProvider.notifier).update((state) {
+  //       state.addAll(res!.files);
+  //       return state;
+  //     });
+  //     _ref.read(selectedImageProvider);
+  //     print(_ref.read(selectedImageProvider).length);
+  //   } else {}
+  // }
 
-  Future<List<OptionsType>> getProType() async {
-    final res = await _propertiesRepository.getPropertType();
-    return res.fold(
-        (l) => AppConfig.handleErrorMessage(l.error), (data) => data);
-  }
+  // Future<List<OptionsType>> getProType() async {
+  //   final res = await _propertiesRepository.getPropertType();
+  //   return res.fold(
+  //       (l) => AppConfig.handleErrorMessage(l.error), (data) => data);
+  // }
 
-  Future<List<OptionsType>> getResType() async {
-    final res = await _propertiesRepository.getResType();
-    return res.fold(
-        (l) => AppConfig.handleErrorMessage(l.error), (data) => data);
-  }
+  // Future<List<OptionsType>> getResType() async {
+  //   final res = await _propertiesRepository.getResType();
+  //   return res.fold(
+  //       (l) => AppConfig.handleErrorMessage(l.error), (data) => data);
+  // }
 
-  Future<List<OptionsType>> getCondType() async {
-    final res = await _propertiesRepository.getCondType();
-    return res.fold(
-        (l) => AppConfig.handleErrorMessage(l.error), (data) => data);
-  }
+  // Future<List<OptionsType>> getCondType() async {
+  //   final res = await _propertiesRepository.getCondType();
+  //   return res.fold(
+  //       (l) => AppConfig.handleErrorMessage(l.error), (data) => data);
+  // }
 
   //Create New Properties
 

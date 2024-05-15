@@ -2,7 +2,7 @@ import 'package:payam_user/src/features/auth/presentation/views/reset_passcode.d
 
 import '../../../../../packages.dart';
 
-class PasscodeWidget extends StatefulWidget {
+class PasscodeWidget extends ConsumerStatefulWidget {
   final String title;
   final String subtitle;
   final String btnText;
@@ -20,10 +20,10 @@ class PasscodeWidget extends StatefulWidget {
   });
 
   @override
-  State<PasscodeWidget> createState() => _PasscodeWidgetState();
+  ConsumerState<PasscodeWidget> createState() => _PasscodeWidgetState();
 }
 
-class _PasscodeWidgetState extends State<PasscodeWidget> {
+class _PasscodeWidgetState extends ConsumerState<PasscodeWidget> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldBody(
@@ -77,6 +77,7 @@ class _PasscodeWidgetState extends State<PasscodeWidget> {
             ),
             Spacer(),
             LoadingButton(
+              isLoading: ref.watch(authControllerProvider),
                 onPressed: widget.onPressed,
                 child: Text(widget.btnText, style: AppTextStyle.pryBtnStyle))
           ],

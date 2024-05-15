@@ -95,7 +95,7 @@ class _AppTextFieldState extends State<AppTextField> {
             maxLength: widget.maxLenth,
             style: widget.style ??
                 AppTextStyle.headline3.copyWith(
-                    color: AppColors.black, fontWeight: AppFontWeight.medium),
+                    color: AppColors.black, fontWeight: AppFontWeight.regular),
             cursorColor: AppColors.primaryDeep,
             obscureText: widget.isPassword ? !isVisible : widget.obscured,
             keyboardType: widget.type,

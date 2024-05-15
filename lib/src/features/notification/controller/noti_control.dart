@@ -8,9 +8,9 @@ final notiController =
       notiRepos: ref.read(notiRepoProvider), ref: ref);
 });
 
-final allNotiProvider = FutureProvider((ref) async {
-  return ref.read(notiController.notifier).getAllNotification();
-});
+// final allNotiProvider = FutureProvider((ref) async {
+//   return ref.read(notiController.notifier).getAllNotification();
+// });
 
 class NotificationController extends StateNotifier<bool> {
   NotificationRepository _notiRepo;
@@ -23,8 +23,8 @@ class NotificationController extends StateNotifier<bool> {
         _ref = ref,
         super(false);
 
-  Future<List<NotificationModel>> getAllNotification() async {
-    final res = await _notiRepo.getAllNotification();
-    return res.fold((l) => AppConfig.handleErrorMessage(l.error), (r) => r);
-  }
+  // Future<List<NotificationModel>> getAllNotification() async {
+  //   final res = await _notiRepo.getAllNotification();
+  //   return res.fold((l) => AppConfig.handleErrorMessage(l.error), (r) => r);
+  // }
 }

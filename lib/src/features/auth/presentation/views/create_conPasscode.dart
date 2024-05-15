@@ -2,18 +2,18 @@
 
 import '../../../../../packages.dart';
 
-class CreatePassCodeScreen extends ConsumerStatefulWidget {
+class ConfirmPassCodeScreen extends ConsumerStatefulWidget {
   final String phoneNumber;
-  const CreatePassCodeScreen({
+  const ConfirmPassCodeScreen({
     required this.phoneNumber,
   });
 
   @override
-  ConsumerState<CreatePassCodeScreen> createState() =>
+  ConsumerState<ConfirmPassCodeScreen> createState() =>
       _CreatePassCodeScreenState();
 }
 
-class _CreatePassCodeScreenState extends ConsumerState<CreatePassCodeScreen> {
+class _CreatePassCodeScreenState extends ConsumerState<ConfirmPassCodeScreen> {
   TextEditingController controller = TextEditingController();
 
   @override
@@ -24,20 +24,19 @@ class _CreatePassCodeScreenState extends ConsumerState<CreatePassCodeScreen> {
       valueListenable: controller,
       builder: (context, value, child) {
         bool isEnable = value.text.length == 6;
-
         return PasscodeWidget(
             onPressed: isEnable
                 ? () {
                     ref.read(authControllerProvider.notifier).createPasscode(
-                        context, widget.phoneNumber, controller.text, false);
+                        context, widget.phoneNumber, controller.text, true);
                     // pushTo(context, CreateProfileScreen());
                   }
                 : null,
             subtitle:
-                'Create a 6-digit passcode for a fast and easy login to ${AssetConstants.appName}',
+                'Confirm your 6-digit passcode for a fast and easy login to ${AssetConstants.appName}',
             controller: controller,
-            btnText: 'Set Passcode',
-            title: 'Create a Passcode');
+            btnText: 'Confirm Passcode',
+            title: 'Re-enter Passcode');
       },
     );
   }

@@ -62,5 +62,8 @@ export 'package:payam_user/src/features/transfer/presentation/views/payam_transf
 export 'package:payam_user/src/features/transfer/presentation/widgets/list_tile.dart';
 export 'package:payam_user/src/features/transfer/presentation/views/payam_amount.dart';
 export 'package:payam_user/src/features/qrcode/presentation/widgets/confirm_transaction.dart';
+export 'package:payam_user/src/core/utils/extension/string_extensions.dart';
+export 'package:payam_user/src/features/auth/presentation/widgets/passcode_widget.dart';
+
 
 

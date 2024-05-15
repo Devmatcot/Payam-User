@@ -3,11 +3,12 @@ import 'package:payam_user/src/features/auth/presentation/views/login_passcode.d
 import '../../../../../packages.dart';
 
 class LoginScreen extends ConsumerWidget {
-  const LoginScreen({super.key});
-
+   LoginScreen({super.key});
+  final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AuthPhoneWidget(
+      controller: controller,
       onPressed: () {
         pushTo(context, LoginPassCodeScreen());
       },

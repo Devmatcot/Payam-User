@@ -1,10 +1,3 @@
-import 'dart:developer';
-
-import 'package:file_picker/file_picker.dart';
-import 'package:fpdart/fpdart.dart';
-
-import '../../auth/repository/location_service.dart';
-import '../../jobs/model/job_type.dart';
 // import '../model/add_property.dart';
 // import '../model/homefeed_properties.dart';
 // import '../model/property_model.dart';
@@ -69,121 +62,121 @@ class PropertiesRepository {
   //   }
   // }
 
-  FutureVoid addPropertiesToWatchList(String id, bool favoriteState) async {
-    try {
-      Future.delayed(Duration(seconds: 3));
-
-      String accessToken = await _localStorage.get(Endpoints.access_token);
-      log('fav state $favoriteState');
-      if (!favoriteState) {
-        await _dioClient.post(Endpoints.addWatchListbyId(id),
-            options:
-                Options(headers: {'Authorization': 'Bearer $accessToken'}));
-      } else {
-        _dioClient.delete(Endpoints.addWatchListbyId(id),
-            options:
-                Options(headers: {'Authorization': 'Bearer $accessToken'}));
-      }
-
-      return right(null);
-    } on DioError catch (e) {
-      return left(Failure(e));
-    }
-  }
-
-  // FutureEither<List<Listing>> getAllWatchListProperties() async {
+  // FutureVoid addPropertiesToWatchList(String id, bool favoriteState) async {
   //   try {
+  //     Future.delayed(Duration(seconds: 3));
+
   //     String accessToken = await _localStorage.get(Endpoints.access_token);
-  //     final res = await _dioClient.get(Endpoints.allWatchList,
-  //         options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
-  //     List watchList = res.data['data'];
-  //     return right(watchList.map((json) => Listing.fromJson(json)).toList());
+  //     log('fav state $favoriteState');
+  //     if (!favoriteState) {
+  //       await _dioClient.post(Endpoints.addWatchListbyId(id),
+  //           options:
+  //               Options(headers: {'Authorization': 'Bearer $accessToken'}));
+  //     } else {
+  //       _dioClient.delete(Endpoints.addWatchListbyId(id),
+  //           options:
+  //               Options(headers: {'Authorization': 'Bearer $accessToken'}));
+  //     }
+
+  //     return right(null);
   //   } on DioError catch (e) {
   //     return left(Failure(e));
   //   }
   // }
 
-  // FutureEither<List<AgentProperty>> getAgentProperties() async {
+  // // FutureEither<List<Listing>> getAllWatchListProperties() async {
+  // //   try {
+  // //     String accessToken = await _localStorage.get(Endpoints.access_token);
+  // //     final res = await _dioClient.get(Endpoints.allWatchList,
+  // //         options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
+  // //     List watchList = res.data['data'];
+  // //     return right(watchList.map((json) => Listing.fromJson(json)).toList());
+  // //   } on DioError catch (e) {
+  // //     return left(Failure(e));
+  // //   }
+  // // }
+
+  // // FutureEither<List<AgentProperty>> getAgentProperties() async {
+  // //   try {
+  // //     String accessToken = await _localStorage.get(Endpoints.access_token);
+  // //     final res = await _dioClient.get(Endpoints.allAgentProperties,
+  // //         options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
+  // //     List proList = res.data['data'];
+  // //     return right(
+  // //         proList.map((json) => AgentProperty.fromJson(json)).toList());
+  // //   } on DioError catch (e) {
+  // //     return left(Failure(e));
+  // //   }
+  // // }
+
+  // Future<FilePickerResult?> pickImage([bool pickMultiple = true]) async {
+  //   FilePicker? _filePicker = FilePicker.platform;
+  //   final result = await _filePicker.pickFiles(
+  //       allowMultiple: pickMultiple,
+  //       allowCompression: true,
+  //       type: FileType.image);
+  //   if (result != null) {
+  //     return result;
+  //   } else {}
+  //   return null;
+  // }
+
+  // FutureEither<List<OptionsType>> getAllAppliance() async {
   //   try {
   //     String accessToken = await _localStorage.get(Endpoints.access_token);
-  //     final res = await _dioClient.get(Endpoints.allAgentProperties,
-  //         options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
-  //     List proList = res.data['data'];
-  //     return right(
-  //         proList.map((json) => AgentProperty.fromJson(json)).toList());
+
+  //     final res = await _dioClient.get(
+  //       Endpoints.propertiesAppliance,
+  //       options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+  //     );
+  //     List data = res.data['data'];
+  //     return right(data.map((e) => OptionsType.fromJson(e)).toList());
   //   } on DioError catch (e) {
   //     return left(Failure(e));
   //   }
   // }
 
-  Future<FilePickerResult?> pickImage([bool pickMultiple = true]) async {
-    FilePicker? _filePicker = FilePicker.platform;
-    final result = await _filePicker.pickFiles(
-        allowMultiple: pickMultiple,
-        allowCompression: true,
-        type: FileType.image);
-    if (result != null) {
-      return result;
-    } else {}
-    return null;
-  }
+  // FutureEither<List<OptionsType>> getPropertType() async {
+  //   try {
+  //     String accessToken = await _localStorage.get(Endpoints.access_token);
+  //     final res = await _dioClient.get(
+  //       Endpoints.allPropertyType,
+  //       options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+  //     );
+  //     List data = res.data['data'];
+  //     return right(data.map((e) => OptionsType.fromJson(e)).toList());
+  //   } on DioError catch (e) {
+  //     return left(Failure(e));
+  //   }
+  // }
 
-  FutureEither<List<OptionsType>> getAllAppliance() async {
-    try {
-      String accessToken = await _localStorage.get(Endpoints.access_token);
+  // FutureEither<List<OptionsType>> getResType() async {
+  //   try {
+  //     String accessToken = await _localStorage.get(Endpoints.access_token);
+  //     final res = await _dioClient.get(
+  //       Endpoints.allResType,
+  //       options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+  //     );
+  //     List data = res.data['data'];
+  //     return right(data.map((e) => OptionsType.fromJson(e)).toList());
+  //   } on DioError catch (e) {
+  //     return left(Failure(e));
+  //   }
+  // }
 
-      final res = await _dioClient.get(
-        Endpoints.propertiesAppliance,
-        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-      );
-      List data = res.data['data'];
-      return right(data.map((e) => OptionsType.fromJson(e)).toList());
-    } on DioError catch (e) {
-      return left(Failure(e));
-    }
-  }
-
-  FutureEither<List<OptionsType>> getPropertType() async {
-    try {
-      String accessToken = await _localStorage.get(Endpoints.access_token);
-      final res = await _dioClient.get(
-        Endpoints.allPropertyType,
-        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-      );
-      List data = res.data['data'];
-      return right(data.map((e) => OptionsType.fromJson(e)).toList());
-    } on DioError catch (e) {
-      return left(Failure(e));
-    }
-  }
-
-  FutureEither<List<OptionsType>> getResType() async {
-    try {
-      String accessToken = await _localStorage.get(Endpoints.access_token);
-      final res = await _dioClient.get(
-        Endpoints.allResType,
-        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-      );
-      List data = res.data['data'];
-      return right(data.map((e) => OptionsType.fromJson(e)).toList());
-    } on DioError catch (e) {
-      return left(Failure(e));
-    }
-  }
-
-  FutureEither<List<OptionsType>> getCondType() async {
-    try {
-      String accessToken = await _localStorage.get(Endpoints.access_token);
-      final res = await _dioClient.get(
-        Endpoints.propertyCondition,
-        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-      );
-      List data = res.data['data'];
-      return right(data.map((e) => OptionsType.fromJson(e)).toList());
-    } on DioError catch (e) {
-      return left(Failure(e));
-    }
-  }
+  // FutureEither<List<OptionsType>> getCondType() async {
+  //   try {
+  //     String accessToken = await _localStorage.get(Endpoints.access_token);
+  //     final res = await _dioClient.get(
+  //       Endpoints.propertyCondition,
+  //       options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+  //     );
+  //     List data = res.data['data'];
+  //     return right(data.map((e) => OptionsType.fromJson(e)).toList());
+  //   } on DioError catch (e) {
+  //     return left(Failure(e));
+  //   }
+  // }
 
   // FutureVoid addProperty(
   //   AddProperty property,
@@ -258,16 +251,16 @@ class PropertiesRepository {
   //   }
   // }
 
-  FutureVoid checkListingCoin() async {
-    try {
-      String accessToken = await _localStorage.get(Endpoints.access_token);
-      await _dioClient.get(
-        Endpoints.checkProListingCoin,
-        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-      );
-      return right('');
-    } on DioError catch (e) {
-      return left(Failure(e));
-    }
-  }
+  // FutureVoid checkListingCoin() async {
+  //   try {
+  //     String accessToken = await _localStorage.get(Endpoints.access_token);
+  //     await _dioClient.get(
+  //       Endpoints.checkProListingCoin,
+  //       options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+  //     );
+  //     return right('');
+  //   } on DioError catch (e) {
+  //     return left(Failure(e));
+  //   }
+  // }
 }

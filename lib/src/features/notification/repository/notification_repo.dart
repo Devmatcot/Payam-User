@@ -16,17 +16,17 @@ class NotificationRepository {
       : _dioClient = dioClient,
         _localStorage = localStroage;
 
-  FutureEither<List<NotificationModel>> getAllNotification() async {
-    try {
-      String accessToken = await _localStorage.get(Endpoints.access_token);
-      final res = await _dioClient.get(
-        Endpoints.notification,
-        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-      );
-      List json = res.data['data'];
-      return right(json.map((e) => NotificationModel.fromJson(e)).toList());
-    } on DioError catch (e) {
-      return left(Failure(e));
-    }
-  }
+  // FutureEither<List<NotificationModel>> getAllNotification() async {
+  //   try {
+  //     String accessToken = await _localStorage.get(Endpoints.access_token);
+  //     final res = await _dioClient.get(
+  //       Endpoints.notification,
+  //       options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+  //     );
+  //     List json = res.data['data'];
+  //     return right(json.map((e) => NotificationModel.fromJson(e)).toList());
+  //   } on DioError catch (e) {
+  //     return left(Failure(e));
+  //   }
+  // }
 }
