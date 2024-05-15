@@ -3,6 +3,7 @@ import 'package:payam_user/src/features/home/model/service_model.dart';
 import 'package:payam_user/src/features/qrcode/presentation/views/qrcode_screen.dart';
 
 import '../../../../../packages.dart';
+import '../../../transfer/presentation/views/transfer_screen.dart';
 
 class DashBoardScreen extends ConsumerStatefulWidget {
   const DashBoardScreen({super.key});
@@ -13,7 +14,10 @@ class DashBoardScreen extends ConsumerStatefulWidget {
 
 class _DashboardState extends ConsumerState<DashBoardScreen> {
   List<ServiceModel> serviceList = [
-    ServiceModel(title: 'Transfer', icon: AssetConstants.transfer),
+    ServiceModel(
+        title: 'Transfer',
+        icon: AssetConstants.transfer,
+        page: TransferScreen()),
     ServiceModel(title: 'Pay bill', icon: AssetConstants.bill),
     ServiceModel(title: 'Payride', icon: AssetConstants.ride),
   ];
@@ -201,14 +205,21 @@ class ServiceBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(30).r,
-      child: Column(
-        children: [SvgWidget(serviceList.icon), Text(serviceList.title)],
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(10).r,
+    return GestureDetector(
+      onTap: () {
+        if (serviceList.page != null) {
+          pushTo(context, serviceList.page!);
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.all(30).r,
+        child: Column(
+          children: [SvgWidget(serviceList.icon), Text(serviceList.title)],
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(10).r,
+        ),
       ),
     );
   }

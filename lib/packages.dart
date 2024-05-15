@@ -58,5 +58,9 @@ export 'package:qr_flutter/qr_flutter.dart';
 export 'package:payam_user/src/core/shared/confirm_details.dart';
 export 'package:payam_user/src/features/qrcode/model/qr_enum.dart';
 export 'package:payam_user/src/features/home/presentation/views/control_screen.dart';
+export 'package:payam_user/src/features/transfer/presentation/views/payam_transfer.dart';
+export 'package:payam_user/src/features/transfer/presentation/widgets/list_tile.dart';
+export 'package:payam_user/src/features/transfer/presentation/views/payam_amount.dart';
+export 'package:payam_user/src/features/qrcode/presentation/widgets/confirm_transaction.dart';
 
 

@@ -18,7 +18,6 @@ abstract class AppColors {
   /// Scafolld BackGround
   static const Color scaffoldColor = Color(0xFFF5F5F5);
   static const Color scaffoldColorGrey = Color(0xFFF9F9F9);
-  
 
   /// DarkGray
   static const Color darkGray = Color(0xFFB4B4B4);
@@ -34,12 +33,14 @@ abstract class AppColors {
 
   /// Primary
   static const Color primary = Color(0xFF05B56B);
+
   /// Primary Deep
   static const Color primaryDeep = Color(0xFF0D7A4D);
 
   /// Secondary
   static const Color secondary = Color(0xFF1971BF);
-    /// Border
+
+  /// Border
   static const Color border = Color(0xFFACE9D0);
 
   /// Green
@@ -59,7 +60,7 @@ abstract class AppColors {
 
   static const Color bodyColor = Color(0xFF1E1E1E);
 
-  static const Color appBlue = Color(0xFF2093F4);
+  static const Color appBlue = Color(0xFF1368F9);
 
 // Grey Text 828282
   static const Color greyText = Color(0xFF4F4F4F);

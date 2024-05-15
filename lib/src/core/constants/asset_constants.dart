@@ -27,7 +27,8 @@ class AssetConstants {
   static const String points = "points";
 
   static const String filter = "filter";
-  static const String help = "help";
+  static const String smalllogo = "small_logo";
+
   static const String livechat = "livechat";
   static const String lock = "lock";
   static const String logout = "logout";
@@ -39,7 +40,12 @@ class AssetConstants {
   static const String edit = "edit";
   static const String view = "eye";
   static const String calender = "calender";
-  static const String escrow = "escrow";
+  static const String banklogo = "bank_logo";
+  static const String accesslogo = "access_logo";
+  static const String fcmblogo = "fcmb_logo";
+  static const String fidelitylogo = "fidelity_logo";
+  static const String gtblogo = "gtb_logo";
+  // static const String banklogo = "bank_logo";
 
   static const String caution = "caution";
   static const String flag = "flag";

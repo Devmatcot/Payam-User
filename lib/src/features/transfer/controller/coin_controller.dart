@@ -1,11 +1,8 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutterwave_standard/flutterwave.dart';
+import 'package:payam_user/src/features/transfer/model/coin_model.dart';
+import 'package:payam_user/src/features/transfer/repository/coin_repository.dart';
 
-import '../model/trans_model.dart';
 // import '../presentation/views/sucessful_purchase.dart';
 import '/packages.dart';
-import '/src/features/coin/model/coin_model.dart';
-import '/src/features/coin/repository/coin_repository.dart';
 
 final coinControllerProvider = Provider<CoinController>((ref) {
   return CoinController(

@@ -1,5 +1,3 @@
-import 'package:payam_user/src/features/qrcode/presentation/widgets/confirm_transaction.dart';
-
 import '../../../../../packages.dart';
 import '../../controller/escrow_controller.dart';
 

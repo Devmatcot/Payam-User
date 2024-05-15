@@ -2,9 +2,10 @@ import 'dart:developer';
 
 import 'package:fpdart/fpdart.dart';
 
+import '../model/coin_model.dart';
 import '../model/trans_model.dart';
 import '/packages.dart';
-import '/src/features/coin/model/coin_model.dart';
+
 
 final coinRepositoryProvider = Provider<CoinRepository>((ref) {
   return CoinRepository(
