@@ -10,6 +10,7 @@
 // import '../presentation/views/verify_otp.dart';
 // import '../presentation/views/welcome_back.dart';
 import 'package:payam_user/src/features/auth/presentation/views/create_passcode.dart';
+import 'package:payam_user/src/features/auth/presentation/views/login_passcode.dart';
 import 'package:payam_user/src/features/auth/presentation/views/phone_otp.dart';
 import 'package:payam_user/src/features/auth/presentation/views/success_registration.dart';
 
@@ -26,17 +27,13 @@ final authControllerProvider =
       localStroage: ref.read(localStorageProvider));
 });
 
-final userModelProvider = StateProvider<UserModel>((ref) {
-  return UserModel(
-      avatar: '',
-      coinsAvailable: 0,
-      email: '',
-      firstName: '',
-      id: '',
-      lastName: '',
-      userId: '',
-      phoneNumber: '');
+final userModelProvider = StateProvider<UserModel?>((ref) {
+  return null;
 });
+
+// final currentUserProvider = FutureProvider((ref) async {
+//   return ref.read(authControllerProvider.notifier).currentUser(context, phone);
+// });
 
 class AuthController extends StateNotifier<bool> {
   AuthRepository _authrepo;
@@ -86,6 +83,7 @@ class AuthController extends StateNotifier<bool> {
           context,
           CreatePassCodeScreen(
             phoneNumber: phoneNum,
+            isForget: false,
           ),
         );
       });
@@ -108,11 +106,7 @@ class AuthController extends StateNotifier<bool> {
           () {});
       await Future.delayed(Duration(seconds: 3));
       state = false;
-      pushTo(
-          context,
-          PhoneOTPScreen(
-            phoneNumber: phone,
-          ));
+      pushTo(context, PhoneOTPScreen(phoneNumber: phone, isForget: isForget));
     });
   }
 
@@ -122,72 +116,62 @@ class AuthController extends StateNotifier<bool> {
     final res = await _authrepo.verifySMSOTP(phone, OTP, isForget);
     res.fold((l) {
       state = false;
-      AppConfig.handleErrorMessage(
-        l.error,
-      );
+      AppConfig.handleErrorMessage(l.error);
     }, (r) async {
       AppConfig.showToast(
           'Phone Number verified Successfully, Lets Proceed', null, () {});
       await Future.delayed(Duration(seconds: 3));
       state = false;
       if (isForget) {
-        // pushToFirst(
-        //   context,
-        //   PasswordScreen(),
-        // );
+        pushTo(context,
+            CreatePassCodeScreen(phoneNumber: phone, isForget: isForget));
       } else {
-        pushTo(
-            context,
-            CreateProfileScreen(
-              phoneNumber: phone,
-            ));
+        pushTo(context, CreateProfileScreen(phoneNumber: phone));
       }
     });
   }
 
-  // login(
-  //   BuildContext context,
-  //   String email,
-  //   String password,
-  // ) async {
-  //   final acctType = _ref.read(acctTypeProvider);
-  //   state = true;
-  //   final result =
-  //       await _authrepo.login(email, password, acctType != AccountType.user);
-  //   result.fold((e) async {
-  //     print(e.error.response?.statusCode);
-  //     if (e.error.response?.statusCode == 400) {
-  //       AppConfig.showToast(
-  //           'Your Email needs to be verify before you can sucessfully login',
-  //           Colors.red);
-  //       await Future.delayed(Duration(seconds: 2));
-  //       state = false;
-  //       pushTo(
-  //         context,
-  //         VerifyEmailScreen(
-  //           isRestPassword: false,
-  //           email: email,
-  //         ),
-  //       );
-  //     } else {
-  //       state = false;
-  //       AppConfig.handleErrorMessage(
-  //         e.error,
-  //       );
-  //     }
-  //   }, (userModel) {
-  //     _localStorage.set(Endpoints.acctType, acctType.name);
-  //     state = false;
-  //     _ref.read(userModelProvider.notifier).update(
-  //           (state) => userModel,
-  //         );
-  //     if (userModel.avatar == '') {
-  //       pushTo(context, SetProfilePic());
-  //     } else {
-  //       pushToAndClearStack(context, ControlScreen());
-  //     }
-  //   });
-  // }
+  loginUser(
+    BuildContext context,
+    String phone,
+  ) async {
+    state = true;
+    final result = await _authrepo.login(phone);
+    result.fold((e) async {
+      print(e.error.response?.statusCode);
+
+      AppConfig.handleErrorMessage(e.error);
+    }, (u) {
+      pushTo(context, LoginPassCodeScreen(phoneNum: phone));
+    });
+    state = false;
+  }
+
+  loginPassCode(
+    BuildContext context,
+    String phone,
+    String passcode,
+  ) async {
+    state = true;
+    final result = await _authrepo.loginPassCode(phone, passcode);
+    result.fold((e) async {
+      print(e.error.response?.statusCode);
+
+      AppConfig.handleErrorMessage(e.error);
+    }, (u) {
+      currentUser(context, phone);
+    });
+    state = false;
+  }
+
+ Future<UserModel> currentUser(BuildContext context, String phone) async {
+    final res = await _authrepo.currentUser(phone);
+    return res.fold((l) => AppConfig.handleErrorMessage(l.error), (user) {
+      _ref.read(userModelProvider.notifier).update((state) => user);
+      pushToAndClearStack(context, ControlScreen());
+      return user;
+    });
+  }
 
   autoLogin(BuildContext context) async {
     // final firstTime = await _localStorage.get(Endpoints.firstTime);
@@ -287,9 +271,10 @@ class AuthController extends StateNotifier<bool> {
   // }
 
   createPasscode(BuildContext context, String phoneNum, String passcode,
-      bool isConfirm) async {
+      bool isConfirm, bool isForget) async {
     state = true;
-    final res = await _authrepo.createPasscode(phoneNum, passcode, isConfirm);
+    final res =
+        await _authrepo.createPasscode(phoneNum, passcode, isConfirm, isForget);
     res.fold((l) {
       state = false;
       AppConfig.handleErrorMessage(l.error);
@@ -298,10 +283,10 @@ class AuthController extends StateNotifier<bool> {
           'Passcode ${isConfirm ? 'confirmed' : 'created'} successfully!');
       await Future.delayed(Duration(seconds: 2));
       state = false;
-      if (!isConfirm) {
+      if (!isConfirm && !isForget) {
         pushTo(context, ConfirmPassCodeScreen(phoneNumber: phoneNum));
       } else {
-        pushToFirst(context, SuccessRegistration());
+        pushToFirst(context, SuccessRegistration(isForget: isForget));
       }
     });
   }

@@ -1,3 +1,5 @@
+import 'package:payam_user/src/features/transfer/presentation/views/bank_transfer.dart';
+
 import '../../../../../packages.dart';
 
 class TransferScreen extends ConsumerWidget {
@@ -27,6 +29,7 @@ class TransferScreen extends ConsumerWidget {
             CustomListTile(
               icons: AssetConstants.banklogo,
               conColor: AppColors.appBlue,
+              page: BankTransferScreen(),
               title: 'Transfer to Other Banks',
               subTitle:
                   'Send money from ${AssetConstants.appName} to other banks',

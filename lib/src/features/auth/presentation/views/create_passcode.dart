@@ -4,8 +4,10 @@ import '../../../../../packages.dart';
 
 class CreatePassCodeScreen extends ConsumerStatefulWidget {
   final String phoneNumber;
+    final bool isForget;
   const CreatePassCodeScreen({
     required this.phoneNumber,
+    required this.isForget,
   });
 
   @override
@@ -29,7 +31,7 @@ class _CreatePassCodeScreenState extends ConsumerState<CreatePassCodeScreen> {
             onPressed: isEnable
                 ? () {
                     ref.read(authControllerProvider.notifier).createPasscode(
-                        context, widget.phoneNumber, controller.text, false);
+                        context, widget.phoneNumber, controller.text, false, widget.isForget);
                     // pushTo(context, CreateProfileScreen());
                   }
                 : null,

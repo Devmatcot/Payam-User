@@ -13,7 +13,9 @@ class ResetPasscodeScreen extends ConsumerWidget {
           'Enter your phone number to continue, we will send you a verification code.',
       title: 'Reset your Passcode',
       onPressed: () {
-        pushTo(context, PhoneOTPScreen(phoneNumber: controller.text.trim(),));
+        // pushTo(context, PhoneOTPScreen(phoneNumber: controller.text.trim(),));
+        ref.read(authControllerProvider.notifier).sendSMSOTP(context, controller.text.trim(), true);
+
       },
     );
   }

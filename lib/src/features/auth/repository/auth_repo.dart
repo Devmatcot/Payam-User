@@ -41,24 +41,27 @@ class AuthRepository {
     }
   }
 
-  // FutureEither<UserModel> login(
-  //     String email, String password, bool isAgent) async {
-  //   try {
-  //     final response = await _dioClient.post(
-  //         isAgent ? Endpoints.agentLogin : Endpoints.userLogin,
-  //         data: {"email": email.trim(), "password": password.trim()});
-  //     Map<String, dynamic> json = response.data['data']['profile_data'];
-  //     final userModel = UserModel.fromJson(json);
-  //     String accessToken = response.data['data']['tokens']['access'];
-  //     String refreshToken = response.data['data']['tokens']['refresh'];
-  //     await _localStorage.set(Endpoints.access_token, accessToken);
-  //     await _localStorage.set(Endpoints.refresh_token, refreshToken);
-  //     await _localStorage.setMap(Endpoints.userDataMap, json);
-  //     return right(userModel);
-  //   } on DioError catch (e) {
-  //     return left(Failure(e));
-  //   }
-  // }
+  FutureVoid login(String phone) async {
+    try {
+      final response = await _dioClient
+          .post(Endpoints.userLogin, data: {"phone_number": "234$phone"});
+      return right('');
+    } on DioError catch (e) {
+      return left(Failure(e));
+    }
+  }
+
+  FutureVoid loginPassCode(String phone, String passcode) async {
+    try {
+      final response = await _dioClient.post(Endpoints.userPassCodeLogin,
+          data: {"phone_number": "234$phone", "passcode": passcode});
+      String accessToken = response.data['token'];
+      await _localStorage.set(Endpoints.access_token, accessToken);
+      return right('');
+    } on DioError catch (e) {
+      return left(Failure(e));
+    }
+  }
 
   // FutureVoid logOut() async {
   //   try {
@@ -73,7 +76,7 @@ class AuthRepository {
   FutureVoid sendSMSOTP(String phone, [bool isForget = false]) async {
     try {
       await _dioClient.post(
-          isForget ? Endpoints.sendSMSOtp : Endpoints.sendSMSOtp,
+          isForget ? Endpoints.sendForgetOtp : Endpoints.sendSMSOtp,
           data: {"phone_number": "234$phone"});
       return right(null);
     } on DioError catch (e) {
@@ -84,7 +87,7 @@ class AuthRepository {
   FutureVoid verifySMSOTP(String phone, String OTP, bool isForget) async {
     try {
       final res = await _dioClient.post(
-          isForget ? Endpoints.verifySMSOTP : Endpoints.verifySMSOTP,
+          isForget ? Endpoints.verifyForgetOTP : Endpoints.verifySMSOTP,
           data: {"phone_number": "234$phone", "otp": OTP});
       // if (isForget) {
       //   await _localStorage.set(Endpoints.access_token, res.data['data']);
@@ -95,21 +98,22 @@ class AuthRepository {
     }
   }
 
-  // FutureEither<UserModel> refreshUser(String userType) async {
-  //   try {
-  //     String accessToken = await _localStorage.get(Endpoints.access_token);
+  FutureEither<UserModel> currentUser(String phone) async {
+    try {
+      String accessToken = await _localStorage.get(Endpoints.access_token);
 
-  //     final response = await _dioClient.get(
-  //       Endpoints.updateProfile(userType),
-  //       options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-  //     );
-  //     Map<String, dynamic> json = response.data['data'];
-  //     final userModel = UserModel.fromJson(json);
-  //     return right(userModel);
-  //   } on DioError catch (e) {
-  //     return left(Failure(e));
-  //   }
-  // }
+      final response = await _dioClient.post(
+        Endpoints.userProfile,
+        data: {"phone_number": "234$phone"},
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+      Map<String, dynamic> json = response.data['data'];
+      final userModel = UserModel.fromJson(json);
+      return right(userModel);
+    } on DioError catch (e) {
+      return left(Failure(e));
+    }
+  }
 
   // FutureVoid updateUserDetail(
   //     {required String firstName,
@@ -150,11 +154,16 @@ class AuthRepository {
   //   }
   // }
 
-  FutureVoid createPasscode(String phoneNum,String passcode, bool isConfirm) async {
+  FutureVoid createPasscode(
+      String phoneNum, String passcode, bool isConfirm, bool isForget) async {
     try {
       await _dioClient.post(
-        isConfirm ? Endpoints.confirmCreatePasscode : Endpoints.createPasscode,
-        data: {"phone_number": '234$phoneNum', "passcode": 123456},
+        isForget
+            ? Endpoints.newPasscode
+            : (isConfirm
+                ? Endpoints.confirmCreatePasscode
+                : Endpoints.createPasscode),
+        data: {"phone_number": '234$phoneNum', "passcode": passcode},
       );
       return right('');
     } on DioError catch (e) {

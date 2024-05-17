@@ -51,6 +51,7 @@ class _PasscodeWidgetState extends ConsumerState<PasscodeWidget> {
           children: [
             PinCodeField(
               readOnly: true,
+              obscure: true,
               controller: widget.controller,
             ),
             10.0.spacingH,
@@ -77,7 +78,7 @@ class _PasscodeWidgetState extends ConsumerState<PasscodeWidget> {
             ),
             Spacer(),
             LoadingButton(
-              isLoading: ref.watch(authControllerProvider),
+                isLoading: ref.watch(authControllerProvider),
                 onPressed: widget.onPressed,
                 child: Text(widget.btnText, style: AppTextStyle.pryBtnStyle))
           ],

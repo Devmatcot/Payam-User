@@ -2,7 +2,8 @@ import 'package:payam_user/packages.dart';
 import 'package:payam_user/src/features/auth/presentation/views/login_screen.dart';
 
 class SuccessRegistration extends ConsumerWidget {
-  const SuccessRegistration({super.key});
+  final bool isForget;
+  const SuccessRegistration({super.key, required this.isForget});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +21,7 @@ class SuccessRegistration extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20.0).r,
               child: Text(
-                'Registration Completed successfully, process to login',
+                '${isForget?"Passcode Reset":"Registration"} completed successfully, process to login',
                 style: AppTextStyle.formTextNaturalR,
                 textAlign: TextAlign.center,
               ),

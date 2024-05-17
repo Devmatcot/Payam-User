@@ -2,15 +2,16 @@
 import '../../../../../packages.dart';
 
 class AppPhoneField extends StatelessWidget {
- final TextEditingController controller;
-  const AppPhoneField({
+  final TextEditingController controller;
+  AppPhoneField({
     Key? key,
     required this.controller,
   }) : super(key: key);
-
+  GlobalKey<FormState> fieldKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18).r,
@@ -30,11 +31,25 @@ class AppPhoneField extends StatelessWidget {
         ),
         10.0.spacingW,
         Expanded(
-            child: AppTextField(
-          hint: 'e.g 7011223344',
-          type: TextInputType.phone,
-          controller: controller,
-          maxLenth: 10,
+            child: Form(
+          key: fieldKey,
+          onChanged: () => fieldKey.currentState?.validate(),
+          child: AppTextField(
+            hint: 'e.g 7011223344',
+            type: TextInputType.phone,
+            controller: controller,
+            validator: (value) {
+              String phone = '0$value';
+              if (value!.isEmpty) {
+                return 'This field is required';
+              } else if (!phone.isValidPhone) {
+                return 'Valid phone number is required';
+              }
+
+              return null;
+            },
+            maxLenth: 10,
+          ),
         ))
       ],
     );

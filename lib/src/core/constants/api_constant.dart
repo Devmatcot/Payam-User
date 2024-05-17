@@ -2,7 +2,7 @@ class Endpoints {
   Endpoints._();
 
   // ALL PRODUCTION BASEURL
-  static const String baseUrl = "https://dev.payam.ng";
+  static const String baseUrl = "https://dev.payam.ng/api";
   // static const String sockectBaseURl =
   //     'wss://real-estate-sieg.vercel.app/ws/chat/';
 
@@ -31,14 +31,15 @@ class Endpoints {
 //   // connectTimeout
   static const int connectionTimeout = 20000;
 // //_________________________________________AUTH_____________________________________________
-//   static const String userLogin = '/api/v1/auth/user-login';
+  static const String userLogin = '/login/step1';
+  static const String userPassCodeLogin = '/login/step2';
 //   static const String agentLogin = '/api/v1/auth/agent-login';
 //   static const String notification = '/api/v1/notifications/all';
 
 //   static const String logout = '/api/v1/auth/logout';
-  static const String createPasscode = '/api/register/step4';
-  static const String confirmCreatePasscode = '/api/register/step5';
-//   static const String userProfile = '/api/v1/auth/user_profile/details';
+  static const String createPasscode = '/register/step4';
+  static const String confirmCreatePasscode = '/register/step5';
+  static const String userProfile = '/user';
 //   static String updateProfile(String userType) {
 //     return '/api/v1/auth/${userType}_profile/details';
 //   }
@@ -46,20 +47,17 @@ class Endpoints {
   // static String newPassword(String token) {
   //   return '/api/v1/auth/change/forgot-password/$token';
   // }
-  // static String newPassword(String token) {
-  //   return '/api/v1/auth/change/forgot-password/$token';
-  // }
   static String createUserAcct(String phone) {
-    return "/api/register/step3/234$phone";
+    return "/register/step3/234$phone";
   }
 
-  static const String sendSMSOtp = '/api/register/step1';
+  static const String sendSMSOtp = '/register/step1';
+  static const String verifySMSOTP = '/register/step2';
 
-//   static const String sendForgetOtp =
-//       "/api/v1/auth/request/forgot-password/code";
-  static const String verifySMSOTP = '/api/register/step2';
-//   static const String verifyForgetOTP =
-//       '/api/v1/auth/verify/forgot-password/code';
+
+  static const String sendForgetOtp = "/reset/step1";
+  static const String verifyForgetOTP = '/reset/step2';
+  static String newPasscode  = '/reset/step3';
 
 //   static const String consumerKYC = '/consumer/getConsumnerKYC';
 //   static const String getBankList = '/nipservice/api/v1/util/get-nip-fi-list';
@@ -113,7 +111,7 @@ class Endpoints {
 //   }
 
 //   //---------------------Refresh Token--------------------------
-  static const String refreshToken = '/api/v1/auth/refresh/token';
+  static const String refreshToken = '/v1/auth/refresh/token';
 // //---------------------------Merchant Onboarding Process-----------------------------
 
 //   static const String validateTin = '/camlsystem/api/v1/validatetin';

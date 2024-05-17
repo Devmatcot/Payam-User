@@ -3,8 +3,10 @@ import '../../../../../packages.dart';
 
 class PhoneOTPScreen extends ConsumerWidget {
   final String phoneNumber;
+  final bool isForget;
   PhoneOTPScreen({
     required this.phoneNumber,
+    this.isForget = false,
   });
   final TextEditingController controller = TextEditingController();
   @override
@@ -37,7 +39,7 @@ class PhoneOTPScreen extends ConsumerWidget {
                             ref
                                 .read(authControllerProvider.notifier)
                                 .verifySMSOTP(context, phoneNumber,
-                                    controller.text.trim(), false);
+                                    controller.text.trim(), isForget);
 
                             // pushTo(context, CreateProfileScreen());
                           }

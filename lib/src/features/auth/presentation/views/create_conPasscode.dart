@@ -4,6 +4,7 @@ import '../../../../../packages.dart';
 
 class ConfirmPassCodeScreen extends ConsumerStatefulWidget {
   final String phoneNumber;
+
   const ConfirmPassCodeScreen({
     required this.phoneNumber,
   });
@@ -28,7 +29,7 @@ class _CreatePassCodeScreenState extends ConsumerState<ConfirmPassCodeScreen> {
             onPressed: isEnable
                 ? () {
                     ref.read(authControllerProvider.notifier).createPasscode(
-                        context, widget.phoneNumber, controller.text, true);
+                        context, widget.phoneNumber, controller.text, true, false);
                     // pushTo(context, CreateProfileScreen());
                   }
                 : null,

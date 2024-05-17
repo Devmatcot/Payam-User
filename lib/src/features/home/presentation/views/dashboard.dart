@@ -23,174 +23,185 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    final usermodel = ref.watch(userModelProvider);
     return Scaffold(
-      body: SafeArea(
-          child: ListView(
-        padding: EdgeInsets.all(20).r,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+      body: RefreshIndicator.adaptive(
+        onRefresh: () async {
+          await ref
+              .read(authControllerProvider.notifier)
+              .currentUser(context, '${usermodel?.phoneNumber.substring(3)}');
+        },
+        child: SafeArea(
+            child: ListView(
+          padding: EdgeInsets.all(20).r,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 15,
+                      backgroundImage: AssetImage(AssetConstants.avater),
+                      backgroundColor: AppColors.black25,
+                    ),
+                    10.0.spacingW,
+                    Text(
+                      'Welcome ${usermodel?.firstName ?? 'Payam User'}!',
+                      style: AppTextStyle.formTextNatural
+                          .copyWith(fontWeight: AppFontWeight.regular),
+                    )
+                  ],
+                ),
+                SvgWidget(AssetConstants.notification)
+              ],
+            ),
+            20.0.spacingH,
+
+            // Balance Card
+            Container(
+              child: Row(
                 children: [
-                  CircleAvatar(
-                    radius: 15,
-                    backgroundImage: AssetImage(AssetConstants.avater),
-                    backgroundColor: AppColors.black25,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Wallet Balance',
+                          style: AppTextStyle.bodyText4,
+                        ),
+                        FittedBox(
+                          child: Text.rich(TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: AssetConstants.nairaSymbol,
+                                    style: TextStyle(fontFamily: 'Ariel')),
+                                TextSpan(
+                                    text: MoneyFormatter(
+                                            amount: double.parse(
+                                                usermodel?.balance ?? "0"))
+                                        .output
+                                        .nonSymbol)
+                              ],
+                              style: AppTextStyle.bodyText1
+                                  .copyWith(fontSize: 20))),
+                        )
+                      ],
+                    ),
                   ),
                   10.0.spacingW,
-                  Text(
-                    'Welcome! Matcot',
-                    style: AppTextStyle.formTextNatural
-                        .copyWith(fontWeight: AppFontWeight.regular),
+                  Container(
+                    padding: EdgeInsets.all(10).r,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15).r,
+                        border: Border.all(color: AppColors.black25)),
+                    child: Row(
+                      children: [
+                        Icon(Icons.add, color: AppColors.natural),
+                        Text(
+                          'Fund Wallet',
+                          style: AppTextStyle.formTextNatural
+                              .copyWith(fontWeight: AppFontWeight.regular),
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
-              SvgWidget(AssetConstants.notification)
-            ],
-          ),
-          20.0.spacingH,
-
-          // Balance Card
-          Container(
-            child: Row(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 45).r,
+              decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(10).r),
+            )
+            // Action Button
+            ,
+            20.0.spacingH,
+            Row(
               children: [
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Wallet Balance',
-                        style: AppTextStyle.bodyText4,
+                  child: GestureDetector(
+                    onTap: () {
+                      pushTo(context, QrCodeScreen());
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgWidget(AssetConstants.qrcode),
+                          5.0.spacingW,
+                          FittedBox(
+                            child: Text(
+                              'Scan to pay',
+                              style: AppTextStyle.bodyText1
+                                  .copyWith(color: AppColors.primary),
+                            ),
+                          )
+                        ],
                       ),
-                      FittedBox(
-                        child: Text.rich(TextSpan(
-                            children: [
-                              TextSpan(
-                                  text: AssetConstants.nairaSymbol,
-                                  style: TextStyle(fontFamily: 'Ariel')),
-                              TextSpan(
-                                  text: MoneyFormatter(amount: 50000)
-                                      .output
-                                      .nonSymbol)
-                            ],
-                            style:
-                                AppTextStyle.bodyText1.copyWith(fontSize: 20))),
-                      )
-                    ],
+                      decoration: BoxDecoration(
+                          color: AppColors.white,
+                          border: Border.all(color: AppColors.primary),
+                          borderRadius: BorderRadius.circular(30).r),
+                    ),
                   ),
                 ),
-                10.0.spacingW,
-                Container(
-                  padding: EdgeInsets.all(10).r,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15).r,
-                      border: Border.all(color: AppColors.black25)),
-                  child: Row(
-                    children: [
-                      Icon(Icons.add, color: AppColors.natural),
-                      Text(
-                        'Fund Wallet',
-                        style: AppTextStyle.formTextNatural
-                            .copyWith(fontWeight: AppFontWeight.regular),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 45).r,
-            decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(10).r),
-          )
-          // Action Button
-          ,
-          20.0.spacingH,
-          Row(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    pushTo(context, QrCodeScreen());
-                  },
+                15.0.spacingW,
+                Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgWidget(AssetConstants.qrcode),
-                        5.0.spacingW,
                         FittedBox(
                           child: Text(
-                            'Scan to pay',
-                            style: AppTextStyle.bodyText1
-                                .copyWith(color: AppColors.primary),
+                            'Receive money',
+                            style: AppTextStyle.pryBtnStyle,
                           ),
                         )
                       ],
                     ),
                     decoration: BoxDecoration(
-                        color: AppColors.white,
-                        border: Border.all(color: AppColors.primary),
+                        // border: Border.all(color: AppColors.primary),
+                        color: AppColors.primary,
                         borderRadius: BorderRadius.circular(30).r),
                   ),
                 ),
-              ),
-              15.0.spacingW,
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FittedBox(
-                        child: Text(
-                          'Receive money',
-                          style: AppTextStyle.pryBtnStyle,
-                        ),
-                      )
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      // border: Border.all(color: AppColors.primary),
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(30).r),
-                ),
-              ),
-            ],
-          )
-          // Service
-          ,
-          20.0.spacingH,
+              ],
+            )
+            // Service
+            ,
+            20.0.spacingH,
 
-          Text(
-            'Services',
-            style: AppTextStyle.formTextNaturalR,
-          ),
-          10.0.spacingH,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(serviceList.length,
-                (index) => ServiceBox(serviceList: serviceList[index])),
-          ),
-          20.0.spacingH,
-
-          Text(
-            'Recent Transactions',
-            style: AppTextStyle.formTextNaturalR,
-          ),
-          10.0.spacingH,
-          ...List.generate(
-            10,
-            (index) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2).r,
-              child: TransactionList(),
+            Text(
+              'Services',
+              style: AppTextStyle.formTextNaturalR,
             ),
-          ),
-          20.0.spacingH,
-        ],
-      )),
+            10.0.spacingH,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(serviceList.length,
+                  (index) => ServiceBox(serviceList: serviceList[index])),
+            ),
+            20.0.spacingH,
+
+            Text(
+              'Recent Transactions',
+              style: AppTextStyle.formTextNaturalR,
+            ),
+            10.0.spacingH,
+            ...List.generate(
+              10,
+              (index) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2).r,
+                child: TransactionList(),
+              ),
+            ),
+            20.0.spacingH,
+          ],
+        )),
+      ),
     );
   }
 }

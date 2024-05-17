@@ -1,10 +1,10 @@
-import 'package:payam_user/src/features/auth/presentation/widgets/passcode_widget.dart';
-import 'package:payam_user/src/features/home/presentation/views/control_screen.dart';
-
 import '../../../../../packages.dart';
 
 class LoginPassCodeScreen extends ConsumerStatefulWidget {
-  const LoginPassCodeScreen({super.key});
+  final String phoneNum;
+  const LoginPassCodeScreen({
+    required this.phoneNum,
+  });
 
   @override
   ConsumerState<LoginPassCodeScreen> createState() =>
@@ -20,9 +20,13 @@ class _LoginPassCodeScreenState extends ConsumerState<LoginPassCodeScreen> {
   ) {
     return PasscodeWidget(
         isForgetPass: true,
+      
         onPressed: () {
           // pushTo(context, CreateProfileScreen());
-          pushToAndClearStack(context, ControlScreen());
+          //pushToAndClearStack(context, ControlScreen());
+          ref
+              .read(authControllerProvider.notifier)
+              .loginPassCode(context, widget.phoneNum, controller.text.trim());
         },
         subtitle:
             'Enter your 6-digit passcode to login into your ${AssetConstants.appName} account',
