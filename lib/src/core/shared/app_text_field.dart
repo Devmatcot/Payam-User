@@ -25,6 +25,7 @@ class AppTextField extends StatefulWidget {
   final EdgeInsetsGeometry? contentPadding;
   final double borRadius;
   final VoidCallback? onEditingComplete;
+  final VoidCallback? onTap;
   final Function(String)? onChange;
   final Function(String)? onSubmitted;
   final String? Function(String?)? validator;
@@ -45,6 +46,7 @@ class AppTextField extends StatefulWidget {
     this.borRadius = 12,
     this.fill = false,
     this.onEditingComplete,
+    this.onTap,
     this.focusNode,
     this.readOnly = false,
     this.isPassword = false,
@@ -86,6 +88,7 @@ class _AppTextFieldState extends State<AppTextField> {
           TextFormField(
             controller: widget.controller,
             focusNode: widget.focusNode,
+            onTap: widget.onTap,
             onFieldSubmitted: widget.onSubmitted,
             onEditingComplete: widget.onEditingComplete,
             maxLines: widget.maxLines,

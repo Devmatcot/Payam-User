@@ -1,8 +1,7 @@
 import '../../../../../packages.dart';
-import 'phone_otp.dart';
 
 class RegisterScreen extends ConsumerWidget {
-   RegisterScreen({super.key});
+  RegisterScreen({super.key});
   final TextEditingController controller = TextEditingController();
 
   @override
@@ -13,7 +12,9 @@ class RegisterScreen extends ConsumerWidget {
           'Enter your phone number to continue, we will send you a verification code.',
       title: 'Welcome to ${AssetConstants.appName}',
       onPressed: () {
-        ref.read(authControllerProvider.notifier).sendSMSOTP(context, controller.text.trim());
+        ref
+            .read(authControllerProvider.notifier)
+            .sendSMSOTP(context, controller.text.trim());
         // pushTo(context, PhoneOTPScreen());
       },
     );

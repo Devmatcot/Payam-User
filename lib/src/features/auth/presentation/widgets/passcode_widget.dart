@@ -77,10 +77,17 @@ class _PasscodeWidgetState extends ConsumerState<PasscodeWidget> {
               },
             ),
             Spacer(),
-            LoadingButton(
-                isLoading: ref.watch(authControllerProvider),
-                onPressed: widget.onPressed,
-                child: Text(widget.btnText, style: AppTextStyle.pryBtnStyle))
+            ValueListenableBuilder(
+              valueListenable: widget.controller,
+              builder: (context, value, child) {
+                bool isEnable = value.text.length == 6;
+                return LoadingButton(
+                    isLoading: ref.watch(authControllerProvider),
+                    onPressed: isEnable ? widget.onPressed : null,
+                    child:
+                        Text(widget.btnText, style: AppTextStyle.pryBtnStyle));
+              },
+            )
           ],
         ),
       ),

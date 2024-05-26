@@ -49,10 +49,10 @@ class AssetConstants {
 
   static const String caution = "caution";
   static const String flag = "flag";
-  // static const String bolt = "bolt";
-  // static const String beneficarybank = "beneficary_bank";
-  //  static const String googleIcon = "ic_google";
-  //  static const String googleIcon = "ic_google";
+  static const String cabletv = "cabletv";
+  static const String electricity = "electricity";
+   static const String internet = "internet";
+   static const String contact = "contact";
   //  static const String googleIcon = "ic_google";
   //  static const String googleIcon = "ic_google";
   //  static const String googleIcon = "ic_google";
@@ -68,7 +68,7 @@ class AssetConstants {
   static const String plumber = "plumber";
   static const String nairaSymbol = "₦";
 
-  // static const String avater = "avafilter";
+  static const String avaterUrl = "https://images.pexels.com/photos/697509/pexels-photo-697509.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
   // static const String avater = "avafilter";
   // static const String avater = "avafilter";
   // static const String avater = "avafilter";

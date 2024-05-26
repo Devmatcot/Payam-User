@@ -74,15 +74,15 @@ class Endpoints {
 //     return "/api/v1/searchmerchantkycdetailsbyuid/$uid";
 //   }
 
-//   //________________________--Properties_____________________________________
+//   //________________________Transafer_____________________________________
 
-//   // static const String allProperties = '/api/v1/property/properties/all';
+  static const String walletTransfer = '/transfer-to-wallet';
 
 //   static String allProperties(String city, state) {
 //     return '/api/v1/property/properties/all?city=$city&state=$state';
 //   }
 
-//   static String tryAllPro = '/api/v1/property/properties/all';
+  static String transactionHistory = '/transactions';
 
 //   static const String allPropertyType = "/api/v1/property/property/types/all";
 //   static const String addProperty = "/api/v1/property/add/property/";

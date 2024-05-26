@@ -1,7 +1,4 @@
-import 'package:fpdart/fpdart.dart';
-
 import '../../../../packages.dart';
-import '/src/features/notification/model/noti_model.dart';
 
 final notiRepoProvider = Provider<NotificationRepository>((ref) {
   return NotificationRepository(

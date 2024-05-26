@@ -17,7 +17,6 @@ class LoadingIndicator extends StatelessWidget {
   }
 }
 
-
 class SmallProgress extends StatelessWidget {
   const SmallProgress({
     this.color = AppColors.primary,

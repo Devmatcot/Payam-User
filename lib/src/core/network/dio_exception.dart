@@ -15,11 +15,13 @@ class DioExceptions implements Exception {
         message = "Receive timeout in connection with API server";
         break;
       case DioErrorType.response:
-        if (dioError.response?.data['message'].toString() != null ||
+        if (dioError.response!.data.toString().contains('<!DOCTYPE html>')) {
+          message = 'Error occur, Try again';
+        } else if (dioError.response?.data['message'].toString() != null ||
             dioError.response!.data['error'] ||
             dioError.response!.data.containsKey('errors')) {
           message = dioError.response?.data['message'].toString() ??
-              dioError.response!.data['error'].toString();
+              dioError.response!.data['errors'].toString();
         } else if (dioError.response?.data['error'].toString() != null) {
           message = dioError.response!.data['error'].toString();
         } else {
@@ -54,6 +56,8 @@ class DioExceptions implements Exception {
         return error['message'] ?? 'Unauthorized';
       case 403:
         return 'Forbidden';
+      case 422:
+        return error['message'];
       case 404:
         return error['message'] ?? '';
       case 500:

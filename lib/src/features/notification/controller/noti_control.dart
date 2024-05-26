@@ -1,5 +1,4 @@
 import '../../../../packages.dart';
-import '../model/noti_model.dart';
 import '/src/features/notification/repository/notification_repo.dart';
 
 final notiController =

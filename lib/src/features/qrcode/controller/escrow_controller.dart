@@ -1,7 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:payam_user/src/features/qrcode/model/qr_enum.dart';
 
-import '../../property/repositiory/properties_repo.dart';
+import '../../utility/repositiory/utility_repo.dart';
 
 import '../repository/escrow_repository.dart';
 import '/packages.dart';

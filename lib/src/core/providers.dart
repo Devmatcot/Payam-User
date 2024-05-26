@@ -7,3 +7,7 @@ import 'network/dio_client.dart';
 final dioClientProvider = Provider<DioClient>((ref) {
   return DioClient();
 });
+
+final pinProvider = StateProvider<String>((ref) {
+  return '';
+});

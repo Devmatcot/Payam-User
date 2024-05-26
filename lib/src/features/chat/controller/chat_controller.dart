@@ -1,5 +1,4 @@
 // import '../../coin/presentation/widgets/no_coin_alert.dart';
-import '../model/chat_inbox.dart';
 import '../model/chat_model.dart';
 import '/packages.dart';
 // import '/src/features/chat/presentation/views/chat_room_screen.dart';

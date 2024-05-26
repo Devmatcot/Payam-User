@@ -1,7 +1,10 @@
 import '../../../packages.dart';
 
 class TransactionPinModal extends ConsumerStatefulWidget {
-  const TransactionPinModal({super.key});
+  final VoidCallback onDone;
+  final String amount;
+
+  const TransactionPinModal({super.key, required this.onDone, required this.amount});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -24,11 +27,11 @@ class _TransactionPinModalState extends ConsumerState<TransactionPinModal> {
             Text.rich(
               TextSpan(
                 children: [
-                  TextSpan(text: 'You about to send '),
+                  TextSpan(text: 'You about to transact '),
                   TextSpan(
                       text: AssetConstants.nairaSymbol,
                       style: AppTextStyle.nairaStyle),
-                  TextSpan(text: MoneyFormatter(amount: 5000).output.nonSymbol)
+                  TextSpan(text: MoneyFormatter(amount: double.parse(widget.amount)).output.nonSymbol)
                 ],
               ),
               style: AppTextStyle.headline2,
@@ -45,10 +48,14 @@ class _TransactionPinModalState extends ConsumerState<TransactionPinModal> {
                 controller: controller,
                 onChanged: (value) async {
                   if (value.length == 4) {
-                    await pop(context).then((value) => showTranSuccessModel(
-                        context,
-                        'Payment Successful',
-                        'You have successful sent 5000.00 to Ademola Chukwdi'));
+                    ref.read(pinProvider.notifier).update((state) => value);
+                    Navigator.pop(context);
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    widget.onDone();
+                    // await pop(context).then((value) => showTranSuccessModel(
+                    //     context,
+                    //     'Payment Successful',
+                    //     'You have successful sent 5000.00 to Ademola Chukwdi'));
                   }
                 },
               ),

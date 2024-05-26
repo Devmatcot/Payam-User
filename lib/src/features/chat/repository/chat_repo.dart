@@ -1,12 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:fpdart/fpdart.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../controller/chat_controller.dart';
-import '../model/chat_inbox.dart';
-import '../model/chat_model.dart';
 import '/packages.dart';
 
 final chatRepoProvider = Provider<ChatRepository>((ref) {

@@ -1,8 +1,7 @@
 import '../../../../../packages.dart';
-import 'phone_otp.dart';
 
 class ResetPasscodeScreen extends ConsumerWidget {
-   ResetPasscodeScreen({super.key});
+  ResetPasscodeScreen({super.key});
   final TextEditingController controller = TextEditingController();
 
   @override
@@ -14,8 +13,9 @@ class ResetPasscodeScreen extends ConsumerWidget {
       title: 'Reset your Passcode',
       onPressed: () {
         // pushTo(context, PhoneOTPScreen(phoneNumber: controller.text.trim(),));
-        ref.read(authControllerProvider.notifier).sendSMSOTP(context, controller.text.trim(), true);
-
+        ref
+            .read(authControllerProvider.notifier)
+            .sendSMSOTP(context, controller.text.trim(), true);
       },
     );
   }

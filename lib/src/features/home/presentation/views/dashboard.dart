@@ -1,9 +1,11 @@
-import 'package:intl/intl.dart';
 import 'package:payam_user/src/features/home/model/service_model.dart';
 import 'package:payam_user/src/features/qrcode/presentation/views/qrcode_screen.dart';
+import 'package:payam_user/src/features/transaction/controller/transaction_controller.dart';
 
 import '../../../../../packages.dart';
+import '../../../transaction/presentation/widgets/transaction_list.dart';
 import '../../../transfer/presentation/views/transfer_screen.dart';
+import '../../../utility/presentation/views/utility_sreen.dart';
 
 class DashBoardScreen extends ConsumerStatefulWidget {
   const DashBoardScreen({super.key});
@@ -18,7 +20,8 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
         title: 'Transfer',
         icon: AssetConstants.transfer,
         page: TransferScreen()),
-    ServiceModel(title: 'Pay bill', icon: AssetConstants.bill),
+    ServiceModel(
+        title: 'Pay bill', icon: AssetConstants.bill, page: UtilityScreen()),
     ServiceModel(title: 'Payride', icon: AssetConstants.ride),
   ];
   @override
@@ -29,7 +32,8 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
         onRefresh: () async {
           await ref
               .read(authControllerProvider.notifier)
-              .currentUser(context, '${usermodel?.phoneNumber.substring(3)}');
+              .currentUser(context, '${usermodel.phoneNumber.substring(3)}');
+          ref.refresh(allTransactionHistory);
         },
         child: SafeArea(
             child: ListView(
@@ -40,14 +44,30 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
               children: [
                 Row(
                   children: [
+                    // Image.network(AssetConstants.avaterUrl),
+                    // Image.network(
+                    //   'https://ui-avatars.com/api/?name=John+Doe',
+                    //   errorBuilder: (BuildContext context, Object exception,
+                    //       StackTrace? stackTrace) {
+                    //     return Text('Failed to load avatar');
+                    //   },
+                    // ),
                     CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage(AssetConstants.avater),
-                      backgroundColor: AppColors.black25,
+                      radius: 18,
+                      // backgroundImage: AssetImage(AssetConstants.avater),
+                      child: usermodel!.profilePhotoUrl.contains('ui-avatars')
+                          ? Text(
+                              '${usermodel.firstName.split('').first}${usermodel.lastName.split('').first}')
+                          : null,
+                      backgroundImage:
+                          !usermodel.profilePhotoUrl.contains('ui-avatars')
+                              ? NetworkImage(usermodel.profilePhotoUrl)
+                              : null,
+                      backgroundColor: AppColors.black54,
                     ),
                     10.0.spacingW,
                     Text(
-                      'Welcome ${usermodel?.firstName ?? 'Payam User'}!',
+                      'Welcome ${usermodel.firstName}!',
                       style: AppTextStyle.formTextNatural
                           .copyWith(fontWeight: AppFontWeight.regular),
                     )
@@ -56,7 +76,7 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
                 SvgWidget(AssetConstants.notification)
               ],
             ),
-            20.0.spacingH,
+            10.0.spacingH,
 
             // Balance Card
             Container(
@@ -79,7 +99,7 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
                                 TextSpan(
                                     text: MoneyFormatter(
                                             amount: double.parse(
-                                                usermodel?.balance ?? "0"))
+                                                usermodel.balance ?? "0"))
                                         .output
                                         .nonSymbol)
                               ],
@@ -187,17 +207,39 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
             20.0.spacingH,
 
             Text(
-              'Recent Transactions',
+              'Recent Transactions (5)',
               style: AppTextStyle.formTextNaturalR,
             ),
             10.0.spacingH,
-            ...List.generate(
-              10,
-              (index) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2).r,
-                child: TransactionList(),
-              ),
-            ),
+            ref.watch(allTransactionHistory).when(
+                skipLoadingOnRefresh: false,
+                data: (data) {
+                  return ListView.builder(
+                    itemCount: data.length <= 5 ? data.length : 5,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2).r,
+                        child: TransactionListWidget(model: data[index]),
+                      );
+                    },
+                  );
+                },
+                error: (e, s) => Text(e.toString()),
+                loading: () {
+                  return ListView.builder(
+                    itemCount: 5,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2).r,
+                        child: TransactionListShimmer(),
+                      );
+                    },
+                  );
+                }),
             20.0.spacingH,
           ],
         )),
@@ -231,64 +273,6 @@ class ServiceBox extends StatelessWidget {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(10).r,
         ),
-      ),
-    );
-  }
-}
-
-class TransactionList extends StatelessWidget {
-  const TransactionList({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25).r,
-      decoration: BoxDecoration(
-          color: AppColors.white, borderRadius: BorderRadius.circular(10).r),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 20.h,
-            backgroundColor: AppColors.gray,
-            child: SvgWidget(
-              AssetConstants.send,
-              height: 18.h,
-            ),
-          ),
-          10.0.spacingW,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Money Out', style: AppTextStyle.formTextNatural),
-                Text(
-                  'Wallet transfer To - Dev Matcot',
-                  style: AppTextStyle.formText.copyWith(fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text.rich(
-                TextSpan(children: [
-                  TextSpan(
-                      text: AssetConstants.nairaSymbol,
-                      style: TextStyle(fontFamily: 'Ariel')),
-                  TextSpan(text: MoneyFormatter(amount: 3000).output.nonSymbol)
-                ]),
-                style: AppTextStyle.bodyText1,
-              ),
-              Text(
-                DateFormat.yMMMd().add_jm().format(DateTime.now()),
-                style: AppTextStyle.formText.copyWith(fontSize: 10),
-              ),
-            ],
-          )
-        ],
       ),
     );
   }

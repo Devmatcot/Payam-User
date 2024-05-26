@@ -62,17 +62,14 @@ class CustomListTile extends StatelessWidget {
 }
 
 class BeneListTile extends StatelessWidget {
- 
   final String title;
   final String subTitle;
 
   final Widget? page;
   const BeneListTile({
     Key? key,
-
     this.page,
     required this.title,
-
     required this.subTitle,
   }) : super(key: key);
 
@@ -127,21 +124,83 @@ class BeneListTile extends StatelessWidget {
   }
 }
 
+class AcctListTile extends StatelessWidget {
+  final UserModel? model;
+  // final String subTitle;
 
+  final Widget? page;
+  const AcctListTile({
+    Key? key,
+    this.page,
+    required this.model,
+    // required this.subTitle,
+  }) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (page != null) {
+          pushTo(context, page!);
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.all(10).r,
+        decoration: BoxDecoration(
+            color: AppColors.white, borderRadius: BorderRadius.circular(10).r),
+        child: Row(
+          children: [
+            CachedNetworkImage(
+              imageUrl:
+                  'https://ui-avatars.com/api/?name=M+E&color=7F9CF5&background=EBF4FF',
+              imageBuilder: (context, imageProvider) =>
+                  CircleAvatar(radius: 30.h, backgroundImage: imageProvider),
+              placeholder: (context, url) => CircleAvatar(
+                  radius: 30.h,
+                  backgroundImage: AssetImage(
+                      'assets/images/${AssetConstants.profile}.png')),
+              errorWidget: (context, url, error) => CircleAvatar(
+                radius: 30.h,
+                backgroundImage:
+                    AssetImage('assets/images/${AssetConstants.profile}.png'),
+              ),
+            ),
+            10.0.spacingW,
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${model?.firstName} ${model?.lastName}',
+                  style: AppTextStyle.formTextNaturalR,
+                ),
+                Text(
+                  model?.phoneNumber.substring(3) ?? "",
+                  style: AppTextStyle.formTextNatural.copyWith(fontSize: 12),
+                )
+              ],
+            )),
+            Icon(
+              Icons.arrow_forward_ios,
+              color: AppColors.primary,
+              size: 20,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class BankBeneListTile extends StatelessWidget {
- 
   final String title;
   final String subTitle;
 
   final Widget? page;
   const BankBeneListTile({
     Key? key,
-
     this.page,
     required this.title,
-
     required this.subTitle,
   }) : super(key: key);
 

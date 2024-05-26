@@ -14,7 +14,7 @@ class LoginScreen extends ConsumerWidget {
             .loginUser(context, controller.text.trim());
       },
       subtitle: 'Enter your phone number to login into your account.',
-      title: 'Welcome to Payam',
+      title: 'Welcome to ${AssetConstants.appName}',
     );
   }
 }

@@ -1,45 +1,40 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:payam_user/src/features/transfer/controller/transfer_controller.dart';
-
 import '../../../../../packages.dart';
 
-class ConfirmQrCodeTransaction extends ConsumerWidget {
-  const ConfirmQrCodeTransaction({
-    required this.acctName,
-    this.note,
-    required this.acctNo,
+class ConfirmAirtimeTransaction extends ConsumerWidget {
+  const ConfirmAirtimeTransaction({
+    required this.biller,
+    required this.phoneNumber,
     required this.amount,
     required this.ctx,
   });
 
-  final String amount, acctNo, acctName;
-  final String? note;
-
+  final String amount, phoneNumber, biller;
   final BuildContext ctx;
 
-  processTransaction(WidgetRef ref, String pin) async {
-    final process = ref.read(transferConProvider.notifier);
-    process.wallet2wallet(
-      context: ctx,
-      amount: amount,
-      note: note ?? "",
-      toUser: acctNo,
-    );
-  }
+  // processTransaction(WidgetRef ref, String pin) async {
+  //   final process = ref.read(transferConProvider.notifier);
+  //   process.wallet2wallet(
+  //     context: ctx,
+  //     amount: amount,
+  //     note: note ?? "",
+  //     toUser: phoneNumber,
+  //   );
+  // }
 
-  noBioProcess(BuildContext context, WidgetRef ref) async {
-    await showPinModel(context, () async {
-      String pin = ref.read(pinProvider);
-      processTransaction(ref, pin);
-    }, amount)
-        .then((value) => pop(context));
-  }
+  // noBioProcess(BuildContext context, WidgetRef ref) async {
+  //   await showPinModel(context, () async {
+  //     String pin = ref.read(pinProvider);
+  //     processTransaction(ref, pin);
+  //   }, amount)
+  //       .then((value) => pop(context));
+  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: EdgeInsets.all(20).r,
-      height: 500.h,
+      height: 480.h,
       width: double.infinity,
       child: Column(
         children: [
@@ -74,17 +69,26 @@ class ConfirmQrCodeTransaction extends ConsumerWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Sending to',
+              'Purchasing for',
               style: AppTextStyle.bodyText4,
             ),
           ),
           5.0.spacingH,
           Container(
             padding: EdgeInsets.all(10).r,
-            child: Column(
+            child: Row(
               children: [
-                ConfirmDetails(data: acctName, title: 'Account Name'),
-                ConfirmDetails(data: acctNo, title: 'Account Number'),
+                CircleAvatar(
+                  backgroundImage: AssetImage(
+                    'assets/images/mtn.png',
+                  ),
+                  backgroundColor: AppColors.gray,
+                ),
+                10.0.spacingW,
+                Text(
+                  phoneNumber,
+                  style: AppTextStyle.bodyText1,
+                )
               ],
             ),
             decoration: BoxDecoration(
@@ -111,7 +115,7 @@ class ConfirmQrCodeTransaction extends ConsumerWidget {
                   title: 'Amount',
                   isAmount: true,
                 ),
-                ConfirmDetails(data: note ?? '', title: 'Narration'),
+                ConfirmDetails(data: 'free', title: 'Fees'),
               ],
             ),
             decoration: BoxDecoration(
@@ -121,8 +125,9 @@ class ConfirmQrCodeTransaction extends ConsumerWidget {
           Spacer(),
           LoadingButton(
               onPressed: () async {
-                // await pop(context).then((value) => showPinModel(context));
-                noBioProcess(context, ref);
+                await pop(context)
+                    .then((value) => showPinModel(context, () {}, amount));
+                // noBioProcess(context, ref);
               },
               child: Text(
                 'Proceed',

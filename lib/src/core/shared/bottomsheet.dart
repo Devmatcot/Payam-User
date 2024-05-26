@@ -90,8 +90,8 @@ showTranSuccessModel(
             10.0.spacingH,
             TextButton(
                 onPressed: () {
-                  // pushToAndClearStack(context, ControlScreen());
-                  pop(context);
+                  pushToAndClearStack(context, ControlScreen());
+                  // pop(context);
                 },
                 child: Text(
                   'Return to Home',
@@ -107,6 +107,9 @@ showTranSuccessModel(
 
 showPinModel(
   BuildContext context,
+  VoidCallback onDone,
+  String amount,
 ) {
-  return bottomSheet(context, TransactionPinModal());
+  return bottomSheet(
+      context, TransactionPinModal(onDone: onDone, amount: amount));
 }

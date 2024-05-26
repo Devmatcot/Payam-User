@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import '../../../../../packages.dart';
-import '../../../property/controller/properties_controller.dart';
+import '../../../utility/controller/utility_controller.dart';
 
 class PropertyMemImage extends ConsumerWidget {
   const PropertyMemImage(

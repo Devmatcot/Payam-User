@@ -1,12 +1,11 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:payam_user/src/features/utility/repositiory/utility_repo.dart';
 
-import '../../jobs/model/job_type.dart';
 // import '../../jobs/presentation/views/create_job.dart';
-
 // import '../presentation/views/create_property_list.dart';
 import '/packages.dart';
 import '/src/features/auth/model/acct_enum.dart';
-import '/src/features/property/repositiory/properties_repo.dart';
+
 // import 'add_property_control.dart';
 
 final favoriteProvider = StateProvider<bool>((ref) {
@@ -16,8 +15,8 @@ final selectedImageProvider = StateProvider<List<PlatformFile>>((ref) {
   return [];
 });
 final propertiesControllerProvider =
-    StateNotifierProvider<PropertiesController, bool>((ref) {
-  return PropertiesController(
+    StateNotifierProvider<UtilityController, bool>((ref) {
+  return UtilityController(
       propertiesRepository: ref.watch(propertiesRepoProvider), ref: ref);
 });
 final propertiesLoadingProvider = StateProvider<bool>((ref) {
@@ -81,40 +80,13 @@ final propertiesLoadingProvider = StateProvider<bool>((ref) {
 //   });
 //   return res;
 // });
-final proTypeListProvider = StateProvider<List<OptionsType>>((ref) {
-  List<OptionsType> proType = [
-    OptionsType(
-      id: '001',
-      name: 'Select Property type',
-    )
-  ];
 
-  return proType;
-});
 
 final coinNotifier = StateProvider<bool>((ref) {
   return false;
 });
 
-final proConListProvider = StateProvider<List<OptionsType>>((ref) {
-  List<OptionsType> proType = [
-    OptionsType(
-      id: '001',
-      name: 'Select Property Condition',
-    )
-  ];
-  return proType;
-});
 
-final proResListProvider = StateProvider<List<OptionsType>>((ref) {
-  List<OptionsType> proType = [
-    OptionsType(
-      id: '001',
-      name: 'Select Resident type',
-    )
-  ];
-  return proType;
-});
 
 // final homeProvider = FutureProvider<HomeFeedProperties>((ref) async {
 //   return ref.read(propertiesControllerProvider.notifier).getNewHomeDetails();
@@ -124,11 +96,19 @@ final proResListProvider = StateProvider<List<OptionsType>>((ref) {
 //   return ref.read(propertiesControllerProvider.notifier).getAllAppliance();
 // });
 
-class PropertiesController extends StateNotifier<bool> {
+
+final airtimeAmountProvider = StateProvider<String>((ref) {
+  return '';
+});
+
+final netWorkSelectProvider = StateProvider<String>((ref) {
+  return '';
+});
+class UtilityController extends StateNotifier<bool> {
   PropertiesRepository _propertiesRepository;
   Ref _ref;
 
-  PropertiesController(
+  UtilityController(
       {required PropertiesRepository propertiesRepository, required Ref ref})
       : _propertiesRepository = propertiesRepository,
         _ref = ref,

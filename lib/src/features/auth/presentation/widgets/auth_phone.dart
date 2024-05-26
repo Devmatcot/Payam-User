@@ -26,10 +26,16 @@ class AuthPhoneWidget extends ConsumerWidget {
               controller: controller,
             ),
             Spacer(),
-            LoadingButton(
-              isLoading: ref.watch(authControllerProvider),
-                onPressed: onPressed,
-                child: Text('Proceed', style: AppTextStyle.pryBtnStyle))
+            ValueListenableBuilder(
+              valueListenable: controller,
+              builder: (context, value, child) {
+                bool isEnable = '0${value.text}'.isValidPhone;
+                return LoadingButton(
+                    isLoading: ref.watch(authControllerProvider),
+                    onPressed: isEnable ? onPressed : null,
+                    child: Text('Proceed', style: AppTextStyle.pryBtnStyle));
+              },
+            )
           ],
         ),
       ),

@@ -25,7 +25,7 @@ class AuthRepository {
   }) async {
     try {
       print(dob.toSplashForm());
-      final response =
+      
           await _dioClient.put(Endpoints.createUserAcct(phoneNum), data: {
         "first_name": firstName.trim(),
         "last_name": lastName.trim(),
@@ -43,7 +43,7 @@ class AuthRepository {
 
   FutureVoid login(String phone) async {
     try {
-      final response = await _dioClient
+      await _dioClient
           .post(Endpoints.userLogin, data: {"phone_number": "234$phone"});
       return right('');
     } on DioError catch (e) {
@@ -86,7 +86,7 @@ class AuthRepository {
 
   FutureVoid verifySMSOTP(String phone, String OTP, bool isForget) async {
     try {
-      final res = await _dioClient.post(
+     await _dioClient.post(
           isForget ? Endpoints.verifyForgetOTP : Endpoints.verifySMSOTP,
           data: {"phone_number": "234$phone", "otp": OTP});
       // if (isForget) {
@@ -101,16 +101,14 @@ class AuthRepository {
   FutureEither<UserModel> currentUser(String phone) async {
     try {
       String accessToken = await _localStorage.get(Endpoints.access_token);
-
-      final response = await _dioClient.post(
-        Endpoints.userProfile,
-        data: {"phone_number": "234$phone"},
-        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-      );
+      final response = await _dioClient.post(Endpoints.userProfile,
+          data: {"phone_number": "234$phone"},
+          options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
       Map<String, dynamic> json = response.data['data'];
       final userModel = UserModel.fromJson(json);
       return right(userModel);
     } on DioError catch (e) {
+      print(e.requestOptions.data);
       return left(Failure(e));
     }
   }

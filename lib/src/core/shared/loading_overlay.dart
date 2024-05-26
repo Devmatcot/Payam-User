@@ -1,7 +1,6 @@
 import 'package:loading_overlay/loading_overlay.dart';
 
 import '../../../packages.dart';
-import 'loading_indicator.dart';
 
 class LoadingOverlayer extends StatelessWidget {
   const LoadingOverlayer(
@@ -12,7 +11,8 @@ class LoadingOverlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return LoadingOverlay(
       isLoading: isLoading,
-      color: AppColors.black25,
+      color: AppColors.white,
+      opacity: 1,
       progressIndicator: LoadingIndicator(),
       child: child,
     );
