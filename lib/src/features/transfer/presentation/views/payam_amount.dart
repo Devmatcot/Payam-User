@@ -1,6 +1,3 @@
-import 'package:payam_user/src/core/utils/extension/money_formeter.dart';
-import 'package:payam_user/src/features/transfer/controller/transfer_controller.dart';
-
 import '../../../../../packages.dart';
 
 class PayamAmountScreen extends ConsumerWidget {

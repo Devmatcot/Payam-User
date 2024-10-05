@@ -45,7 +45,8 @@ class AssetConstants {
   static const String fcmblogo = "fcmb_logo";
   static const String fidelitylogo = "fidelity_logo";
   static const String gtblogo = "gtb_logo";
-  // static const String banklogo = "bank_logo";
+  static const String sendPackage = "send_package";
+  static const String orderRide = "order_ride";
 
   static const String caution = "caution";
   static const String flag = "flag";

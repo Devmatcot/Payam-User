@@ -3,6 +3,7 @@ import 'package:payam_user/src/features/qrcode/presentation/views/qrcode_screen.
 import 'package:payam_user/src/features/transaction/controller/transaction_controller.dart';
 
 import '../../../../../packages.dart';
+import '../../../ride/presentation/views/ride_screen.dart';
 import '../../../transaction/presentation/widgets/transaction_list.dart';
 import '../../../transfer/presentation/views/transfer_screen.dart';
 import '../../../utility/presentation/views/utility_sreen.dart';
@@ -22,7 +23,8 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
         page: TransferScreen()),
     ServiceModel(
         title: 'Pay bill', icon: AssetConstants.bill, page: UtilityScreen()),
-    ServiceModel(title: 'Payride', icon: AssetConstants.ride),
+    ServiceModel(
+        page: RideScreen(), title: 'Payride', icon: AssetConstants.ride),
   ];
   @override
   Widget build(BuildContext context) {

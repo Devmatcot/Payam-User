@@ -1,4 +1,5 @@
 import '../../../../../packages.dart';
+import '../../../../core/shared/app_dropdown.dart';
 
 class BankTransferScreen extends ConsumerWidget {
   BankTransferScreen({super.key});
@@ -17,19 +18,32 @@ class BankTransferScreen extends ConsumerWidget {
         children: [
           10.0.spacingH,
           AppTextField(
-            hint: 'Phone No/Payam Tag/Email',
-            type: TextInputType.text,
-            title: 'Enter customer info',
+            hint: 'Enter 10 digit account number',
+            type: TextInputType.number,
+            maxLenth: 10,
+            title: 'Enter account number',
           ),
           10.0.spacingH,
-          CustomDropDown(
-            itemsList:
-                'Access Bank,GT Bank,Polaris,Sky Bank,Union Bank,Opay,Bellbank'
-                    .split(','),
-            hintText: '',
-            firstItem: 'Access Bank',
-            onChange: (value) {},
-            title: 'Select Bank',
+          AppTextField(
+            hint: 'Select Bank',
+            type: TextInputType.none,
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => Scaffold(
+                        backgroundColor: AppColors.transparent,
+                        body: AppCustomDropDown(
+                            title: 'Select Bank',
+                            height: 700,
+                            iconList: [],
+                            itemList:
+                                'Access Bank,GT Bank,Polaris,Sky Bank,Union Bank,Opay,Bellbank'
+                                    .split(',')),
+                      ));
+            },
+            title: 'Select biller',
+            readOnly: true,
+            surfixIcons: Icon(Icons.keyboard_arrow_down),
           ),
           20.0.spacingH,
           Text(

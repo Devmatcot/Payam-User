@@ -1,20 +1,10 @@
-// import 'dart:convert';
-// import 'dart:developer';
 
-// import '../../coin/controller/coin_controller.dart';
-// import '../../escrow/controller/escrow_controller.dart';
-// import '../../home/controller/home_controller.dart';
-// import '../model/acct_enum.dart';
-// import '../presentation/views/change_password.dart';
-// import '../presentation/views/verify_email.dart';
-// import '../presentation/views/verify_otp.dart';
-// import '../presentation/views/welcome_back.dart';
 import 'package:payam_user/src/features/auth/presentation/views/create_passcode.dart';
 import 'package:payam_user/src/features/auth/presentation/views/login_passcode.dart';
 import 'package:payam_user/src/features/auth/presentation/views/phone_otp.dart';
 import 'package:payam_user/src/features/auth/presentation/views/success_registration.dart';
 
-import '../presentation/views/create_conPasscode.dart';
+import '../presentation/views/create_compasscode.dart';
 import '../repository/auth_repo.dart';
 import '/packages.dart';
 // import '/src/features/auth/presentation/views/switch_account.dart';

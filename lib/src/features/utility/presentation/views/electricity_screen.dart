@@ -1,3 +1,4 @@
+import 'package:payam_user/src/core/shared/app_dropdown.dart';
 import 'package:payam_user/src/features/utility/model/electricty_billers.dart';
 
 import '../../../../../packages.dart';
@@ -27,47 +28,14 @@ class ElectricityScreen extends ConsumerWidget {
             hint: 'Select Biller',
             type: TextInputType.text,
             onTap: () {
-              print('sd');
               showDialog(
-                  // traversalEdgeBehavior: TraversalEdgeBehavior.leaveFlutterView,
                   context: context,
-                  builder: (context) => SimpleDialog(
-                        // insetPadding: EdgeInsets.symmetric(horizontal: 0),
-                        surfaceTintColor: AppColors.white,
-                        title: Text(
-                          'Select Biller',
-                        ),
-                        titleTextStyle: AppTextStyle.headline3,
-                        titlePadding: EdgeInsets.all(10).r,
-                        backgroundColor: AppColors.white,
-                        contentPadding: EdgeInsets.all(10).r,
-                        children: [
-                          Container(
-                            height: 400.h,
-                            child: ListView.builder(
-                              itemCount: electricty.length,
-                              itemBuilder: (context, index) => Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5).r,
-                                child: Container(
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 20.r,
-                                        backgroundColor: AppColors.gray,
-                                      ),
-                                      10.0.spacingW,
-                                      Text(
-                                        electricty[index].name,
-                                        style: AppTextStyle.bodyText1,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
+                  builder: (context) => Scaffold(
+                        backgroundColor: AppColors.transparent,
+                        body: AppCustomDropDown(
+                            iconList: [],
+                            title: 'Select Biller',
+                            itemList: electricty),
                       ));
             },
             title: 'Select biller',
@@ -85,11 +53,10 @@ class ElectricityScreen extends ConsumerWidget {
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10).r,
             child: Text(
               'Matthew Olayemi Emmanuel',
-              style:
-                  AppTextStyle.bodyText1.copyWith(color: AppColors.primaryDeep),
+              style: AppTextStyle.bodyText1.copyWith(color: AppColors.primary),
             ),
             decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(5).r),
           ),
           15.0.spacingH,
