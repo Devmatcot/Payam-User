@@ -55,7 +55,7 @@ class TransactionListWidget extends StatelessWidget {
                 style: AppTextStyle.bodyText1,
               ),
               Text(
-                DateFormat.yMMMd().add_jm().format(DateTime.now()),
+                DateFormat.yMMMd().add_jm().format(model.createdAt),
                 style: AppTextStyle.formText.copyWith(fontSize: 10),
               ),
             ],

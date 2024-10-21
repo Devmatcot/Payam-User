@@ -24,7 +24,15 @@ class BeneficiaryModel {
         profilePhotoPath: json["profile_photo_path"],
         createdAt: DateTime.parse(json["created_at"]),
       );
-
+  factory BeneficiaryModel.fromJsonBene(Map<String, dynamic> json) =>
+      BeneficiaryModel(
+        id: 00,
+        accountName: json["full_name"],
+        accountNumber: json["phone_number"],
+        bankName: json["email"],
+        profilePhotoPath: json["photo"],
+        createdAt: DateTime.now(),
+      );
   Map<String, dynamic> toJson() => {
         "id": id,
         "account_name": accountName,

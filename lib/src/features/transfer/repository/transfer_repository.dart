@@ -91,13 +91,16 @@ class TransferRepository {
   FutureEither<List<BankModel>> getBankSugList(String acctNum) async {
     try {
       String accessToken = await _localStorage.get(Endpoints.access_token);
-      final res = await _dioClient.post(
-        Endpoints.bankSuggestion,
-        data: {"account_number": acctNum},
-        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      final res = await _dioClient.get(
+        Endpoints.bankSuggestion(acctNum),
+        // data: {"account_number": acctNum},
+        options: Options(headers: {
+          'Authorization': 'Bearer $accessToken',
+        }),
       );
       List bankList = res.data['data'];
-      return right(bankList.map((e) => BankModel.fromJson(e)).toList());
+      print(bankList.last);
+      return right(bankList.map((e) => BankModel.fromSug(e)).toList());
     } on DioError catch (e) {
       return left(Failure(e));
     }

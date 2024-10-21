@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:fpdart/fpdart.dart';
+import 'package:payam_user/src/features/transfer/model/beneficiary_model.dart';
 
 import '../../../../packages.dart';
 
@@ -110,6 +111,23 @@ class AuthRepository {
       Map<String, dynamic> json = response.data['data'];
       log(response.toString());
       final userModel = UserModel.fromJson(json);
+      return right(userModel);
+    } on DioError catch (e) {
+      log(e.requestOptions.data.toString());
+
+      print(e.requestOptions.data);
+      return left(Failure(e));
+    }
+  }
+
+  FutureEither<BeneficiaryModel> getPayamUser(String phone) async {
+    try {
+      String accessToken = await _localStorage.get(Endpoints.access_token);
+      final response = await _dioClient.get(Endpoints.getPayamUser(phone),
+          options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
+      Map<String, dynamic> json = response.data['data'];
+      log(response.toString());
+      final userModel = BeneficiaryModel.fromJsonBene(json);
       return right(userModel);
     } on DioError catch (e) {
       log(e.requestOptions.data.toString());

@@ -59,7 +59,11 @@ class AppCustomDropDown extends StatelessWidget {
                             radius: 25.r,
                             backgroundColor: AppColors.gray,
                             backgroundImage: iconList.isNotEmpty
-                                ? NetworkImage(iconList[index])
+                                ? NetworkImage(
+                                    iconList[index].toString().contains('svg')
+                                        ? Endpoints.defaultBankImg
+                                        : iconList[index].image,
+                                    scale: 2)
                                 : null,
                           ),
                           10.0.spacingW,

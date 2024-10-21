@@ -12,7 +12,7 @@ class Endpoints {
 //     // return 'wss://real-estate-sieg.up.railway.app/ws/chat/$roomId?token=$token';
 //   }
 
-//   static const String allMessage = '/api/v1/chats/messages/all';
+  static const String defaultBankImg = 'https://dev.payam.ng/images/default-bank.png';
 //   static const String checkCoin = '/api/v1/points/check/coin';
 
 //   static String allRoomMessage(String roomId) {
@@ -40,9 +40,9 @@ class Endpoints {
   static const String createPasscode = '/register/step4';
   static const String confirmCreatePasscode = '/register/step5';
   static const String userProfile = '/user';
-//   static String updateProfile(String userType) {
-//     return '/api/v1/auth/${userType}_profile/details';
-//   }
+  static String getPayamUser(String phone) {
+    return '/payam-user?phone_number=234$phone';
+  }
 
   // static String newPassword(String token) {
   //   return '/api/v1/auth/change/forgot-password/$token';
@@ -85,12 +85,12 @@ class Endpoints {
   static String transactionHistory = '/transactions';
 
   static const String allBank = "/banks";
-  static const String bankSuggestion = "/bank-suggestion";
+  // static const String bankSuggestion = "/bank-suggestion?account_number=8108281494";
   static const String initateFund = "/fund-wallet/initialize";
   static const String verifyFunding = "/fund-wallet/verify";
-//   static String agentPropertiesbyId(String id) {
-//     return '/api/v1/property/agent_properties/$id';
-//   }
+  static String bankSuggestion(String acctNum) {
+    return '/bank-suggestion?account_number=$acctNum';
+  }
 
 //   static const String propertyCondition =
 //       "/api/v1/property/property/conditions/all";
@@ -137,7 +137,8 @@ class Endpoints {
 //   //SECURED STORAGE KEY
   static const String oneSignalAppID = 'edd68c45-b86d-4820-97d6-37c6349d3aa6';
 
-  static const String paystackKey = 'sk_test_e71629112b733ee4d09a150cb9285da7a1ef2047';
+  static const String paystackKey =
+      'sk_test_e71629112b733ee4d09a150cb9285da7a1ef2047';
   static const String access_token = 'access_token';
   static const String refresh_token = 'refresh_token';
   static const String firstTime = '0';

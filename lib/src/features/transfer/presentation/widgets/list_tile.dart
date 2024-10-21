@@ -1,3 +1,5 @@
+import 'package:payam_user/src/features/transfer/model/beneficiary_model.dart';
+
 import '../../../../../packages.dart';
 
 class CustomListTile extends StatelessWidget {
@@ -107,7 +109,7 @@ class RideListTile extends StatelessWidget {
 }
 
 class AcctListTile extends StatelessWidget {
-  final UserModel? model;
+  final BeneficiaryModel? model;
   // final String subTitle;
 
   final Widget? page;
@@ -153,11 +155,11 @@ class AcctListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${model?.firstName} ${model?.lastName}',
+                  '${model?.accountName}',
                   style: AppTextStyle.formTextNaturalR,
                 ),
                 Text(
-                  model?.phoneNumber.substring(3) ?? "",
+                  model?.accountNumber.substring(3) ?? "",
                   style: AppTextStyle.formTextNatural.copyWith(fontSize: 12),
                 )
               ],

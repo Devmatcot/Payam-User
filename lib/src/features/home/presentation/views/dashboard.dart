@@ -230,6 +230,7 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
                           itemCount: data.length <= 5 ? data.length : 5,
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
+                          reverse: true,
                           itemBuilder: (context, index) {
                             return Padding(
                               padding:

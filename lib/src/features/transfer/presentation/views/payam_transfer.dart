@@ -1,3 +1,5 @@
+import 'package:payam_user/src/features/transfer/model/beneficiary_model.dart';
+
 import '../../../../../packages.dart';
 
 class PayamTransferScreen extends ConsumerStatefulWidget {
@@ -19,7 +21,7 @@ class _PayamTransferScreenState extends ConsumerState<PayamTransferScreen> {
       isLoading = true;
       final data = await ref
           .read(transferChangeProvider.notifier)
-          .currentUser(_controller.text);
+          .getPayamUser(_controller.text);
       if (data != null) {
         isLoading = false;
         payamDetail = data;
@@ -33,7 +35,7 @@ class _PayamTransferScreenState extends ConsumerState<PayamTransferScreen> {
     }
   }
 
-  UserModel? payamDetail;
+  BeneficiaryModel? payamDetail;
 
   @override
   void dispose() {
@@ -67,13 +69,15 @@ class _PayamTransferScreenState extends ConsumerState<PayamTransferScreen> {
           children: [
             10.0.spacingH,
             AppTextField(
-              hint: 'Phone No/Payam Tag/Email',
-              type: TextInputType.text,
+              hint: 'Phone No e.g 7011223344',
+              type: TextInputType.phone,
               title: 'Enter payam info',
               controller: _controller,
+              maxLenth: 10,
               focusNode: _focusNode,
               onChange: (value) {
                 payamDetail = null;
+                setState(() {});
               },
               surfixIcons: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -95,9 +99,9 @@ class _PayamTransferScreenState extends ConsumerState<PayamTransferScreen> {
                   children: [
                     10.0.spacingH,
                     AcctListTile(
-                      // page: payamDetail != null
-                      //     ? PayamAmountScreen(model: payamDetail!)
-                      //     : null,
+                      page: payamDetail != null
+                          ? PayamAmountScreen(model: payamDetail!)
+                          : null,
                       model: payamDetail,
                     ),
                   ],

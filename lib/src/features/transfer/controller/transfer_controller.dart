@@ -24,6 +24,7 @@ final payamBeneProvider = FutureProvider((ref) async {
 final bankListProvider = FutureProvider((ref) async {
   return ref.read(transferConProvider.notifier).getBankList();
 });
+
 class TransferController extends StateNotifier<bool> {
   final TransferRepository _transferRepository;
   final AuthRepository _authRepository;
@@ -100,9 +101,9 @@ class TransferNotifier extends ChangeNotifier {
     return res.fold((l) => AppConfig.handleErrorMessage(l.error), (r) => r);
   }
 
-    Future<UserModel?> getPayamUser(phone) async {
+  Future<BeneficiaryModel?> getPayamUser(phone) async {
     print(phone);
-    final res = await _authRepository.currentUser('$phone');
+    final res = await _authRepository.getPayamUser('$phone');
     return res.fold((l) => AppConfig.handleErrorMessage(l.error), (r) => r);
   }
 }

@@ -37,6 +37,7 @@ class _BankTransferScreenState extends ConsumerState<BankTransferScreen> {
       if (data.isNotEmpty) {
         isLoading = false;
         suggetedBank = data;
+        setState(() {});
       }
       isLoading = false;
       setState(() {});
@@ -75,11 +76,13 @@ class _BankTransferScreenState extends ConsumerState<BankTransferScreen> {
             type: TextInputType.number,
             maxLenth: 10,
             title: 'Enter Account Number',
+            formeter: [],
             controller: _controller,
             focusNode: _focusNode,
             onChange: (value) {
               if (value.length == 10) {
                 _focusNode.unfocus();
+                // getBankSuggestion();
               }
             },
             surfixIcons: Padding(
@@ -128,11 +131,18 @@ class _BankTransferScreenState extends ConsumerState<BankTransferScreen> {
                                 height: 50.h,
                                 width: 50.h,
                                 decoration: BoxDecoration(
-                                    color: AppColors.white,
+                                    color: AppColors.gray,
+                                    image: DecorationImage(
+                                        image: NetworkImage(suggetedBank[index]
+                                                .image
+                                                .contains('svg')
+                                            ? Endpoints.defaultBankImg
+                                            : suggetedBank[index].image)),
                                     borderRadius: BorderRadius.circular(5).r),
                                 padding: EdgeInsets.all(10).r,
-                                child: SvgWidget(iconList.first),
+                                // child: SvgWidget(iconList.first),
                               ),
+                              10.0.spacingW,
                               Text(
                                 suggetedBank[index].name,
                                 style: AppTextStyle.formTextNaturalR,
@@ -144,43 +154,47 @@ class _BankTransferScreenState extends ConsumerState<BankTransferScreen> {
                     ),
                   ),
                 ),
+                AppTextField(
+                  hint: 'Select Bank',
+                  type: TextInputType.none,
+                  controller: bankNameController,
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => Scaffold(
+                              backgroundColor: AppColors.transparent,
+                              body: AppCustomDropDown(
+                                  title: 'Select Bank',
+                                  height: 700,
+                                  onTap: (value) {
+                                    bankNameController.text = value;
+                                  },
+                                  iconList: bankData.hasValue
+                                      ? bankData.value!
+                                          .map((e) => e.image)
+                                          .toList()
+                                      : [],
+                                  itemList: bankData.hasValue
+                                      ? bankData.value!
+                                          .map((e) => e.name)
+                                          .toList()
+                                      : []
+                                  // 'Access Bank,GT Bank,Polaris,Sky Bank,Union Bank,Opay,Bellbank'
+                                  //     .split(',')
+
+                                  ),
+                            ));
+                  },
+                  title: 'Select bank',
+                  readOnly: true,
+                  surfixIcons: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ref.watch(bankListProvider).isLoading
+                          ? SmallProgress()
+                          : Icon(Icons.keyboard_arrow_down)),
+                ),
               ],
             ),
-          ),
-          AppTextField(
-            hint: 'Select Bank',
-            type: TextInputType.none,
-            controller: bankNameController,
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => Scaffold(
-                        backgroundColor: AppColors.transparent,
-                        body: AppCustomDropDown(
-                            title: 'Select Bank',
-                            height: 700,
-                            onTap: (value) {
-                              bankNameController.text = value;
-                            },
-                            iconList: bankData.hasValue
-                                ? bankData.value!.map((e) => e.image).toList()
-                                : [],
-                            itemList: bankData.hasValue
-                                ? bankData.value!.map((e) => e.name).toList()
-                                : []
-                            // 'Access Bank,GT Bank,Polaris,Sky Bank,Union Bank,Opay,Bellbank'
-                            //     .split(',')
-
-                            ),
-                      ));
-            },
-            title: 'Select bank',
-            readOnly: true,
-            surfixIcons: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ref.watch(bankListProvider).isLoading
-                    ? SmallProgress()
-                    : Icon(Icons.keyboard_arrow_down)),
           ),
           20.0.spacingH,
           Text(

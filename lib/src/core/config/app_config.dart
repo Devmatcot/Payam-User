@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:another_flushbar/flushbar.dart';
-import '/src/core/utils/extension/text_extentions.dart';
 
 import '../../../packages.dart';
 import '../network/dio_exception.dart';
@@ -18,6 +17,7 @@ class AppConfig {
     final errorMessage =
         DioExceptions.fromDioError(dioError).toString().toTitleCase();
     log(dioError.toString());
+    log(dioError.requestOptions.headers.toString());
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
       backgroundColor: AppColors.redLight,
