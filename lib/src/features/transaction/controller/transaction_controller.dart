@@ -1,6 +1,5 @@
 import 'package:payam_user/src/features/transaction/model/transaction_model.dart';
 
-import '../../transfer/model/trans_model.dart';
 import '../repository/transaction_repo.dart';
 import '/packages.dart';
 

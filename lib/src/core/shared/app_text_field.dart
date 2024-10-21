@@ -123,6 +123,8 @@ class _AppTextFieldState extends State<AppTextField> {
           fontFamily: 'Arial', fontWeight: AppFontWeight.medium, fontSize: 18),
       prefixIcon: widget.prefixIcons,
       fillColor: widget.fillColor ?? AppColors.gray,
+      // prefixIconConstraints: BoxConstraints(maxHeight: 40.h, maxWidth: 55.h),
+      // suffixIconConstraints: BoxConstraints(maxHeight: 40.h, maxWidth: 55.h),
       suffixIcon: widget.isPassword
           ? InkWell(
               child: Icon(isVisible

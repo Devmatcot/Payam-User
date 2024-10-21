@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fpdart/fpdart.dart';
 
 import '../../../../packages.dart';
@@ -25,14 +27,16 @@ class AuthRepository {
   }) async {
     try {
       print(dob.toSplashForm());
-      
-          await _dioClient.put(Endpoints.createUserAcct(phoneNum), data: {
+      print(Endpoints.createUserAcct(phoneNum) + "  URL");
+      final body = {
         "first_name": firstName.trim(),
         "last_name": lastName.trim(),
-        "email": email,
+        "email": email.trim(),
         "gender": gender.toLowerCase(),
         "date_of_birth": dob.toSplashForm()
-      });
+      };
+      log(body.toString());
+      await _dioClient.put(Endpoints.createUserAcct(phoneNum), data: body);
       return right('');
     } on DioError catch (e) {
       print(e.response?.realUri);
@@ -86,7 +90,7 @@ class AuthRepository {
 
   FutureVoid verifySMSOTP(String phone, String OTP, bool isForget) async {
     try {
-     await _dioClient.post(
+      await _dioClient.post(
           isForget ? Endpoints.verifyForgetOTP : Endpoints.verifySMSOTP,
           data: {"phone_number": "234$phone", "otp": OTP});
       // if (isForget) {
@@ -101,13 +105,15 @@ class AuthRepository {
   FutureEither<UserModel> currentUser(String phone) async {
     try {
       String accessToken = await _localStorage.get(Endpoints.access_token);
-      final response = await _dioClient.post(Endpoints.userProfile,
-          data: {"phone_number": "234$phone"},
+      final response = await _dioClient.get(Endpoints.userProfile,
           options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
       Map<String, dynamic> json = response.data['data'];
+      log(response.toString());
       final userModel = UserModel.fromJson(json);
       return right(userModel);
     } on DioError catch (e) {
+      log(e.requestOptions.data.toString());
+
       print(e.requestOptions.data);
       return left(Failure(e));
     }

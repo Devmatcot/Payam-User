@@ -1,6 +1,5 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:payam_user/src/features/transaction/model/transaction_model.dart';
-import 'package:payam_user/src/features/transfer/model/trans_model.dart';
 
 import '../../../../packages.dart';
 
@@ -18,14 +17,15 @@ class TransactionRepository {
       : _dioClient = dioClient,
         _localStorage = localStorage;
 
-  FutureEither<List<TransactionHistoryModel>> getTransaction(String phone) async {
+  FutureEither<List<TransactionHistoryModel>> getTransaction(
+      String phone) async {
     try {
       final accessToken = await _localStorage.get(Endpoints.access_token);
-      final res = await _dioClient.post(Endpoints.transactionHistory,
-          data: {"phone_number": phone},
+      final res = await _dioClient.get(Endpoints.transactionHistory,
           options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
       List trans = res.data['data'];
-      return right(trans.map((e) => TransactionHistoryModel.fromJson(e)).toList());
+      return right(
+          trans.map((e) => TransactionHistoryModel.fromJson(e)).toList());
     } on DioError catch (e) {
       return left(Failure(e));
     }

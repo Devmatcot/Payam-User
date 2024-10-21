@@ -1,88 +1,68 @@
-
 class TransactionHistoryModel {
-    final int id;
-    final User fromUser;
-    final User toUser;
-    final String amount;
-    final String? narration;
-    final String transactionType;
-    final String status;
-    final String transactionReference;
-    // final dynamic deletedAt;
-    final DateTime createdAt;
-    final DateTime updatedAt;
+  final int id;
+  final String type;
+  final String amount;
+  final String status;
+  final String reference;
+  final String? narration;
+  final int userId;
+  final DateTime createdAt;
+  final Receiver receiver;
 
-    TransactionHistoryModel({
-        required this.id,
-        required this.fromUser,
-        required this.toUser,
-        required this.amount,
-        required this.narration,
-        required this.transactionType,
-        required this.status,
-        required this.transactionReference,
-        // required this.deletedAt,
-        required this.createdAt,
-        required this.updatedAt,
-    });
+  TransactionHistoryModel({
+    required this.id,
+    required this.type,
+    required this.amount,
+    required this.status,
+    required this.reference,
+    required this.narration,
+    required this.userId,
+    required this.createdAt,
+    required this.receiver,
+  });
 
-    factory TransactionHistoryModel.fromJson(Map<String, dynamic> json) => TransactionHistoryModel(
+  factory TransactionHistoryModel.fromJson(Map<String, dynamic> json) =>
+      TransactionHistoryModel(
         id: json["id"],
-        fromUser: User.fromJson(json["from_user"]),
-        toUser: User.fromJson(json["to_user"]),
+        type: json["type"],
         amount: json["amount"],
-        narration: json["narration"],
-        transactionType: json["transaction_type"],
         status: json["status"],
-        transactionReference: json["transaction_reference"],
-        // deletedAt: json["deleted_at"],
+        reference: json["reference"],
+        narration: json["narration"],
+        userId: json["user_id"],
         createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-    );
+        receiver: Receiver.fromJson(json["receiver"]),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
-        "from_user": fromUser.toJson(),
-        "to_user": toUser.toJson(),
+        "type": type,
         "amount": amount,
-        "narration": narration,
-        "transaction_type": transactionType,
         "status": status,
-        "transaction_reference": transactionReference,
-        // "deleted_at": deletedAt,
+        "reference": reference,
+        "narration": narration,
+        "user_id": userId,
         "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-    };
+        "receiver": receiver.toJson(),
+      };
 }
 
-class User {
-    final int id;
-    final String firstName;
-    final String lastName;
-    final String phoneNumber;
-    final String profilePhotoUrl;
+class Receiver {
+  final int id;
+  final String name;
 
-    User({
-        required this.id,
-        required this.firstName,
-        required this.lastName,
-        required this.phoneNumber,
-        required this.profilePhotoUrl,
-    });
+  Receiver({
+    required this.id,
+    required this.name,
+  });
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+  factory Receiver.fromJson(Map<String, dynamic> json) => Receiver(
         id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        phoneNumber: json["phone_number"],
-        profilePhotoUrl: json["profile_photo_url"],
-    );
+        name: json["name"],
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
-        "first_name": firstName,
-        "last_name": lastName,
-        "phone_number": phoneNumber,
-        "profile_photo_url": profilePhotoUrl,
-    };
+        "name": name,
+      };
 }

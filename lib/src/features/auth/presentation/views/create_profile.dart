@@ -10,7 +10,7 @@ class CreateProfileScreen extends ConsumerWidget {
   final TextEditingController lastName = TextEditingController();
   final TextEditingController emailAddress = TextEditingController();
   // final TextEditingController firstName = TextEditingController();
-  String selectedGender = '';
+  String selectedGender = 'Male';
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userDob = ref.watch(datePickerProvider);
@@ -53,9 +53,9 @@ class CreateProfileScreen extends ConsumerWidget {
           ListenableBuilder(
             listenable: Listenable.merge([emailAddress, firstName, lastName]),
             builder: (context, child) {
-              bool isEnable = emailAddress.text.isValidEmail &&
-                  firstName.text.isValidName &&
-                  lastName.text.isValidName &&
+              bool isEnable = emailAddress.text.trim().isValidEmail &&
+                  firstName.text.trim().isValidName &&
+                  lastName.text.trim().isValidName &&
                   userDob != null;
               return LoadingButton(
                   isLoading: ref.watch(authControllerProvider),

@@ -1,3 +1,4 @@
+import 'package:payam_user/src/features/fundwallet/presentation/views/fund_wallet.dart';
 import 'package:payam_user/src/features/home/model/service_model.dart';
 import 'package:payam_user/src/features/qrcode/presentation/views/qrcode_screen.dart';
 import 'package:payam_user/src/features/transaction/controller/transaction_controller.dart';
@@ -35,7 +36,7 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
           await ref
               .read(authControllerProvider.notifier)
               .currentUser(context, '${usermodel.phoneNumber.substring(3)}');
-          ref.refresh(allTransactionHistory);
+          ref.refresh(allTransactionHistory.future);
         },
         child: SafeArea(
             child: ListView(
@@ -46,26 +47,19 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
               children: [
                 Row(
                   children: [
-                    // Image.network(AssetConstants.avaterUrl),
-                    // Image.network(
-                    //   'https://ui-avatars.com/api/?name=John+Doe',
-                    //   errorBuilder: (BuildContext context, Object exception,
-                    //       StackTrace? stackTrace) {
-                    //     return Text('Failed to load avatar');
-                    //   },
-                    // ),
                     CircleAvatar(
                       radius: 18,
                       // backgroundImage: AssetImage(AssetConstants.avater),
-                      child: usermodel!.profilePhotoUrl.contains('ui-avatars')
+                      child: usermodel!.profilePhotoUrl == null
                           ? Text(
-                              '${usermodel.firstName.split('').first}${usermodel.lastName.split('').first}')
+                              '${usermodel.firstName.split('').first}${usermodel.lastName.split('').first}',
+                              style: AppTextStyle.bodyText1,
+                            )
                           : null,
-                      backgroundImage:
-                          !usermodel.profilePhotoUrl.contains('ui-avatars')
-                              ? NetworkImage(usermodel.profilePhotoUrl)
-                              : null,
-                      backgroundColor: AppColors.black54,
+                      backgroundImage: usermodel.profilePhotoUrl != null
+                          ? NetworkImage(usermodel.profilePhotoUrl!)
+                          : null,
+                      backgroundColor: AppColors.border,
                     ),
                     10.0.spacingW,
                     Text(
@@ -112,20 +106,25 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
                     ),
                   ),
                   10.0.spacingW,
-                  Container(
-                    padding: EdgeInsets.all(10).r,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15).r,
-                        border: Border.all(color: AppColors.black25)),
-                    child: Row(
-                      children: [
-                        Icon(Icons.add, color: AppColors.natural),
-                        Text(
-                          'Fund Wallet',
-                          style: AppTextStyle.formTextNatural
-                              .copyWith(fontWeight: AppFontWeight.regular),
-                        )
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      pushTo(context, FundWallet());
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10).r,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15).r,
+                          border: Border.all(color: AppColors.black25)),
+                      child: Row(
+                        children: [
+                          Icon(Icons.add, color: AppColors.natural),
+                          Text(
+                            'Fund Wallet',
+                            style: AppTextStyle.formTextNatural
+                                .copyWith(fontWeight: AppFontWeight.regular),
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -216,17 +215,29 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
             ref.watch(allTransactionHistory).when(
                 skipLoadingOnRefresh: false,
                 data: (data) {
-                  return ListView.builder(
-                    itemCount: data.length <= 5 ? data.length : 5,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2).r,
-                        child: TransactionListWidget(model: data[index]),
-                      );
-                    },
-                  );
+                  return data.isEmpty
+                      ? Center(
+                          child: Column(
+                            children: [
+                              30.0.spacingH,
+                              SvgWidget(AssetConstants.noRecord),
+                              Text('No Transaction History',
+                                  style: AppTextStyle.bodyText1),
+                            ],
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: data.length <= 5 ? data.length : 5,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 2).r,
+                              child: TransactionListWidget(model: data[index]),
+                            );
+                          },
+                        );
                 },
                 error: (e, s) => Text(e.toString()),
                 loading: () {

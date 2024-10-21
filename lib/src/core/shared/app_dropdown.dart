@@ -5,6 +5,7 @@ class AppCustomDropDown extends StatelessWidget {
       {super.key,
       required this.itemList,
       required this.iconList,
+      required this.onTap,
       this.height = 600,
       required this.title});
 
@@ -12,6 +13,7 @@ class AppCustomDropDown extends StatelessWidget {
   final List<dynamic> iconList;
   final String title;
   final double height;
+  final Function(String) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class AppCustomDropDown extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  title,
+                  title + iconList.length.toString(),
                   style: AppTextStyle.bodyText1,
                 ),
                 IconButton(
@@ -43,20 +45,34 @@ class AppCustomDropDown extends StatelessWidget {
                 itemCount: itemList.length,
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10).r,
-                  child: Container(
-                    // padding: Ed,
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 25.r,
-                          backgroundColor: AppColors.gray,
-                        ),
-                        10.0.spacingW,
-                        Text(
-                          itemList[index],
-                          style: AppTextStyle.bodyText2,
-                        ),
-                      ],
+                  child: GestureDetector(
+                    onTap: () {
+                      onTap(itemList[index]);
+                      pop(context);
+                    },
+                    child: Container(
+                      // padding: Ed,
+                      color: AppColors.transparent,
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 25.r,
+                            backgroundColor: AppColors.gray,
+                            backgroundImage: iconList.isNotEmpty
+                                ? NetworkImage(iconList[index])
+                                : null,
+                          ),
+                          10.0.spacingW,
+                          Flexible(
+                            child: Text(
+                              itemList[index],
+                              style: AppTextStyle.bodyText2,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

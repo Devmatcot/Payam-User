@@ -33,7 +33,7 @@ class TransactionListWidget extends StatelessWidget {
               children: [
                 Text('Wallet Transfer', style: AppTextStyle.formTextNatural),
                 Text(
-                  'Wallet transfer To - ${model.toUser.firstName + ' ' + model.toUser.lastName}',
+                  'Wallet transfer To - ${model.receiver.name}',
                   style: AppTextStyle.formText.copyWith(fontSize: 12),
                 ),
               ],

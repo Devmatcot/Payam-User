@@ -145,6 +145,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  currency_text_input_formatter:
+    dependency: "direct main"
+    description:
+      name: currency_text_input_formatter
+      sha256: e2dda73e5ddbe2b70b898ece09aeb661a10808e084f776bebf81e07e8d57b29c
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.6"
   dio:
     dependency: "direct main"
     description:
@@ -784,6 +792,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  pay_with_paystack:
+    dependency: "direct main"
+    description:
+      name: pay_with_paystack
+      sha256: e7675d01e7a49e6cfe615a65b26616e313d1325ea793842e048fd14b9f8976ab
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.10"
   permission_handler:
     dependency: "direct main"
     description:
@@ -1093,6 +1109,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.0"
+  webview_flutter:
+    dependency: transitive
+    description:
+      name: webview_flutter
+      sha256: "6869c8786d179f929144b4a1f86e09ac0eddfe475984951ea6c634774c16b522"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.8.0"
+  webview_flutter_android:
+    dependency: transitive
+    description:
+      name: webview_flutter_android
+      sha256: ed021f27ae621bc97a6019fb601ab16331a3db4bf8afa305e9f6689bdb3edced
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.16.8"
+  webview_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: webview_flutter_platform_interface
+      sha256: d937581d6e558908d7ae3dc1989c4f87b786891ab47bb9df7de548a151779d8d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.10.0"
+  webview_flutter_wkwebview:
+    dependency: transitive
+    description:
+      name: webview_flutter_wkwebview
+      sha256: "9c62cc46fa4f2d41e10ab81014c1de470a6c6f26051a2de32111b2ee55287feb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.14.0"
   win32:
     dependency: transitive
     description:

@@ -33,7 +33,7 @@ class Endpoints {
 // //_________________________________________AUTH_____________________________________________
   static const String userLogin = '/login/step1';
   static const String userPassCodeLogin = '/login/step2';
-//   static const String agentLogin = '/api/v1/auth/agent-login';
+  static const String payamBeneficiary = '/payam-beneficiaries';
 //   static const String notification = '/api/v1/notifications/all';
 
 //   static const String logout = '/api/v1/auth/logout';
@@ -49,15 +49,15 @@ class Endpoints {
   // }
   static String createUserAcct(String phone) {
     return "/register/step3/234$phone";
+    // return "/register/step3";
   }
 
   static const String sendSMSOtp = '/register/step1';
   static const String verifySMSOTP = '/register/step2';
 
-
   static const String sendForgetOtp = "/reset/step1";
   static const String verifyForgetOTP = '/reset/step2';
-  static String newPasscode  = '/reset/step3';
+  static String newPasscode = '/reset/step3';
 
 //   static const String consumerKYC = '/consumer/getConsumnerKYC';
 //   static const String getBankList = '/nipservice/api/v1/util/get-nip-fi-list';
@@ -84,8 +84,10 @@ class Endpoints {
 
   static String transactionHistory = '/transactions';
 
-//   static const String allPropertyType = "/api/v1/property/property/types/all";
-//   static const String addProperty = "/api/v1/property/add/property/";
+  static const String allBank = "/banks";
+  static const String bankSuggestion = "/bank-suggestion";
+  static const String initateFund = "/fund-wallet/initialize";
+  static const String verifyFunding = "/fund-wallet/verify";
 //   static String agentPropertiesbyId(String id) {
 //     return '/api/v1/property/agent_properties/$id';
 //   }
@@ -102,7 +104,6 @@ class Endpoints {
 //     return '/api/v1/property/properties/$id';
 //   }
 
-//   static const String propertiesAppliance = "/api/v1/property/appliances/all";
 //   static const String filterProperties = "/api/v1/property/properties/filters";
 //   static const String searchProperties = "/api/v1/property/search/properties/";
 
@@ -135,6 +136,8 @@ class Endpoints {
 
 //   //SECURED STORAGE KEY
   static const String oneSignalAppID = 'edd68c45-b86d-4820-97d6-37c6349d3aa6';
+
+  static const String paystackKey = 'sk_test_e71629112b733ee4d09a150cb9285da7a1ef2047';
   static const String access_token = 'access_token';
   static const String refresh_token = 'refresh_token';
   static const String firstTime = '0';

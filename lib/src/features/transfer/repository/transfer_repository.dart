@@ -1,7 +1,9 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:payam_user/src/features/transfer/model/bank_model.dart';
 
-import '../model/transfer_res_model.dart';
 import '/packages.dart';
+import '../model/beneficiary_model.dart';
+import '../model/transfer_res_model.dart';
 
 final transferRepositoryProvider = Provider<TransferRepository>((ref) {
   return TransferRepository(
@@ -19,19 +21,19 @@ class TransferRepository {
   })  : _dioClient = dioClient,
         _localStorage = localStorage;
 
-  // FutureEither<List<CoinModel>> getAllCoinList() async {
-  //   try {
-  //     String accessToken = await _localStorage.get(Endpoints.access_token);
-  //     final res = await _dioClient.get(
-  //       Endpoints.allCoinList,
-  //       options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-  //     );
-  //     List coinList = res.data['data'];
-  //     return right(coinList.map((e) => CoinModel.fromJson(e)).toList());
-  //   } on DioError catch (e) {
-  //     return left(Failure(e));
-  //   }
-  // }
+  FutureEither<List<BeneficiaryModel>> getPayamBeneList() async {
+    try {
+      String accessToken = await _localStorage.get(Endpoints.access_token);
+      final res = await _dioClient.get(
+        Endpoints.payamBeneficiary,
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+      List beneList = res.data['data'];
+      return right(beneList.map((e) => BeneficiaryModel.fromJson(e)).toList());
+    } on DioError catch (e) {
+      return left(Failure(e));
+    }
+  }
 
   FutureEither<TransferResponse> wallet2wallet(
       {required String fromUser,
@@ -44,7 +46,6 @@ class TransferRepository {
       final res = await _dioClient.post(
         Endpoints.walletTransfer,
         data: {
-          "from_user": fromUser,
           "to_user": '234$toUser',
           "amount": amount,
           "narration": note,
@@ -73,17 +74,32 @@ class TransferRepository {
   //   }
   // }
 
-  // FutureEither<List<TransactionModel>> transactionHistory() async {
-  //   try {
-  //     String accessToken = await _localStorage.get(Endpoints.access_token);
-  //     final res = await _dioClient.get(
-  //       Endpoints.tranHistory,
-  //       options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-  //     );
-  //     List history = res.data['data'];
-  //     return right(history.map((e) => TransactionModel.fromJson(e)).toList());
-  //   } on DioError catch (e) {
-  //     return left(Failure(e));
-  //   }
-  // }
+  FutureEither<List<BankModel>> getBankList() async {
+    try {
+      String accessToken = await _localStorage.get(Endpoints.access_token);
+      final res = await _dioClient.get(
+        Endpoints.allBank,
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+      List bankList = res.data['data'];
+      return right(bankList.map((e) => BankModel.fromJson(e)).toList());
+    } on DioError catch (e) {
+      return left(Failure(e));
+    }
+  }
+
+  FutureEither<List<BankModel>> getBankSugList(String acctNum) async {
+    try {
+      String accessToken = await _localStorage.get(Endpoints.access_token);
+      final res = await _dioClient.post(
+        Endpoints.bankSuggestion,
+        data: {"account_number": acctNum},
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+      List bankList = res.data['data'];
+      return right(bankList.map((e) => BankModel.fromJson(e)).toList());
+    } on DioError catch (e) {
+      return left(Failure(e));
+    }
+  }
 }

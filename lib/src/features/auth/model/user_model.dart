@@ -7,7 +7,7 @@ class UserModel {
     final String gender;
     final DateTime dateOfBirth;
     final String balance;
-    final String profilePhotoUrl;
+    final String? profilePhotoUrl;
 
     UserModel({
         required this.phoneNumber,
@@ -17,7 +17,7 @@ class UserModel {
         required this.gender,
         required this.dateOfBirth,
         required this.balance,
-        required this.profilePhotoUrl,
+         this.profilePhotoUrl,
     });
 
     UserModel copyWith({

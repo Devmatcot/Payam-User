@@ -1,7 +1,8 @@
 import '../../../../../packages.dart';
+import '../../model/beneficiary_model.dart';
 
 class PayamAmountScreen extends ConsumerWidget {
-  final UserModel model;
+  final BeneficiaryModel model;
   PayamAmountScreen({super.key, required this.model});
   TextEditingController _amountCon = TextEditingController();
   TextEditingController _descriptionCon = TextEditingController();
@@ -21,9 +22,7 @@ class PayamAmountScreen extends ConsumerWidget {
               style: AppTextStyle.formTextNaturalR,
             ),
             5.0.spacingH,
-            BeneListTile(
-                title: '${model.firstName} ${model.lastName}',
-                subTitle: model.phoneNumber.substring(3)),
+            BeneListTile(data: model),
             20.0.spacingH,
             AppTextField(
               hint: '10.00 - 100,000.00',
@@ -60,8 +59,9 @@ class PayamAmountScreen extends ConsumerWidget {
                 bottomSheet(
                     context,
                     ConfirmQrCodeTransaction(
-                      acctName: '${model.firstName} ${model.lastName}',
-                      acctNo: model.phoneNumber.substring(3),
+                      acctName: '${model.accountName}',
+                      acctNo: model.accountNumber.substring(3),
+                      // acctNo: '7064610605',
                       amount: newAmount,
                       ctx: context,
                       note: _descriptionCon.text,

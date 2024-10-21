@@ -1,9 +1,9 @@
 import 'package:payam_user/src/features/auth/repository/auth_repo.dart';
+import 'package:payam_user/src/features/transfer/model/beneficiary_model.dart';
 import 'package:payam_user/src/features/transfer/repository/transfer_repository.dart';
 
-// import '../presentation/views/sucessful_purchase.dart';
-
 import '/packages.dart';
+import '../model/bank_model.dart';
 
 final transferConProvider =
     StateNotifierProvider<TransferController, bool>((ref) {
@@ -17,6 +17,13 @@ final transferChangeProvider = ChangeNotifierProvider<TransferNotifier>((ref) {
   return TransferNotifier(authRepository: ref.read(authRepoProvider));
 });
 
+final payamBeneProvider = FutureProvider((ref) async {
+  return ref.read(transferConProvider.notifier).payamBeneList();
+});
+
+final bankListProvider = FutureProvider((ref) async {
+  return ref.read(transferConProvider.notifier).getBankList();
+});
 class TransferController extends StateNotifier<bool> {
   final TransferRepository _transferRepository;
   final AuthRepository _authRepository;
@@ -62,53 +69,25 @@ class TransferController extends StateNotifier<bool> {
     state = false;
   }
 
-  // Future<List<TransactionModel>> transactionHistory() async {
-  //   final res = await _coinRepository.transactionHistory();
-  //   return res.fold((l) {
-  //     AppConfig.handleErrorMessage(l.error);
-  //     return [];
-  //   }, (result) => result);
-  // }
+  Future<List<BeneficiaryModel>> payamBeneList() async {
+    final res = await _transferRepository.getPayamBeneList();
+    return res.fold((l) {
+      AppConfig.handleErrorMessage(l.error);
+      return [];
+    }, (result) => result);
+  }
 
-  // Future handlePayment(BuildContext context, CoinModel coin) async {
-  //   _ref.read(purchaseLoadProvider.notifier).update((state) => true);
-  //   final user = _ref.read(userModelProvider);
-  //   String txfId = '';
-  //   final res = await _coinRepository.getPurchaseTxf(coin.id);
-  //   res.fold((l) => AppConfig.handleErrorMessage(l.error), (id) => txfId = id);
-  //   final Customer customer = Customer(
-  //       email: user.email, name: user.firstName, phoneNumber: user.phoneNumber);
-  //   final Flutterwave flutterwave = Flutterwave(
-  //       context: context,
-  //       publicKey: dotenv.get('PUBLIC_KEY'),
-  //       currency: 'NGN',
-  //       redirectUrl: 'https://google.com',
-  //       txRef: txfId,
-  //       amount: coin.price.toString(),
-  //       customer: customer,
-  //       paymentOptions: "card, payattitude, barter, bank transfer, ussd",
-  //       customization: Customization(title: "Test Payment"),
-  //       isTestMode: true);
-  //   final ChargeResponse response = await flutterwave.charge();
+  Future<List<BankModel>> getBankList() async {
+    final res = await _transferRepository.getBankList();
+    return res.fold(
+        (l) => AppConfig.handleErrorMessage(l.error), (result) => result);
+  }
 
-  //   print('waveresponse ${response.toJson()}');
-  //   if (response.success!) {
-  //     final res = await _coinRepository.verifyPurchase(txfId);
-  //     res.fold((l) => Failure(l.error), (r) {
-  //       _ref.read(authControllerProvider.notifier).refreshUser();
-  //       pushTo(
-  //           context,
-  //           SucessfulPurchase(
-  //             coin: coin.coins.toString(),
-  //           )).then((value) => pop(context));
-  //     });
-  //   } else {
-  //     pop(context);
-  //     AppConfig.showToast(
-  //         'Transaction Fail, please try again', AppColors.redLight);
-  //   }
-  //   _ref.read(purchaseLoadProvider.notifier).update((state) => false);
-  // }
+  Future<List<BankModel>> getBankSugList(String acctNo) async {
+    final res = await _transferRepository.getBankSugList(acctNo);
+    return res.fold(
+        (l) => AppConfig.handleErrorMessage(l.error), (result) => result);
+  }
 }
 
 class TransferNotifier extends ChangeNotifier {
@@ -116,6 +95,12 @@ class TransferNotifier extends ChangeNotifier {
   TransferNotifier({required AuthRepository authRepository})
       : _authRepository = authRepository;
   Future<UserModel?> currentUser(phone) async {
+    print(phone);
+    final res = await _authRepository.currentUser('$phone');
+    return res.fold((l) => AppConfig.handleErrorMessage(l.error), (r) => r);
+  }
+
+    Future<UserModel?> getPayamUser(phone) async {
     print(phone);
     final res = await _authRepository.currentUser('$phone');
     return res.fold((l) => AppConfig.handleErrorMessage(l.error), (r) => r);
