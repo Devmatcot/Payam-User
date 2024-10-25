@@ -22,7 +22,7 @@ class FundRepository {
       required String url,
       required String email}) async {
     try {
-      bool status = false;
+      bool status = true;
       // PayWithPayStack().now(
       //     context: context,
       //     secretKey: Endpoints.paystackKey,
@@ -39,7 +39,17 @@ class FundRepository {
       //       print("Transaction Not Successful!");
       //       status = false;
       //     });
-      pushTo(context, WebViewScreen(url: url, title: 'Payment'));
+      pushTo(
+          context,
+          WebViewScreen(
+            url: url,
+            title: 'Payment',
+            actions: [
+              TextButton(
+                  onPressed: () {},
+                  child: Text('Done', style: AppTextStyle.secBtnStyle))
+            ],
+          ));
       return right(status);
     } on DioError catch (e) {
       return left(Failure(DioError(
@@ -64,11 +74,13 @@ class FundRepository {
   FutureVoid verifyTransaction(String reference) async {
     try {
       String accessToken = await _localStorage.get(Endpoints.access_token);
-      await _dioClient.post(Endpoints.verifyFunding,
+      final res = await _dioClient.post(Endpoints.verifyFunding,
           data: {"reference": reference},
           options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
+      print(res.data);
       return right('');
     } on DioError catch (e) {
+      print('error $e');
       return left(Failure(e));
     }
   }

@@ -7,9 +7,16 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../../../packages.dart';
 
 class WebViewScreen extends StatefulWidget {
-  WebViewScreen({this.url, this.title, super.key});
+  WebViewScreen(
+      {this.url,
+      this.title,
+      this.actions,
+      this.onPopInvokedWithResult,
+      super.key});
   String? url;
   String? title;
+  List<Widget>? actions;
+  Function(bool, dynamic)? onPopInvokedWithResult;
 
   @override
   State<WebViewScreen> createState() => _ChatScreenState();
@@ -55,11 +62,7 @@ class _ChatScreenState extends State<WebViewScreen> {
           },
         ),
       )
-      // ..loadHtmlString(htmlContent)
-      // ..loadRequest(Uri.dataFromString(htmlContent, mimeType: 'text/html'))
-      //     .toString();
-      ..loadRequest(Uri.parse(widget.url ??
-          'https://support.enaira.gov.ng/index.php?p=link&sp=1&ssp=en'));
+      ..loadRequest(Uri.parse(widget.url ?? 'https://google.com'));
     super.initState();
   }
 
@@ -73,23 +76,27 @@ class _ChatScreenState extends State<WebViewScreen> {
           widget.title ?? 'Chat',
           style: AppTextStyle.headline1,
         ),
+        actions: widget.actions,
       ),
-      body: Column(
-        children: [
-          prgressValue != 1
-              ? LinearProgressIndicator(
-                  value: prgressValue,
-                )
-              : SizedBox(),
-          Expanded(
-            child: WebViewWidget(
-              gestureRecognizers: Set()
-                ..add(Factory<VerticalDragGestureRecognizer>(
-                    () => VerticalDragGestureRecognizer())),
-              controller: controller,
+      body: PopScope(
+        onPopInvokedWithResult: widget.onPopInvokedWithResult,
+        child: Column(
+          children: [
+            prgressValue != 1
+                ? LinearProgressIndicator(
+                    value: prgressValue,
+                  )
+                : SizedBox(),
+            Expanded(
+              child: WebViewWidget(
+                gestureRecognizers: Set()
+                  ..add(Factory<VerticalDragGestureRecognizer>(
+                      () => VerticalDragGestureRecognizer())),
+                controller: controller,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
 
       //  Column(

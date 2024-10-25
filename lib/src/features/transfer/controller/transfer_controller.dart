@@ -103,7 +103,7 @@ class TransferNotifier extends ChangeNotifier {
 
   Future<BeneficiaryModel?> getPayamUser(phone) async {
     print(phone);
-    final res = await _authRepository.getPayamUser('$phone');
+    final res = await _authRepository.getPayamUser(phone);
     return res.fold((l) => AppConfig.handleErrorMessage(l.error), (r) => r);
   }
 }

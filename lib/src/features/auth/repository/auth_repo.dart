@@ -124,9 +124,9 @@ class AuthRepository {
     try {
       String accessToken = await _localStorage.get(Endpoints.access_token);
       final response = await _dioClient.get(Endpoints.getPayamUser(phone),
-          options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
+          options: Options(headers: {'Authorization': 'Bearer $accessToken',}));
       Map<String, dynamic> json = response.data['data'];
-      log(response.toString());
+      // log(response.toString());
       final userModel = BeneficiaryModel.fromJsonBene(json);
       return right(userModel);
     } on DioError catch (e) {

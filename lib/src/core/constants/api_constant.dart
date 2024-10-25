@@ -85,7 +85,7 @@ class Endpoints {
   static String transactionHistory = '/transactions';
 
   static const String allBank = "/banks";
-  // static const String bankSuggestion = "/bank-suggestion?account_number=8108281494";
+  static const String validateBank = "/validate-bank";
   static const String initateFund = "/fund-wallet/initialize";
   static const String verifyFunding = "/fund-wallet/verify";
   static String bankSuggestion(String acctNum) {

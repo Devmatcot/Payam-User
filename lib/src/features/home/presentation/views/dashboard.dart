@@ -31,15 +31,15 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
   Widget build(BuildContext context) {
     final usermodel = ref.watch(userModelProvider);
     return Scaffold(
-      body: RefreshIndicator.adaptive(
-        onRefresh: () async {
-          await ref
-              .read(authControllerProvider.notifier)
-              .currentUser(context, '${usermodel.phoneNumber.substring(3)}');
-          ref.refresh(allTransactionHistory.future);
-        },
-        child: SafeArea(
-            child: ListView(
+      body: SafeArea(
+        child: RefreshIndicator.adaptive(
+          onRefresh: () async {
+            await ref
+                .read(authControllerProvider.notifier)
+                .currentUser(context, '${usermodel.phoneNumber.substring(3)}');
+            ref.refresh(allTransactionHistory.future);
+          },
+          child: ListView(
           padding: EdgeInsets.all(20).r,
           children: [
             Row(
@@ -82,9 +82,21 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Wallet Balance',
-                          style: AppTextStyle.bodyText4,
+                        Row(
+                          children: [
+                            Text(
+                              'Wallet Balance',
+                              style: AppTextStyle.bodyText5
+                                  .copyWith(color: AppColors.white),
+                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.visibility,
+                                  color: AppColors.white,
+                                  size: 20,
+                                ))
+                          ],
                         ),
                         FittedBox(
                           child: Text.rich(TextSpan(
@@ -99,40 +111,52 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
                                         .output
                                         .nonSymbol)
                               ],
-                              style: AppTextStyle.bodyText1
-                                  .copyWith(fontSize: 20))),
+                              style: AppTextStyle.bodyText1.copyWith(
+                                  fontSize: 24, color: AppColors.white))),
+                        ),
+                        // 10.0.spacingH,
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: () {
+                              pushTo(context, FundWallet());
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(10).r,
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryDeep,
+                                borderRadius: BorderRadius.circular(30).r,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.add, color: AppColors.white),
+                                  Text(
+                                    'Fund Wallet',
+                                    style: AppTextStyle.formTextNatural
+                                        .copyWith(
+                                            fontWeight: AppFontWeight.regular,
+                                            color: AppColors.white),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         )
                       ],
                     ),
                   ),
-                  10.0.spacingW,
-                  GestureDetector(
-                    onTap: () {
-                      pushTo(context, FundWallet());
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(10).r,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15).r,
-                          border: Border.all(color: AppColors.black25)),
-                      child: Row(
-                        children: [
-                          Icon(Icons.add, color: AppColors.natural),
-                          Text(
-                            'Fund Wallet',
-                            style: AppTextStyle.formTextNatural
-                                .copyWith(fontWeight: AppFontWeight.regular),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
                 ],
               ),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 45).r,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15).r,
               decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(10).r),
+                  // color: AppColors.white,
+                  gradient: LinearGradient(colors: [
+                    Color(0xFF0C8B56),
+                    Color(0xFF05B56B),
+                    // AppColors.green,
+                  ]),
+                  borderRadius: BorderRadius.circular(20).r),
             )
             // Action Button
             ,
@@ -146,7 +170,7 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
                     },
                     child: Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 15).r,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -171,7 +195,8 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
                 15.0.spacingW,
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 15).r,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -256,7 +281,8 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
                 }),
             20.0.spacingH,
           ],
-        )),
+        ),
+        ),
       ),
     );
   }

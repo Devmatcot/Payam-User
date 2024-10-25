@@ -24,7 +24,7 @@ class ConfirmDetails extends StatelessWidget {
     return Visibility(
       visible: visible,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0).r,
+        padding: const EdgeInsets.symmetric(vertical: 5.0).r,
         // padding: const EdgeInsets.only(top: 8.0).r,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +32,7 @@ class ConfirmDetails extends StatelessWidget {
           children: [
             Text(
               title,
-              style: AppTextStyle.bodyText5
+              style: AppTextStyle.formText
                   .copyWith(fontWeight: AppFontWeight.regular),
             ),
             Row(
@@ -41,7 +41,7 @@ class ConfirmDetails extends StatelessWidget {
               children: [
                 if (isAmount != null)
                   NairaText(
-                    fontSize: 17,
+                    fontSize: 16,
                   ),
                 1.0.spacingW,
                 Container(
@@ -49,7 +49,7 @@ class ConfirmDetails extends StatelessWidget {
                   child: Text(
                     data,
                     textAlign: TextAlign.end,
-                    style: AppTextStyle.bodyText5M.copyWith(color: color),
+                    style: AppTextStyle.caption.copyWith(color: color),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),

@@ -1,15 +1,11 @@
 // import '../../coin/presentation/widgets/no_coin_alert.dart';
-import '../model/chat_model.dart';
 import '/packages.dart';
 // import '/src/features/chat/presentation/views/chat_room_screen.dart';
 import '/src/features/chat/repository/chat_repo.dart';
+import '../model/chat_model.dart';
 
 final chatControlerProvider =
     StateNotifierProvider<ChatController, bool>((ref) {
-  ref.onDispose(() {
-    print('chat dispose');
-    // ref.read(chatRepoProvider).closeSocket();
-  });
   return ChatController(chatRepository: ref.watch(chatRepoProvider), ref: ref);
 });
 // final allMessageProvider = FutureProvider((ref) async {

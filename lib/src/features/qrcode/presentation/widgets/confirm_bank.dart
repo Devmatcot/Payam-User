@@ -1,8 +1,9 @@
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import '../../../../../packages.dart';
 
-class ConfirmQrCodeTransaction extends ConsumerWidget {
-  const ConfirmQrCodeTransaction({
+class ConfirmBankTransaction extends ConsumerWidget {
+  const ConfirmBankTransaction({
     required this.acctName,
     this.note,
     required this.acctNo,

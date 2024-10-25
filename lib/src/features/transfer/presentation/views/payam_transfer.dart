@@ -15,7 +15,6 @@ class _PayamTransferScreenState extends ConsumerState<PayamTransferScreen> {
   TextEditingController _controller = TextEditingController();
   bool isLoading = false;
   getDetail() async {
-    print('start');
     try {
       payamDetail = null;
       isLoading = true;
@@ -28,10 +27,11 @@ class _PayamTransferScreenState extends ConsumerState<PayamTransferScreen> {
       }
       isLoading = false;
       setState(() {});
-    } catch (e) {
+    } on DioError catch (e) {
       payamDetail = null;
       isLoading = false;
       setState(() {});
+      AppConfig.showToast('User not found');
     }
   }
 

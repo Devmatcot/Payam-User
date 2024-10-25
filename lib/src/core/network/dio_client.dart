@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import '/src/core/network/form_interceptor.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '/src/core/constants/api_constant.dart';
+import '/src/core/network/form_interceptor.dart';
 
 class DioClient {
 // dio instance
@@ -63,7 +63,7 @@ class DioClient {
       ..options.connectTimeout = Endpoints.connectionTimeout
       ..options.receiveTimeout = Endpoints.receiveTimeout
       ..options.headers['content-Type'] = 'application/json'
-      ..options.headers['accept'] = '*/*'
+      ..options.headers['accept'] = 'application/json'
       ..interceptors.add(
           // MyInterceptor()
 
