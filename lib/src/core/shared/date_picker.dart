@@ -8,9 +8,13 @@ class DatePicker extends ConsumerStatefulWidget {
   final DateTime? date;
   final DateTime? lastDate;
   final String? title;
+  final String? hintText;
+  final double? padding;
   const DatePicker({
     this.title,
     this.date,
+    this.hintText,
+    this.padding,
     this.lastDate,
     super.key,
   });
@@ -80,7 +84,7 @@ class _DatePickerState extends ConsumerState<DatePicker> {
           },
           child: Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 25)
+            padding: EdgeInsets.symmetric(vertical: widget.padding ?? 25)
                 .r
                 .copyWith(left: 10, right: 20)
                 .r,
@@ -101,7 +105,7 @@ class _DatePickerState extends ConsumerState<DatePicker> {
                 5.0.spacingW,
                 if (date == null)
                   Text(
-                    'e.g 01/01/1900',
+                    widget.hintText ?? '01/01/1900',
                     style: AppTextStyle.formText,
                   ),
                 if (date != null)

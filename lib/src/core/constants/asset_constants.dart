@@ -55,7 +55,7 @@ class AssetConstants {
    static const String internet = "internet";
    static const String contact = "contact";
    static const String noRecord = "no_record";
-  //  static const String googleIcon = "ic_google";
+   static const String deposit = "deposit";
   //  static const String googleIcon = "ic_google";
   //  static const String googleIcon = "ic_google";
   //  static const String googleIcon = "ic_google";

@@ -72,3 +72,4 @@ export 'package:shimmer/shimmer.dart';
 export 'package:payam_user/src/features/transfer/controller/transfer_controller.dart';
 export 'package:payam_user/src/features/transfer/presentation/widgets/bene_tile.dart';
 export 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+export 'package:payam_user/src/features/home/presentation/views/dashboard.dart';

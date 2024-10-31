@@ -1,4 +1,3 @@
-
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import '../../../../../packages.dart';
 
@@ -29,7 +28,7 @@ class ConfirmBankTransaction extends ConsumerWidget {
   noBioProcess(BuildContext context, WidgetRef ref) async {
     await showPinModel(context, () async {
       String pin = ref.read(pinProvider);
-      processTransaction(ref, pin);
+      // processTransaction(ref, pin);
     }, amount)
         .then((value) => pop(context));
   }
@@ -84,6 +83,8 @@ class ConfirmBankTransaction extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   backgroundColor: AppColors.gray,
+                  child: SvgWidget(AssetConstants.banklogo,
+                      color: AppColors.primary),
                 ),
                 5.0.spacingW,
                 Expanded(
@@ -120,9 +121,13 @@ class ConfirmBankTransaction extends ConsumerWidget {
                   title: 'Amount',
                   isAmount: true,
                 ),
-                ConfirmDetails(data: 'Free', title: 'Fees'),
+                ConfirmDetails(data: '10', isAmount: true, title: 'Fees'),
                 if (note != null && note!.length > 1)
                   ConfirmDetails(data: note!, title: 'Narration'),
+                ConfirmDetails(
+                    isAmount: true,
+                    data: '${double.parse(amount) + 10}',
+                    title: 'Total'),
               ],
             ),
             decoration: BoxDecoration(

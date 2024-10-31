@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:payam_user/src/features/transfer/model/bank_model.dart';
 
 import '/packages.dart';
+import '../model/bank_validate.dart';
 import '../model/beneficiary_model.dart';
 import '../model/transfer_res_model.dart';
 
@@ -60,19 +61,20 @@ class TransferRepository {
     }
   }
 
-  // FutureVoid verifyPurchase(String txf) async {
-  //   try {
-  //     String accessToken = await _localStorage.get(Endpoints.access_token);
-  //     final res = await _dioClient.get(
-  //       Endpoints.verifyPurchaseCoin(txf),
-  //       options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
-  //     );
-  //     log(res.data.toString());
-  //     return right(null);
-  //   } on DioError catch (e) {
-  //     return left(Failure(e));
-  //   }
-  // }
+  FutureEither<BankValidate> validateBankDetail(
+      String acctNum, String bankCode) async {
+    try {
+      String accessToken = await _localStorage.get(Endpoints.access_token);
+      final res = await _dioClient.post(
+        Endpoints.validateBank,
+        data: {"account_number": acctNum.trim(), "bank_code": bankCode},
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+      return right(BankValidate.fromJson(res.data['data']));
+    } on DioError catch (e) {
+      return left(Failure(e));
+    }
+  }
 
   FutureEither<List<BankModel>> getBankList() async {
     try {

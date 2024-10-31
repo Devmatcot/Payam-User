@@ -8,6 +8,7 @@ abstract class AppColors {
   /// Black 54% opacity
   static const Color black54 = Color(0x8A000000);
   static const Color greyBlack = Color(0xFF5D6368);
+  static const Color greyBlack1 = Color(0xFFECECEC);
 
   /// Black 25% opacity
   static const Color black25 = Color(0x40202124);
@@ -51,6 +52,7 @@ abstract class AppColors {
 
   /// Charcoal
   static const Color charcoal = Color(0xBF202124);
+  static const Color purple = Color(0xFF9747FF);
 
   static const Color red = Color(0xFFFF3A44);
 

@@ -4,6 +4,7 @@ import '../../../../../packages.dart';
 
 class CustomListTile extends StatelessWidget {
   final Color? conColor;
+  final Color? svgColor;
   final String title;
   final String subTitle;
   final String icons;
@@ -11,6 +12,7 @@ class CustomListTile extends StatelessWidget {
   const CustomListTile({
     Key? key,
     this.conColor,
+    this.svgColor,
     this.page,
     required this.title,
     required this.icons,
@@ -37,9 +39,7 @@ class CustomListTile extends StatelessWidget {
               decoration: BoxDecoration(
                   color: conColor, borderRadius: BorderRadius.circular(5).r),
               padding: EdgeInsets.all(10).r,
-              child: SvgWidget(
-                  // AssetConstants.smalllogo,
-                  icons),
+              child: SvgWidget(icons, color: svgColor),
             ),
             10.0.spacingW,
             Expanded(

@@ -40,248 +40,245 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
             ref.refresh(allTransactionHistory.future);
           },
           child: ListView(
-          padding: EdgeInsets.all(20).r,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 18,
-                      // backgroundImage: AssetImage(AssetConstants.avater),
-                      child: usermodel!.profilePhotoUrl == null
-                          ? Text(
-                              '${usermodel.firstName.split('').first}${usermodel.lastName.split('').first}',
-                              style: AppTextStyle.bodyText1,
-                            )
-                          : null,
-                      backgroundImage: usermodel.profilePhotoUrl != null
-                          ? NetworkImage(usermodel.profilePhotoUrl!)
-                          : null,
-                      backgroundColor: AppColors.border,
-                    ),
-                    10.0.spacingW,
-                    Text(
-                      'Welcome ${usermodel.firstName}!',
-                      style: AppTextStyle.formTextNatural
-                          .copyWith(fontWeight: AppFontWeight.regular),
-                    )
-                  ],
-                ),
-                SvgWidget(AssetConstants.notification)
-              ],
-            ),
-            10.0.spacingH,
-
-            // Balance Card
-            Container(
-              child: Row(
+            padding: EdgeInsets.all(20).r,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'Wallet Balance',
-                              style: AppTextStyle.bodyText5
-                                  .copyWith(color: AppColors.white),
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.visibility,
-                                  color: AppColors.white,
-                                  size: 20,
-                                ))
-                          ],
-                        ),
-                        FittedBox(
-                          child: Text.rich(TextSpan(
-                              children: [
-                                TextSpan(
-                                    text: AssetConstants.nairaSymbol,
-                                    style: TextStyle(fontFamily: 'Ariel')),
-                                TextSpan(
-                                    text: MoneyFormatter(
-                                            amount: double.parse(
-                                                usermodel.balance ?? "0"))
-                                        .output
-                                        .nonSymbol)
-                              ],
-                              style: AppTextStyle.bodyText1.copyWith(
-                                  fontSize: 24, color: AppColors.white))),
-                        ),
-                        // 10.0.spacingH,
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            onTap: () {
-                              pushTo(context, FundWallet());
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(10).r,
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryDeep,
-                                borderRadius: BorderRadius.circular(30).r,
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(Icons.add, color: AppColors.white),
-                                  Text(
-                                    'Fund Wallet',
-                                    style: AppTextStyle.formTextNatural
-                                        .copyWith(
-                                            fontWeight: AppFontWeight.regular,
-                                            color: AppColors.white),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 18,
+                        // backgroundImage: AssetImage(AssetConstants.avater),
+                        child: usermodel!.profilePhotoUrl == null
+                            ? Text(
+                                '${usermodel.firstName.split('').first}${usermodel.lastName.split('').first}',
+                                style: AppTextStyle.bodyText1,
+                              )
+                            : null,
+                        backgroundImage: usermodel.profilePhotoUrl != null
+                            ? NetworkImage(usermodel.profilePhotoUrl!)
+                            : null,
+                        backgroundColor: AppColors.border,
+                      ),
+                      10.0.spacingW,
+                      Text(
+                        'Welcome ${usermodel.firstName}!',
+                        style: AppTextStyle.formTextNatural
+                            .copyWith(fontWeight: AppFontWeight.regular),
+                      )
+                    ],
                   ),
+                  SvgWidget(AssetConstants.notification)
                 ],
               ),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15).r,
-              decoration: BoxDecoration(
-                  // color: AppColors.white,
-                  gradient: LinearGradient(colors: [
-                    Color(0xFF0C8B56),
-                    Color(0xFF05B56B),
-                    // AppColors.green,
-                  ]),
-                  borderRadius: BorderRadius.circular(20).r),
-            )
-            // Action Button
-            ,
-            20.0.spacingH,
-            Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      pushTo(context, QrCodeScreen());
-                    },
+              10.0.spacingH,
+
+              // Balance Card
+              Container(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'Wallet Balance',
+                                style: AppTextStyle.bodyText5
+                                    .copyWith(color: AppColors.white),
+                              ),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.visibility,
+                                      color: AppColors.white, size: 20))
+                            ],
+                          ),
+                          FittedBox(
+                            child: Text.rich(TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text: AssetConstants.nairaSymbol,
+                                      style: TextStyle(fontFamily: 'Ariel')),
+                                  TextSpan(
+                                      text: MoneyFormatter(
+                                              amount: double.parse(
+                                                  usermodel.balance ?? "0"))
+                                          .output
+                                          .nonSymbol)
+                                ],
+                                style: AppTextStyle.bodyText1.copyWith(
+                                    fontSize: 24, color: AppColors.white))),
+                          ),
+                          // 10.0.spacingH,
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: () {
+                                pushTo(context, FundWallet());
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(10).r,
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryDeep,
+                                  borderRadius: BorderRadius.circular(30).r,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.add, color: AppColors.white),
+                                    Text(
+                                      'Fund Wallet',
+                                      style: AppTextStyle.formTextNatural
+                                          .copyWith(
+                                              fontWeight: AppFontWeight.regular,
+                                              color: AppColors.white),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15).r,
+                decoration: BoxDecoration(
+                    // color: AppColors.white,
+                    gradient: LinearGradient(colors: [
+                      Color(0xFF0C8B56),
+                      Color(0xFF05B56B),
+                      // AppColors.green,
+                    ]),
+                    borderRadius: BorderRadius.circular(20).r),
+              ),
+              // Action Button
+
+              20.0.spacingH,
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        pushTo(context, QrCodeScreen());
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 15)
+                                .r,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgWidget(AssetConstants.qrcode),
+                            5.0.spacingW,
+                            FittedBox(
+                              child: Text(
+                                'Scan to pay',
+                                style: AppTextStyle.bodyText1
+                                    .copyWith(color: AppColors.primary),
+                              ),
+                            )
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                            color: AppColors.white,
+                            border: Border.all(color: AppColors.primary),
+                            borderRadius: BorderRadius.circular(30).r),
+                      ),
+                    ),
+                  ),
+                  15.0.spacingW,
+                  Expanded(
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 15).r,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgWidget(AssetConstants.qrcode),
-                          5.0.spacingW,
                           FittedBox(
                             child: Text(
-                              'Scan to pay',
-                              style: AppTextStyle.bodyText1
-                                  .copyWith(color: AppColors.primary),
+                              'Receive money',
+                              style: AppTextStyle.pryBtnStyle,
                             ),
                           )
                         ],
                       ),
                       decoration: BoxDecoration(
-                          color: AppColors.white,
-                          border: Border.all(color: AppColors.primary),
+                          // border: Border.all(color: AppColors.primary),
+                          color: AppColors.primary,
                           borderRadius: BorderRadius.circular(30).r),
                     ),
                   ),
-                ),
-                15.0.spacingW,
-                Expanded(
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20, vertical: 15).r,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FittedBox(
-                          child: Text(
-                            'Receive money',
-                            style: AppTextStyle.pryBtnStyle,
-                          ),
-                        )
-                      ],
-                    ),
-                    decoration: BoxDecoration(
-                        // border: Border.all(color: AppColors.primary),
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(30).r),
-                  ),
-                ),
-              ],
-            )
-            // Service
-            ,
-            20.0.spacingH,
+                ],
+              ),
+              // Service
+              20.0.spacingH,
+              Text(
+                'Services',
+                style: AppTextStyle.formTextNaturalR,
+              ),
+              10.0.spacingH,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(serviceList.length,
+                    (index) => ServiceBox(serviceList: serviceList[index])),
+              ),
+              20.0.spacingH,
 
-            Text(
-              'Services',
-              style: AppTextStyle.formTextNaturalR,
-            ),
-            10.0.spacingH,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(serviceList.length,
-                  (index) => ServiceBox(serviceList: serviceList[index])),
-            ),
-            20.0.spacingH,
-
-            Text(
-              'Recent Transactions (5)',
-              style: AppTextStyle.formTextNaturalR,
-            ),
-            10.0.spacingH,
-            ref.watch(allTransactionHistory).when(
-                skipLoadingOnRefresh: false,
-                data: (data) {
-                  return data.isEmpty
-                      ? Center(
-                          child: Column(
-                            children: [
-                              30.0.spacingH,
-                              SvgWidget(AssetConstants.noRecord),
-                              Text('No Transaction History',
-                                  style: AppTextStyle.bodyText1),
-                            ],
-                          ),
-                        )
-                      : ListView.builder(
-                          itemCount: data.length <= 5 ? data.length : 5,
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          reverse: true,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 2).r,
-                              child: TransactionListWidget(model: data[index]),
-                            );
-                          },
+              Text(
+                'Recent Transactions (5)',
+                style: AppTextStyle.formTextNaturalR,
+              ),
+              10.0.spacingH,
+              ref.watch(allTransactionHistory).when(
+                  skipLoadingOnRefresh: false,
+                  data: (data) {
+                    return data.isEmpty
+                        ? Center(
+                            child: Column(
+                              children: [
+                                30.0.spacingH,
+                                SvgWidget(AssetConstants.noRecord),
+                                Text('No Transaction History',
+                                    style: AppTextStyle.bodyText1),
+                              ],
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: data.length <= 5 ? data.length : 5,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            reverse: true,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 2).r,
+                                child:
+                                    TransactionListWidget(model: data[index]),
+                              );
+                            },
+                          );
+                  },
+                  error: (e, s) => Text(e.toString()),
+                  loading: () {
+                    return ListView.builder(
+                      itemCount: 5,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2).r,
+                          child: TransactionListShimmer(),
                         );
-                },
-                error: (e, s) => Text(e.toString()),
-                loading: () {
-                  return ListView.builder(
-                    itemCount: 5,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2).r,
-                        child: TransactionListShimmer(),
-                      );
-                    },
-                  );
-                }),
-            20.0.spacingH,
-          ],
-        ),
+                      },
+                    );
+                  }),
+              20.0.spacingH,
+            ],
+          ),
         ),
       ),
     );

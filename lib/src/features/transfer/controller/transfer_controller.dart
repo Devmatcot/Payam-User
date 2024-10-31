@@ -1,4 +1,5 @@
 import 'package:payam_user/src/features/auth/repository/auth_repo.dart';
+import 'package:payam_user/src/features/transfer/model/bank_validate.dart';
 import 'package:payam_user/src/features/transfer/model/beneficiary_model.dart';
 import 'package:payam_user/src/features/transfer/repository/transfer_repository.dart';
 
@@ -20,9 +21,19 @@ final transferChangeProvider = ChangeNotifierProvider<TransferNotifier>((ref) {
 final payamBeneProvider = FutureProvider((ref) async {
   return ref.read(transferConProvider.notifier).payamBeneList();
 });
-
+// final bankValidatePro =
+//     FutureProvider.family<BankValidate, ({String acctNum, String bankCode})>(
+//         (ref, params) async {
+//   return ref
+//       .read(transferConProvider.notifier)
+//       .validateBankDetail(params.acctNum, params.bankCode);
+// });
 final bankListProvider = FutureProvider((ref) async {
   return ref.read(transferConProvider.notifier).getBankList();
+});
+
+final bankValidateProvider = StateProvider<BankValidate?>((ref) {
+  return;
 });
 
 class TransferController extends StateNotifier<bool> {
@@ -88,6 +99,16 @@ class TransferController extends StateNotifier<bool> {
     final res = await _transferRepository.getBankSugList(acctNo);
     return res.fold(
         (l) => AppConfig.handleErrorMessage(l.error), (result) => result);
+  }
+
+  validateBankDetail(String acctNum, String bankCode) async {
+    state = true;
+    final res = await _transferRepository.validateBankDetail(acctNum, bankCode);
+    res.fold((l) => AppConfig.handleErrorMessage(l.error), (bankDetails) {
+      _ref.read(bankValidateProvider.notifier).update((state) => bankDetails);
+      // bankDetails;
+    });
+    state = false;
   }
 }
 

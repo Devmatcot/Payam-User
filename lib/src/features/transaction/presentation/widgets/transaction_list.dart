@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:payam_user/src/features/transaction/model/transaction_model.dart';
+import 'package:payam_user/src/features/transaction/presentation/views/transaction_details.dart';
 
 import '../../../../../packages.dart';
 
@@ -12,55 +13,71 @@ class TransactionListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25).r,
-      decoration: BoxDecoration(
-          color: AppColors.white, borderRadius: BorderRadius.circular(10).r),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 20.h,
-            backgroundColor: AppColors.gray,
-            child: SvgWidget(
-              AssetConstants.send,
-              height: 18.h,
-            ),
-          ),
-          10.0.spacingW,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Wallet Transfer', style: AppTextStyle.formTextNatural),
-                Text(
-                  'Wallet transfer To - ${model.receiver.name}',
-                  style: AppTextStyle.formText.copyWith(fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text.rich(
-                TextSpan(children: [
-                  TextSpan(
-                      text: AssetConstants.nairaSymbol,
-                      style: TextStyle(fontFamily: 'Ariel')),
-                  TextSpan(
-                      text: MoneyFormatter(amount: double.parse(model.amount))
-                          .output
-                          .nonSymbol)
-                ]),
-                style: AppTextStyle.bodyText1,
+    return GestureDetector(
+      onTap: () {
+        pushTo(context, TransactionDetailsScreen(model: model));
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15).r,
+        decoration: BoxDecoration(
+            color: AppColors.white, borderRadius: BorderRadius.circular(10).r),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              radius: 20.h,
+              backgroundColor: AppColors.purple,
+              child: SvgWidget(
+                AssetConstants.send,
+                height: 18.h,
+                color: AppColors.white,
               ),
-              Text(
-                DateFormat.yMMMd().add_jm().format(model.createdAt),
-                style: AppTextStyle.formText.copyWith(fontSize: 10),
+            ),
+            10.0.spacingW,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text('Wallet Transfer - ${model.receiver.name}',
+                            style: AppTextStyle.formTextNaturalR),
+                      ),
+                      Text.rich(
+                        TextSpan(children: [
+                          TextSpan(
+                              text: AssetConstants.nairaSymbol,
+                              style: TextStyle(fontFamily: 'Ariel')),
+                          TextSpan(
+                              text: MoneyFormatter(
+                                      amount: double.parse(model.amount))
+                                  .output
+                                  .nonSymbol)
+                        ]),
+                        style: AppTextStyle.bodyText1,
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        // '${model.receiver.name}',
+                        DateFormat.yMMMd().add_jm().format(model.createdAt),
+                        style: AppTextStyle.formText.copyWith(fontSize: 12),
+                      ),
+                      Text(
+                        model.status.toCapitalized(),
+                        style: AppTextStyle.formText.copyWith(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          )
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:payam_user/src/features/home/presentation/views/dashboard.dart';
 
 import '/packages.dart';
+import '../../../transaction/presentation/views/transaction_screen.dart';
 
 class ControlScreen extends StatefulWidget {
   const ControlScreen({super.key});
@@ -31,7 +31,7 @@ class _ControlScreenState extends State<ControlScreen> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           DashBoardScreen(),
-          DashBoardScreen(),
+          TransactionScreen(),
           DashBoardScreen(),
         ],
       ),

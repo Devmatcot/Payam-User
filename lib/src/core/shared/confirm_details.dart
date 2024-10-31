@@ -41,7 +41,7 @@ class ConfirmDetails extends StatelessWidget {
               children: [
                 if (isAmount != null)
                   NairaText(
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
                 1.0.spacingW,
                 Container(
