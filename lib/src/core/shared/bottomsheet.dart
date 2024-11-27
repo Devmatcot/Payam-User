@@ -5,12 +5,14 @@ import 'package:payam_user/src/core/shared/transaction_pin.dart';
 import '../../../packages.dart';
 
 Future<dynamic> bottomSheet(BuildContext context, Widget child,
-    [bool isDimiss = true, bool isScrollable = true]) {
+    [bool isDimiss = true,
+    bool isScrollable = true,
+    Color bg = Colors.transparent]) {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: isScrollable,
     isDismissible: isDimiss,
-    backgroundColor: AppColors.transparent,
+    backgroundColor: bg,
     builder: (context) => SafeArea(
       child: BackdropFilter(
         filter: ImageFilter.blur(
@@ -111,5 +113,9 @@ showPinModel(
   String amount,
 ) {
   return bottomSheet(
-      context, TransactionPinModal(onDone: onDone, amount: amount));
+      context,
+      TransactionPinModal(onDone: onDone, amount: amount),
+      true,
+      true,
+      Colors.white);
 }

@@ -34,9 +34,8 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
       body: SafeArea(
         child: RefreshIndicator.adaptive(
           onRefresh: () async {
-            await ref
-                .read(authControllerProvider.notifier)
-                .currentUser(context, '${usermodel.phoneNumber.substring(3)}');
+            await ref.read(authControllerProvider.notifier).currentUser(
+                context, '${usermodel.phoneNumber.substring(3)}', true);
             ref.refresh(allTransactionHistory.future);
           },
           child: ListView(
@@ -236,6 +235,7 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
               ref.watch(allTransactionHistory).when(
                   skipLoadingOnRefresh: false,
                   data: (data) {
+                    final allTrans = data.reversed.toList();
                     return data.isEmpty
                         ? Center(
                             child: Column(
@@ -248,16 +248,17 @@ class _DashboardState extends ConsumerState<DashBoardScreen> {
                             ),
                           )
                         : ListView.builder(
-                            itemCount: data.length <= 5 ? data.length : 5,
+                            itemCount:
+                                allTrans.length <= 5 ? allTrans.length : 5,
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            reverse: true,
+                            // reverse: true,
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 2).r,
-                                child:
-                                    TransactionListWidget(model: data[index]),
+                                child: TransactionListWidget(
+                                    model: allTrans[index]),
                               );
                             },
                           );

@@ -13,7 +13,7 @@ class AirtimeScreen extends ConsumerWidget {
     '10000'
   ];
   String newAmount = '';
-  List constNetwork = ['MTN', 'Glo', 'Airtel', '9mobile'];
+  // List constNetwork = ['MTN', 'Glo', 'Airtel', '9mobile'];
   String selectNetWork = '';
   TextEditingController _phoneNoCtr = TextEditingController();
   TextEditingController _amountController = TextEditingController();
@@ -55,7 +55,7 @@ class AirtimeScreen extends ConsumerWidget {
           5.0.spacingH,
           GridView.builder(
             shrinkWrap: true,
-            itemCount: constNetwork.length,
+            itemCount: ref.watch(getAirtimeBiller(Endpoints.airtimeBiller)).value?.length ?? 4,
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 10.h,
@@ -64,37 +64,59 @@ class AirtimeScreen extends ConsumerWidget {
                 crossAxisCount: 4),
             itemBuilder: (context, index) {
               selectNetWork = ref.watch(netWorkSelectProvider);
-              bool netWorkTap = selectNetWork == constNetwork[index];
-              return InkWell(
-                onTap: () {
-                  ref
-                      .read(netWorkSelectProvider.notifier)
-                      .update((state) => constNetwork[index]);
-                },
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(30).r,
-                          child: ImageWidget(
-                              constNetwork[index].toString().toLowerCase())),
-                      3.0.spacingH,
-                      Text(
-                        constNetwork[index].toString(),
-                        style: AppTextStyle.bodyText4,
-                      )
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: AppColors.gray.withOpacity(0.6),
-                      border: Border.all(
-                          color: netWorkTap
-                              ? AppColors.primary
-                              : AppColors.transparent),
-                      borderRadius: BorderRadius.circular(10).r),
-                ),
-              );
+
+              return ref.watch(getAirtimeBiller(Endpoints.airtimeBiller)).when(
+                  skipLoadingOnRefresh: false,
+                  data: (data) {
+                    return InkWell(
+                      onTap: () {
+                        ref
+                            .read(netWorkSelectProvider.notifier)
+                            .update((state) => data[index].billerCode);
+                      },
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                                borderRadius: BorderRadius.circular(30).r,
+                                child: ImageWidget(data[index]
+                                    .name
+                                    .split(' ')
+                                    .first
+                                    .toString()
+                                    .toLowerCase())),
+                            3.0.spacingH,
+                            Text(
+                              data[index].name.split(' ').first.toString(),
+                              style: AppTextStyle.bodyText4,
+                            )
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                            color: AppColors.gray.withOpacity(0.6),
+                            border: Border.all(
+                                color: selectNetWork == data[index].billerCode
+                                    ? AppColors.primary
+                                    : AppColors.transparent),
+                            borderRadius: BorderRadius.circular(10).r),
+                      ),
+                    );
+                  },
+                  error: (e, s) => ShimmerOverlay(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.gray,
+                              borderRadius: BorderRadius.circular(10).r),
+                        ),
+                      ),
+                  loading: () => ShimmerOverlay(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.gray,
+                              borderRadius: BorderRadius.circular(10).r),
+                        ),
+                      ));
             },
           ),
           20.0.spacingH,

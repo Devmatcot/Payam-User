@@ -12,7 +12,8 @@ class Endpoints {
 //     // return 'wss://real-estate-sieg.up.railway.app/ws/chat/$roomId?token=$token';
 //   }
 
-  static const String defaultBankImg = 'https://dev.payam.ng/images/default-bank.png';
+  static const String defaultBankImg =
+      'https://dev.payam.ng/images/default-bank.png';
 //   static const String checkCoin = '/api/v1/points/check/coin';
 
 //   static String allRoomMessage(String roomId) {
@@ -134,31 +135,20 @@ class Endpoints {
 //     return '/api/v1/searchmerchantkycdetailsbyuid/$tin';
 //   }
 
-//   //SECURED STORAGE KEY
-  static const String oneSignalAppID = 'edd68c45-b86d-4820-97d6-37c6349d3aa6';
+//   //___________________________UTILITY____________________________
 
-  static const String paystackKey =
-      'sk_test_e71629112b733ee4d09a150cb9285da7a1ef2047';
-  static const String access_token = 'access_token';
-  static const String refresh_token = 'refresh_token';
-  static const String firstTime = '0';
-  static const String userDataMap = 'userDataMap';
-  static const String userName = 'userName';
-  static const String acctType = 'user';
-
-//   //___________________________JOB APIs____________________________
-
-//   static const String allJobs = "/api/v1/jobs/all";
-//   static const String allJobsType = "/api/v1/jobs/job_types/all";
+  static const String airtimeBiller = "/airtime/providers";
+  static const String dataBiller = "/mobiledata/providers";
+//   static const String allJobsType = "/BIL104/information";
 //   static const String createJobs = "/api/v1/jobs/create";
 //   static const String allAgentJobs = "/api/v1/jobs/agent/all";
 //   static String getJobDetailbyId(String id) {
 //     return '/api/v1/jobs/job/$id';
 //   }
 
-//   static String getJobFullDetailbyId(String id) {
-//     return '/api/v1/jobs/agent/job/$id';
-//   }
+  static String getBillerInfo(String code) {
+    return '/$code/information';
+  }
 
 //   static String updateJobById(String id) {
 //     return '/api/v1/jobs/update/$id';
@@ -184,4 +174,16 @@ class Endpoints {
 //     return '/api/v1/escrow/$action/$id';
 //   }
 //   static const String allEscrow = "/api/v1/escrow/escrows/all";
+
+//   //SECURED STORAGE KEY
+  static const String oneSignalAppID = 'edd68c45-b86d-4820-97d6-37c6349d3aa6';
+
+  static const String paystackKey =
+      'sk_test_e71629112b733ee4d09a150cb9285da7a1ef2047';
+  static const String access_token = 'access_token';
+  static const String refresh_token = 'refresh_token';
+  static const String firstTime = '0';
+  static const String userDataMap = 'userDataMap';
+  static const String userName = 'userName';
+  static const String acctType = 'user';
 }

@@ -19,7 +19,7 @@ class OnboardingScreen extends ConsumerWidget {
   ];
 
   updateFirstTime(WidgetRef ref) async {
-    // ref.read(authProvider.notifier).updFirstTime();
+    ref.read(localStorageProvider).set(Endpoints.firstTime, '1');
   }
 
   @override

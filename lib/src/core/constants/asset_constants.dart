@@ -15,6 +15,7 @@ class AssetConstants {
   static const String history = "history";
   static const String resident = "resident";
   static const String arrowleft = "arrowback";
+  static const String arrowforward = "arrowforward";
   static const String secured = "secured";
   static const String bill = "bill";
   static const String microphone = "microphone";
@@ -56,10 +57,10 @@ class AssetConstants {
    static const String contact = "contact";
    static const String noRecord = "no_record";
    static const String deposit = "deposit";
-  //  static const String googleIcon = "ic_google";
-  //  static const String googleIcon = "ic_google";
-  //  static const String googleIcon = "ic_google";
-  //  static const String googleIcon = "ic_google";
+   static const String account = "account";
+   static const String card = "card";
+   static const String help = "help";
+   static const String noti = "noti";
 
   //Image Assests
 
@@ -70,14 +71,14 @@ class AssetConstants {
   static const String nairaSymbol = "₦";
 
   static const String avaterUrl = "https://images.pexels.com/photos/697509/pexels-photo-697509.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
-  // static const String avater = "avafilter";
-  // static const String avater = "avafilter";
-  // static const String avater = "avafilter";
-  // static const String avater = "avafilter";
+  static const String setting = "setting";
+  static const String shield = "shield";
+  static const String email = "email";
+  static const String promo = "promo";
 
-  //  static const String googleIcon = "ic_google";
-  //  static const String googleIcon = "ic_google";
-  //  static const String googleIcon = "ic_google";
+   static const String lock_open = "lock_open";
+   static const String fingerprint = "fingerprint";
+   static const String pin = "pin";
   //  static const String googleIcon = "ic_google";
   //  static const String googleIcon = "ic_google";
   //  static const String googleIcon = "ic_google";

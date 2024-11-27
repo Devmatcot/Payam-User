@@ -33,11 +33,10 @@ class ElectricityScreen extends ConsumerWidget {
                   builder: (context) => Scaffold(
                         backgroundColor: AppColors.transparent,
                         body: AppCustomDropDown(
-                            onTap: (value){},
-
+                            onTap: (value) {},
                             iconList: [],
                             title: 'Select Biller',
-                            itemList: electricty),
+                            itemList: electricty.map((e) => e.name).toList()),
                       ));
             },
             title: 'Select biller',

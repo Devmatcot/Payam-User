@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:payam_user/packages.dart';
 import 'package:payam_user/src/features/fundwallet/model/fund_model.dart';
@@ -74,9 +76,13 @@ class FundRepository {
   FutureVoid verifyTransaction(String reference) async {
     try {
       String accessToken = await _localStorage.get(Endpoints.access_token);
+      log('transaction ref $reference');
       final res = await _dioClient.post(Endpoints.verifyFunding,
           data: {"reference": reference},
-          options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
+          options: Options(headers: {
+            'Authorization': 'Bearer $accessToken',
+            'Accept': 'application/json'
+          }));
       print(res.data);
       return right('');
     } on DioError catch (e) {

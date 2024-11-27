@@ -1,3 +1,5 @@
+import 'package:payam_user/src/core/shared/app_dropdown.dart';
+import 'package:payam_user/src/features/utility/model/data_plans.dart';
 
 import '../../../../../packages.dart';
 
@@ -10,13 +12,40 @@ class DataScreen extends ConsumerWidget {
     '10GB - 650',
   ];
   String newAmount = '';
-  List constNetwork = ['MTN', 'Glo', 'Airtel', '9mobile'];
+  // List constNetwork = ['MTN', 'Glo', 'Airtel', '9mobile'];
+
+  List<DataPlans> dataPlans = [
+    DataPlans(
+        id: 9,
+        billerCode: 'billerCode',
+        name: 'name',
+        defaultCommission: 12,
+        dateAdded: DateTime.now(),
+        country: 'country',
+        isAirtime: false,
+        billerName: 'MTN 50MB',
+        itemCode: 'itemCode',
+        shortName: 'shortName',
+        fee: 9,
+        commissionOnFee: true,
+        regExpression: 'regExpression',
+        labelName: 'labelName',
+        amount: 60,
+        isResolvable: true,
+        groupName: 'groupName',
+        categoryName: 'categoryName',
+        isData: true,
+        defaultCommissionOnAmount: 'defaultCommissionOnAmount',
+        commissionOnFeeOrAmount: 'commissionOnFeeOrAmount',
+        validityPeriod: '7')
+  ];
   String selectNetWork = '';
   TextEditingController _phoneNoCtr = TextEditingController();
   TextEditingController _amountController = TextEditingController();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String userBalance = ref.watch(userModelProvider)?.balance ?? '0';
+    // List<DataPlans> dataPlans = ref.watch(dataPlansPro());
     return OverlayWidget(
       title: 'Purchase Data',
       child: ListView(
@@ -52,7 +81,11 @@ class DataScreen extends ConsumerWidget {
           5.0.spacingH,
           GridView.builder(
             shrinkWrap: true,
-            itemCount: constNetwork.length,
+            itemCount: ref
+                    .watch(getAirtimeBiller(Endpoints.dataBiller))
+                    .value
+                    ?.length ??
+                4,
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 10.h,
@@ -61,116 +94,137 @@ class DataScreen extends ConsumerWidget {
                 crossAxisCount: 4),
             itemBuilder: (context, index) {
               selectNetWork = ref.watch(netWorkSelectProvider);
-              bool netWorkTap = selectNetWork == constNetwork[index];
-              return InkWell(
-                onTap: () {
-                  ref
-                      .read(netWorkSelectProvider.notifier)
-                      .update((state) => constNetwork[index]);
-                },
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(30).r,
-                          child: ImageWidget(
-                              constNetwork[index].toString().toLowerCase())),
-                      3.0.spacingH,
-                      Text(
-                        constNetwork[index].toString(),
-                        style: AppTextStyle.bodyText4,
-                      )
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: AppColors.gray.withOpacity(0.6),
-                      border: Border.all(
-                          color: netWorkTap
-                              ? AppColors.primary
-                              : AppColors.transparent),
-                      borderRadius: BorderRadius.circular(10).r),
-                ),
-              );
+
+              return ref.watch(getAirtimeBiller(Endpoints.dataBiller)).when(
+                  skipLoadingOnRefresh: false,
+                  data: (data) {
+                    return InkWell(
+                      onTap: () {
+                        ref.invalidate(dataPlansPro);
+                        ref
+                            .read(netWorkSelectProvider.notifier)
+                            .update((state) => data[index].billerCode);
+                      },
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                                borderRadius: BorderRadius.circular(30).r,
+                                child: ImageWidget(data[index]
+                                    .name
+                                    .split(' ')
+                                    .first
+                                    .toString()
+                                    .toLowerCase())),
+                            3.0.spacingH,
+                            Text(
+                              data[index].name.split(' ').first.toString(),
+                              style: AppTextStyle.bodyText4,
+                            )
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                            color: AppColors.gray.withOpacity(0.6),
+                            border: Border.all(
+                                color: selectNetWork == data[index].billerCode
+                                    ? AppColors.primary
+                                    : AppColors.transparent),
+                            borderRadius: BorderRadius.circular(10).r),
+                      ),
+                    );
+                  },
+                  error: (e, s) => ShimmerOverlay(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.gray,
+                              borderRadius: BorderRadius.circular(10).r),
+                        ),
+                      ),
+                  loading: () => ShimmerOverlay(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.gray,
+                              borderRadius: BorderRadius.circular(10).r),
+                        ),
+                      ));
             },
           ),
           20.0.spacingH,
-          Text(
-            'Select Plans',
-            style: AppTextStyle.headline5
-                .copyWith(fontWeight: AppFontWeight.regular),
-          ),
-          10.0.spacingH,
-          GridView.builder(
-            shrinkWrap: true,
-            itemCount: constAmount.length,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 10.h,
-                mainAxisSpacing: 10.h,
-                childAspectRatio: 18 / 10,
-                crossAxisCount: 4),
-            itemBuilder: (context, index) {
-              return Consumer(builder: (context, myRef, child) {
-                String selectedAmount = myRef.watch(airtimeAmountProvider);
-                bool isSelect = selectedAmount == constAmount[index];
-                return InkWell(
-                  onTap: () async {
-                    newAmount = myRef
-                        .read(airtimeAmountProvider.notifier)
-                        .update((state) => constAmount[index]);
-                    // openBottomSheet();
-                    // _amountController.text = newAmount;
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(5).r,
-                    decoration: BoxDecoration(
-                        color: AppColors.gray.withOpacity(0.6),
-                        border: Border.all(
-                            color: isSelect
-                                ? AppColors.primary
-                                : AppColors.transparent),
-                        borderRadius: BorderRadius.circular(5).r),
-                    child: FittedBox(
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              constAmount[index].toString().split('-').first +
-                                  ' - ',
-                              style: AppTextStyle.bodyText3,
-                            ),
-                            Text(
-                              AssetConstants.nairaSymbol,
-                              style: TextStyle(
-                                  fontFamily: 'Ariel',
-                                  fontSize: 11,
-                                  color: AppColors.natural,
-                                  fontWeight: AppFontWeight.regular),
-                            ),
-                            // 2.0.spacingW,
-                            Text(
-                              constAmount[index].toString().split('-').last,
-                              style: AppTextStyle.bodyText3,
-                            ),
-                            // 2.0.spacingW,
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              });
-            },
-          ),
+          ref.watch(dataPlansPro(selectNetWork)).when(
+                data: (data) {
+                  return AppTextField(
+                    hint: 'Select Biller ${selectNetWork}',
+                    type: TextInputType.text,
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => Scaffold(
+                                backgroundColor: AppColors.transparent,
+                                body: AppCustomDropDown(
+                                    onTap: (value) {},
+                                    iconList: [],
+                                    title: 'Select Biller',
+                                    itemList: data
+                                        .map((e) =>
+                                            '${e.billerName} - ${e.validityPeriod}Days')
+                                        .toList()),
+                              ));
+                    },
+                    title: 'Select biller',
+                    readOnly: true,
+                    surfixIcons:
+                        ref.watch(dataPlansPro(selectNetWork)).isLoading
+                            ? SmallProgress()
+                            : Icon(Icons.keyboard_arrow_down),
+                  );
+                },
+                error: (e, s) => Text(e.toString()),
+                loading: () => AppTextField(
+                  hint: 'Select Biller ${selectNetWork}',
+                  type: TextInputType.text,
+                  onTap: () {},
+                  title: 'Select biller',
+                  readOnly: true,
+                  surfixIcons: ref.watch(dataPlansPro(selectNetWork)).isLoading
+                      ? SmallProgress()
+                      : Icon(Icons.keyboard_arrow_down),
+                ),
+              ),
+          // AppTextField(
+          //   hint: 'Select Biller ${selectNetWork}',
+          //   type: TextInputType.text,
+          //   onTap: () {
+          //     showDialog(
+          //         context: context,
+          //         builder: (context) => Scaffold(
+          //               backgroundColor: AppColors.transparent,
+          //               body: AppCustomDropDown(
+          //                   onTap: (value) {},
+          //                   iconList: [],
+          //                   title: 'Select Biller',
+          //                   itemList: ref
+          //                           .watch(dataPlansPro(selectNetWork))
+          //                           .value
+          //                           ?.map((e) =>
+          //                               '${e.billerName} - ${e.validityPeriod}Days')
+          //                           .toList() ??
+          //                       []),
+          //             ));
+          //   },
+          //   title: 'Select biller',
+          //   readOnly: true,
+          //   surfixIcons: ref.watch(dataPlansPro(selectNetWork)).isLoading
+          //       ? SmallProgress()
+          //       : Icon(Icons.keyboard_arrow_down),
+          // ),
           20.0.spacingH,
           AppTextField(
             hint: '100 - 10,000',
             type: TextInputType.numberWithOptions(decimal: true),
-            title: 'or Enter Amount',
+            title: 'Enter Amount',
             isAmount: true,
+            readOnly: true,
             controller: _amountController,
             formeter: [
               DecimalFormatter(),

@@ -21,10 +21,10 @@ class PropertyMemImage extends ConsumerWidget {
     return InkWell(
       onTap: () {
         onTap();
-        ref.read(selectedImageProvider.notifier).update((state) {
-          state.removeAt(index);
-          return state;
-        });
+        // ref.read(selectedImageProvider.notifier).update((state) {
+        //   state.removeAt(index);
+        //   return state;
+        // });
       },
       child: Stack(
         children: [

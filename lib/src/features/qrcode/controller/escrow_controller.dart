@@ -1,10 +1,8 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:payam_user/src/features/qrcode/model/qr_enum.dart';
 
-import '../../utility/repositiory/utility_repo.dart';
-
-import '../repository/escrow_repository.dart';
 import '/packages.dart';
+import '../../utility/repositiory/utility_repo.dart';
+import '../repository/escrow_repository.dart';
 
 final escrowControllerProvider =
     StateNotifierProvider<EscrowController, bool>((ref) {
@@ -31,11 +29,11 @@ final proofImageProvider = StateProvider<FilePickerResult?>((ref) {
 
 class EscrowController extends StateNotifier<bool> {
   EscrowRepository _escrowRepository;
-  PropertiesRepository _propertiesRepository;
+  utilityRepository _propertiesRepository;
   Ref _ref;
   EscrowController(
       {required EscrowRepository escrowRepository,
-      required PropertiesRepository propertiesRepository,
+      required utilityRepository propertiesRepository,
       required Ref ref})
       : _escrowRepository = escrowRepository,
         _propertiesRepository = propertiesRepository,

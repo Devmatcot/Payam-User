@@ -84,12 +84,12 @@ class _DatePickerState extends ConsumerState<DatePicker> {
           },
           child: Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: widget.padding ?? 25)
+            padding: EdgeInsets.symmetric(vertical: widget.padding ?? 20)
                 .r
                 .copyWith(left: 10, right: 20)
                 .r,
             decoration: BoxDecoration(
-                color: AppColors.white,
+                color: AppColors.transparent,
                 borderRadius: BorderRadius.circular(10).r,
                 border: Border.all(color: AppColors.black54, width: 0.5)),
             child: Row(

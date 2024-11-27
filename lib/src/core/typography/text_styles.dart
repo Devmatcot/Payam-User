@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-import '../theme/colors.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import '/src/core/typography/typography.dart';
+import '../theme/colors.dart';
 
 /// App Text Style Definitions
 class AppTextStyle {
@@ -38,14 +38,15 @@ class AppTextStyle {
       fontWeight: AppFontWeight.regular,
     );
   }
- static TextStyle get nairaStyle {
+
+  static TextStyle get nairaStyle {
     return _baseTextStyle.copyWith(
       fontSize: 18,
       fontFamily: 'Ariel',
-  
       fontWeight: AppFontWeight.regular,
     );
   }
+
 //secondary button style
   static TextStyle get secBtnStyle {
     return AppTextStyle.headline3.copyWith(
@@ -94,9 +95,9 @@ class AppTextStyle {
   /// Subtitle 1 Text Style
   static TextStyle get subtitle1 {
     return _baseTextStyle.copyWith(
-      fontSize: 15.5,
+      fontSize: 16,
       //letterSpacing: 0.3,
-      fontWeight: AppFontWeight.bold,
+      fontWeight: AppFontWeight.semiBold,
     );
   }
 
@@ -154,7 +155,7 @@ class AppTextStyle {
     );
   }
 
-      static TextStyle get bodyText5M {
+  static TextStyle get bodyText5M {
     return _baseTextStyle.copyWith(
       fontSize: 15,
       fontWeight: AppFontWeight.medium,
@@ -222,6 +223,14 @@ class AppTextStyle {
   static TextStyle get formText {
     return _baseTextStyle.copyWith(
       fontSize: 12 + 3,
+      color: AppColors.appGrey,
+      fontWeight: AppFontWeight.regular,
+    );
+  }
+
+  static TextStyle get formTextS {
+    return _baseTextStyle.copyWith(
+      fontSize: 12,
       color: AppColors.appGrey,
       fontWeight: AppFontWeight.regular,
     );

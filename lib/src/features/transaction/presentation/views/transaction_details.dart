@@ -34,6 +34,7 @@ class TransactionDetailsScreen extends ConsumerWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    20.0.spacingH,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -71,16 +72,24 @@ class TransactionDetailsScreen extends ConsumerWidget {
                             decoration: BoxDecoration(
                                 color: AppColors.border.withOpacity(0.4),
                                 borderRadius: BorderRadius.circular(30).r),
-                            child: Text(
-                              '- ₦' +
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                NairaText(
+                                  fontSize: 32,
+                                  color: AppColors.primaryDeep,
+                                ),
+                                Text(
                                   MoneyFormatter(
                                           amount: double.parse(model.amount))
                                       .output
                                       .nonSymbol,
-                              style: AppTextStyle.bodyText1.copyWith(
-                                  fontWeight: AppFontWeight.semiBold,
-                                  color: AppColors.primaryDeep,
-                                  fontSize: 32),
+                                  style: AppTextStyle.bodyText1.copyWith(
+                                      fontWeight: AppFontWeight.semiBold,
+                                      color: AppColors.primaryDeep,
+                                      fontSize: 32),
+                                ),
+                              ],
                             ),
                           ),
                           10.0.spacingH,
@@ -89,7 +98,7 @@ class TransactionDetailsScreen extends ConsumerWidget {
                             style: AppTextStyle.bodyText1,
                           ),
                           Text(
-                            'Transfer to ${model.receiver.name}',
+                            'Transfer to ${model.receiver?.name}',
                             style: AppTextStyle.bodyText4,
                           )
                         ],
@@ -113,12 +122,13 @@ class TransactionDetailsScreen extends ConsumerWidget {
                                     .toCapitalized(), //'Bank Transfer',
                                 title: 'Transaction Type'),
                             ConfirmDetails(
-                                data: model.receiver.name, //'Matthew Olayemi',
+                                data: model.receiver?.name ??
+                                    '', //'Matthew Olayemi',
 
                                 title: 'Account Name'),
                             ConfirmDetails(
-                                data: model.receiver.id
-                                    .toString(), //'1232800325',
+                                data: model.receiver?.id.toString() ??
+                                    '', //'1232800325',
 
                                 title: 'Account Number'),
                             ConfirmDetails(data: 'Payam Bank', title: 'Bank'),

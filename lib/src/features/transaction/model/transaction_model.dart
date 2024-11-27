@@ -7,7 +7,7 @@ class TransactionHistoryModel {
   final String? narration;
   final int userId;
   final DateTime createdAt;
-  final Receiver receiver;
+  final Receiver? receiver;
 
   TransactionHistoryModel({
     required this.id,
@@ -18,7 +18,7 @@ class TransactionHistoryModel {
     required this.narration,
     required this.userId,
     required this.createdAt,
-    required this.receiver,
+     this.receiver,
   });
 
   factory TransactionHistoryModel.fromJson(Map<String, dynamic> json) =>
@@ -31,7 +31,7 @@ class TransactionHistoryModel {
         narration: json["narration"],
         userId: json["user_id"],
         createdAt: DateTime.parse(json["created_at"]),
-        receiver: Receiver.fromJson(json["receiver"]),
+        receiver:json.containsKey('receiver')? Receiver.fromJson(json["receiver"]):null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,7 +43,7 @@ class TransactionHistoryModel {
         "narration": narration,
         "user_id": userId,
         "created_at": createdAt.toIso8601String(),
-        "receiver": receiver.toJson(),
+        "receiver": receiver?.toJson(),
       };
 }
 

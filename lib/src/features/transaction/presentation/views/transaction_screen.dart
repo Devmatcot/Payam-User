@@ -17,7 +17,7 @@ class _TransactionScreenState extends ConsumerState<TransactionScreen> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24).r,
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 0).r,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

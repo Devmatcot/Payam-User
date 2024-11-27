@@ -17,9 +17,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   autoLogin() async {
     // LocationService location = LocationService();
     // location.checkAndRequestPermission();
-    // ref.read(authControllerProvider.notifier).autoLogin(context);
     await Future.delayed(Duration(seconds: 3));
-    pushToAndClearStack(context, OnboardingScreen());
+    ref.read(authControllerProvider.notifier).autoLogin(context);
+    // pushToAndClearStack(context, OnboardingScreen());
   }
 
   @override

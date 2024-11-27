@@ -1,12 +1,15 @@
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:payam_user/src/features/auth/presentation/views/create_passcode.dart';
 import 'package:payam_user/src/features/auth/presentation/views/login_passcode.dart';
+import 'package:payam_user/src/features/auth/presentation/views/login_screen.dart';
 import 'package:payam_user/src/features/auth/presentation/views/phone_otp.dart';
 import 'package:payam_user/src/features/auth/presentation/views/success_registration.dart';
 
+import '/packages.dart';
 import '../presentation/views/create_compasscode.dart';
 import '../repository/auth_repo.dart';
-import '/packages.dart';
 // import '/src/features/auth/presentation/views/switch_account.dart';
 
 final authControllerProvider =
@@ -154,39 +157,39 @@ class AuthController extends StateNotifier<bool> {
     state = false;
   }
 
- Future<UserModel> currentUser(BuildContext context, String phone) async {
+  Future<UserModel?> currentUser(BuildContext context, String phone,
+      [bool isRefresh = false]) async {
     final res = await _authrepo.currentUser(phone);
-    return res.fold((l) => AppConfig.handleErrorMessage(l.error), (user) {
+    return res.fold((l) {
+      AppConfig.handleErrorMessage(l.error);
+      pushToAndClearStack(context, LoginScreen());
+      return null;
+    }, (user) async {
       _ref.read(userModelProvider.notifier).update((state) => user);
-      pushToAndClearStack(context, ControlScreen());
+      log(user.toString());
+      await _localStorage.setMap(Endpoints.userDataMap, user.toJson());
+      if (!isRefresh) {
+        pushToAndClearStack(context, ControlScreen());
+      }
       return user;
     });
   }
 
   autoLogin(BuildContext context) async {
-    // final firstTime = await _localStorage.get(Endpoints.firstTime);
-    // String acctType = await _localStorage.get(Endpoints.acctType) ?? 'user';
-    // final String userData =
-    //     await _localStorage.get(Endpoints.userDataMap) ?? '';
-    // log(userData);
-    // await Future.delayed(Duration(seconds: 3));
-    // if (firstTime == '1') {
-    //   if (userData != '') {
-    //     _ref.read(acctTypeProvider.notifier).update((state) =>
-    //         acctType == 'user' ? AccountType.user : AccountType.agent);
-    //     // _ref
-    //     //     .watch(userModelProvider.notifier)
-    //     //     .update((state) => UserModel.fromJson(jsonDecode(userData)));
-    //     pushToAndClearStack(
-    //         context,
-    //         WelcomeBackScreen(
-    //             userData: UserModel.fromJson(jsonDecode(userData))));
-    //   } else {
-    //     pushToAndClearStack(context, LoginScreen());
-    //   }
-    // } else {
-    pushToAndClearStack(context, OnboardingScreen());
-    // }
+    final firstTime = await _localStorage.get(Endpoints.firstTime);
+    String accessToken = await _localStorage.get(Endpoints.access_token) ?? "";
+    final String userModel =
+        await _localStorage.get(Endpoints.userDataMap) ?? '';
+    if (firstTime != '' && firstTime != null) {
+      if (userModel != '' && accessToken != '') {
+        UserModel user = UserModel.fromJson(jsonDecode(userModel));
+        currentUser(context, '${user.phoneNumber.substring(3)}');
+      } else {
+        pushToAndClearStack(context, LoginScreen());
+      }
+    } else {
+      pushToAndClearStack(context, OnboardingScreen());
+    }
   }
 
   // logOut(BuildContext context) async {

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:payam_user/src/features/settings/presentation/views/setting_screen.dart';
 
 import '/packages.dart';
 import '../../../transaction/presentation/views/transaction_screen.dart';
@@ -32,7 +33,7 @@ class _ControlScreenState extends State<ControlScreen> {
         children: [
           DashBoardScreen(),
           TransactionScreen(),
-          DashBoardScreen(),
+          SettingScreen(),
         ],
       ),
       bottomNavigationBar: CupertinoTabBar(

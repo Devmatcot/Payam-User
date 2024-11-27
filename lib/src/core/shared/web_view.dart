@@ -11,11 +11,13 @@ class WebViewScreen extends StatefulWidget {
       {this.url,
       this.title,
       this.actions,
+      this.canPop = true,
       this.onPopInvokedWithResult,
       super.key});
   String? url;
   String? title;
   List<Widget>? actions;
+  bool canPop;
   Function(bool, dynamic)? onPopInvokedWithResult;
 
   @override
@@ -72,6 +74,7 @@ class _ChatScreenState extends State<WebViewScreen> {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: AppColors.secondary,
+        automaticallyImplyLeading: false,
         title: Text(
           widget.title ?? 'Chat',
           style: AppTextStyle.headline1,
@@ -79,6 +82,7 @@ class _ChatScreenState extends State<WebViewScreen> {
         actions: widget.actions,
       ),
       body: PopScope(
+        canPop: widget.canPop,
         onPopInvokedWithResult: widget.onPopInvokedWithResult,
         child: Column(
           children: [

@@ -13,6 +13,7 @@ class TransactionListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool walletTransafer = model.type.contains('_to_');
     return GestureDetector(
       onTap: () {
         pushTo(context, TransactionDetailsScreen(model: model));
@@ -39,9 +40,15 @@ class TransactionListWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        child: Text('Wallet Transfer - ${model.receiver.name}',
+                        child: Text(
+                            // isCredit
+                            // ?
+                            // 'Wallet Transfer - ${model.receiver?.name} ${model.type}',
+                            '${model.type.replaceAll('_', ' ').toTitleCase()} ${walletTransafer ? '- ${model.receiver?.name}' : ''}',
+                            // : model.narration ?? 'Wallet Funding',
                             style: AppTextStyle.formTextNaturalR),
                       ),
                       Text.rich(

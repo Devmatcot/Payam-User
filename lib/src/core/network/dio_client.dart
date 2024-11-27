@@ -217,4 +217,145 @@ class DioClient {
       rethrow;
     }
   }
+
+  //Token Request
+
+  // Get:----------------------------------------------------------------------
+
+  Future<Response> getT(
+    String url, {
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final accessToken = await storage.read(key: Endpoints.access_token) ?? '';
+
+    try {
+      final Response response = await _dio.get(
+        url,
+        queryParameters: queryParameters,
+        options: options ??
+            Options(headers: {'Authorization': 'Bearer $accessToken'}),
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+// Post:----------------------------------------------------------------------
+
+  Future<Response> postT(
+    String url, {
+    data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    try {
+      final accessToken = await storage.read(key: Endpoints.access_token) ?? '';
+
+      final Response response = await _dio.post(
+        url,
+        data: data,
+        queryParameters: queryParameters,
+        options: options ??
+            Options(headers: {'Authorization': 'Bearer $accessToken'}),
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+// Put:-----------------------------------------------------------------------
+
+  Future<Response> putT(
+    String url, {
+    data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final accessToken = await storage.read(key: Endpoints.access_token) ?? '';
+
+    try {
+      final Response response = await _dio.put(
+        url,
+        data: data,
+        queryParameters: queryParameters,
+        options: options ??
+            Options(headers: {'Authorization': 'Bearer $accessToken'}),
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Delete:--------------------------------------------------------------------
+  Future<dynamic> deleteT(
+    String url, {
+    data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final accessToken = await storage.read(key: Endpoints.access_token) ?? '';
+
+    try {
+      final Response response = await _dio.delete(
+        url,
+        data: data,
+        queryParameters: queryParameters,
+        options: options ??
+            Options(headers: {'Authorization': 'Bearer $accessToken'}),
+        cancelToken: cancelToken,
+      );
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> patchT(
+    String url, {
+    data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final accessToken = await storage.read(key: Endpoints.access_token) ?? '';
+
+    try {
+      final Response response = await _dio.patch(
+        url,
+        data: data,
+        queryParameters: queryParameters,
+        options: options ??
+            Options(headers: {'Authorization': 'Bearer $accessToken'}),
+        cancelToken: cancelToken,
+      );
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
